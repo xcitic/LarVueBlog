@@ -1,12 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link :to="{ name: 'login' }">Login</router-link>
+
+    <NavBar />
+    <div class="content">
+        <router-view/>
     </div>
-    <router-view/>
+
   </div>
 </template>
+
+<script>
+import NavBar from '@/components/NavBar.vue';
+
+export default {
+  components: {
+    NavBar
+  }
+}
+
+</script>
 
 <style>
 #app {
@@ -19,6 +31,11 @@
 #nav {
   padding: 30px;
 }
+
+.content {
+  padding: 65px;
+}
+
 
 #nav a {
   font-weight: bold;

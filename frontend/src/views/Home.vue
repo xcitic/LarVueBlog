@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar />
       <div class="container">
         <section class="section classic-blog-listing mt-1">
 
