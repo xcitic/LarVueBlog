@@ -21,15 +21,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import NavBar from '@/components/NavBar.vue';
 import BlogPost from '@/components/BlogPost.vue';
 import { mapState } from 'vuex';
 
 export default {
   name: 'home',
   components: {
-    NavBar,
     BlogPost
   },
 
