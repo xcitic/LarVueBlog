@@ -1,7 +1,7 @@
 <template>
   <div class="card card-signin my-5 elevation-10">
     <div class="card-body">
-      <h5 class="card-title text-center">Sign In</h5>
+      <h5 class="card-title text-center">Log In</h5>
       <div class="form-signin">
         <form>
           <div class="form-control-group">
@@ -34,7 +34,7 @@
           <button class="btn btn-lg btn-primary btn-block text-uppercase"
                   :disable="loading"
                   @click.prevent="login">
-                  Sign in
+                  Log In
           </button>
           <hr class="my-4">
           <!--
