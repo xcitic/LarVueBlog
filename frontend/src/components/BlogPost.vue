@@ -11,9 +11,9 @@
             <!--Image-->
             <div class="view overlay hm-white-slight hm-zoom">
                 <img :src="image" class="img-fluid">
-                <a href="#!">
+                <router-link :to="{ name: '', params: {} }">
                     <div class="mask waves-effect waves-light"></div>
-                </a>
+                </router-link>
             </div>
 
             <!--Excerpt-->
