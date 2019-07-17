@@ -11,7 +11,7 @@
             <!--Image-->
             <div class="view overlay hm-white-slight hm-zoom">
                 <img :src="image" class="img-fluid">
-                <router-link :to="{ name: '', params: {} }">
+                <router-link :to="{ name: 'post', params: {id: title} }">
                     <div class="mask waves-effect waves-light"></div>
                 </router-link>
             </div>
@@ -24,13 +24,15 @@
             <p>{{description}}</p>
 
             <div class="text-center">
-              <a class="btn btn-primary btn-rounded waves-effect waves-light">Read more</a>
+              <router-link :to="{ name: 'post', params: {id: title} }">
+                <a class="btn btn-primary btn-rounded waves-effect waves-light">Read more</a>
+              </router-link>
             </div>
 
             <!--Post data-->
             <div class="mt-1">
               <h6 class="mb-1">
-                <a href="#!" class="blue-text">
+                <a class="blue-text">
                   <i class="fa fa-comments-o"></i> {{commentsCount}}
                 </a>
                 <a class="red-text ml-4">
