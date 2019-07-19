@@ -15,7 +15,9 @@
       <!--Navbar links-->
       <ul class="nav navbar-nav nav-flex-icons ml-auto">
           <li class="nav-item">
-              <a class="nav-link"><i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span></a>
+            <router-link class="nav-link" :to="{ name: 'home' }">
+               <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
+              </router-link>
           </li>
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
