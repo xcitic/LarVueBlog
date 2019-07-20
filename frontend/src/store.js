@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -14,14 +15,26 @@ export default new Vuex.Store({
 
     comments: [
       {username: 'User1', text: 'This is the comment 1', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', createdAt: '2 days ago'},
-      {username: 'User2', text: 'This is the comment 2', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-3.jpg', createdAt: '4 days ago'},      
-    ]
+      {username: 'User2', text: 'This is the comment 2', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-3.jpg', createdAt: '4 days ago'},
+    ],
+
+    status: '',
 
   },
   mutations: {
 
   },
   actions: {
+    login({state, commit}, payload) {
+      axios.post('localhost:8000/api/login', payload)
+        .then(({response}) => {
+
+        })
+    },
+
+    register({state, commit}, payload) {
+    }
+
 
   }
 })
