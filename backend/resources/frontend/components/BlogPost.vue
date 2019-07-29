@@ -10,8 +10,8 @@
 
             <!--Image-->
             <div class="view overlay hm-white-slight hm-zoom">
-                <img :src="image" class="img-fluid">
-                <router-link :to="{ name: 'post', params: {id: title} }">
+                <img :src="data.image" class="img-fluid">
+                <router-link :to="{ name: 'post', params: {link: postLink, id: data.id} }">
                     <div class="mask waves-effect waves-light"></div>
                 </router-link>
             </div>
@@ -19,12 +19,12 @@
             <!--Excerpt-->
             <!-- <a href="" class="cyan-text"><h5 class="text-center pt-2"><i class="fa fa-laptop"></i>Startups</h5></a> -->
 
-            <h2 class="text-center mt-1 mb-2">{{title}}</h2>
+            <h2 class="text-center mt-1 mb-2">{{data.title}}</h2>
 
-            <p>{{description}}</p>
+            <p>{{data.description}}</p>
 
             <div class="text-center">
-              <router-link :to="{ name: 'post', params: {id: title} }">
+              <router-link :to="{ name: 'post', params: {link: postLink, id: data.id} }">
                 <a class="btn btn-primary btn-rounded waves-effect waves-light">Read more</a>
               </router-link>
             </div>
@@ -36,11 +36,11 @@
                   <i class="fa fa-comments-o"></i> {{commentsCount}}
                 </a>
                 <a class="red-text ml-4">
-                  <i class="fa fa-heart red-text" :class="liked ? 'red-text' : 'grey-text'"></i> {{commentsCount}}
+                  <i class="fa fa-heart red-text" :class="liked ? 'red-text' : 'grey-text'"></i> {{data.views}}
                 </a>
               </h6>
 
-              <h6>Posted: {{createdAt}}
+              <h6>Posted: {{data.published}}
               </h6>
             </div>
         </div>
@@ -52,14 +52,23 @@
 export default {
   name: 'BlogPost',
   props: {
-    title: String,
-    description: String,
-    image: String,
-    createdAt: String,
-    commentsCount: Number,
-    votes: Number,
-    liked: Boolean
+    data: Object,
   },
+
+  data() {
+    return {
+      liked: false,
+    }
+  },
+
+  computed: {
+    postLink() {
+      return this.data.title.replace(/\s+/g, '-').toLowerCase();
+    },
+    commentsCount() {
+      return this.data.comments.length;
+    }
+  }
 }
 </script>
 

@@ -1953,13 +1953,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'BlogPost',
   props: {
-    title: String,
-    description: String,
-    image: String,
-    createdAt: String,
-    commentsCount: Number,
-    votes: Number,
-    liked: Boolean
+    data: Object
+  },
+  data: function data() {
+    return {
+      liked: false
+    };
+  },
+  computed: {
+    postLink: function postLink() {
+      return this.data.title.replace(/\s+/g, '-').toLowerCase();
+    },
+    commentsCount: function commentsCount() {
+      return this.data.comments.length;
+    }
   }
 });
 
@@ -2624,12 +2631,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2867,7 +2868,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     userIsLoggedIn: function userIsLoggedIn() {
       return true;
     }
-  })
+  }),
+  mounted: function mounted() {
+    console.log(this.$router.id);
+  }
 });
 
 /***/ }),
@@ -5097,11 +5101,21 @@ var render = function() {
           "div",
           { staticClass: "view overlay hm-white-slight hm-zoom" },
           [
-            _c("img", { staticClass: "img-fluid", attrs: { src: _vm.image } }),
+            _c("img", {
+              staticClass: "img-fluid",
+              attrs: { src: _vm.data.image }
+            }),
             _vm._v(" "),
             _c(
               "router-link",
-              { attrs: { to: { name: "post", params: { id: _vm.title } } } },
+              {
+                attrs: {
+                  to: {
+                    name: "post",
+                    params: { link: _vm.postLink, id: _vm.data.id }
+                  }
+                }
+              },
               [_c("div", { staticClass: "mask waves-effect waves-light" })]
             )
           ],
@@ -5109,10 +5123,10 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("h2", { staticClass: "text-center mt-1 mb-2" }, [
-          _vm._v(_vm._s(_vm.title))
+          _vm._v(_vm._s(_vm.data.title))
         ]),
         _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.description))]),
+        _c("p", [_vm._v(_vm._s(_vm.data.description))]),
         _vm._v(" "),
         _c(
           "div",
@@ -5120,7 +5134,14 @@ var render = function() {
           [
             _c(
               "router-link",
-              { attrs: { to: { name: "post", params: { id: _vm.title } } } },
+              {
+                attrs: {
+                  to: {
+                    name: "post",
+                    params: { link: _vm.postLink, id: _vm.data.id }
+                  }
+                }
+              },
               [
                 _c(
                   "a",
@@ -5148,12 +5169,12 @@ var render = function() {
                 staticClass: "fa fa-heart red-text",
                 class: _vm.liked ? "red-text" : "grey-text"
               }),
-              _vm._v(" " + _vm._s(_vm.commentsCount) + "\n              ")
+              _vm._v(" " + _vm._s(_vm.data.views) + "\n              ")
             ])
           ]),
           _vm._v(" "),
           _c("h6", [
-            _vm._v("Posted: " + _vm._s(_vm.createdAt) + "\n            ")
+            _vm._v("Posted: " + _vm._s(_vm.data.published) + "\n            ")
           ])
         ])
       ])
@@ -6158,19 +6179,10 @@ var render = function() {
       _c(
         "section",
         { staticClass: "section classic-blog-listing mt-1" },
-        _vm._l(_vm.posts, function(post) {
+        _vm._l(_vm.posts, function(post, index) {
           return _c("BlogPost", {
-            key: post.id,
-            attrs: {
-              title: post.title,
-              description: post.description,
-              image: post.image,
-              text: post.text,
-              createdAt: post.createdAt,
-              votes: post.votes,
-              commentsCount: post.commentsCount,
-              liked: post.liked
-            }
+            key: index,
+            attrs: { title: post.title, data: post }
           })
         }),
         1
@@ -23092,7 +23104,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'home',
     component: _views_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
-    path: '/post/:id',
+    path: '/post/:link',
     name: 'post',
     component: _views_Post_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
@@ -23162,15 +23174,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       createdAt: '4 days ago'
     }],
     status: '',
-    err: null
+    error: null
   },
   mutations: {
     getPosts: function getPosts(state, data) {
       state.status = 'successfully fetched posts';
       state.posts = [].concat(_toConsumableArray(state.posts), _toConsumableArray(data));
     },
-    err: function err(state, _err) {
-      state.error = _err;
+    error: function error(state, err) {
+      state.error = err;
     }
   },
   actions: {

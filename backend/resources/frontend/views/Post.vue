@@ -163,6 +163,12 @@ import CommentForm from '@/components/CommentForm.vue';
       userIsLoggedIn() {
         return true
       },
+    },
+
+    mounted() {
+
+        console.log(this.$router.id);
+
     }
 
   }

@@ -4,16 +4,10 @@
         <section class="section classic-blog-listing mt-1">
 
           <BlogPost
-            v-for="post in posts"
-            :key="post.id"
+            v-for="(post, index) in posts"
+            :key="index"
             :title="post.title"
-            :description="post.description"
-            :image="post.image"
-            :text="post.text"
-            :createdAt="post.createdAt"
-            :votes="post.votes"
-            :commentsCount="post.commentsCount"
-            :liked="post.liked"
+            :data="post"
            />
 
         </section>

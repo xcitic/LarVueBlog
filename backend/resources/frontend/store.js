@@ -14,7 +14,7 @@ export default new Vuex.Store({
     ],
 
     status: '',
-    err: null,
+    error: null,
 
   },
   mutations: {
@@ -23,7 +23,7 @@ export default new Vuex.Store({
       state.posts = [...state.posts, ...data];
     },
 
-    err(state, err) {
+    error(state, err) {
       state.error = err;
     }
   },

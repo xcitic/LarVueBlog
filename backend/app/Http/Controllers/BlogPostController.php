@@ -15,6 +15,13 @@ class BlogPostController extends Controller
     public function index()
     {
         $posts = BlogPost::get();
+        foreach($posts as $post) {
+          // return created_as in terms of minutes / hours / days ago.
+          $published = $post->created_at->diffForHumans();
+          $post->published = $published;
+          // attach the comments that belong to the post;
+          $comments = $post->comments;
+        }
 
         return $posts;
     }
