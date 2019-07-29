@@ -6,6 +6,13 @@ import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
+
+/* Axios Config */
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = process.env.MIX_APP_URL;
+
+
 new Vue({
   router,
   store,

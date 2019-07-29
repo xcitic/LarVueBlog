@@ -4,7 +4,7 @@ import Home from '@/views/Home.vue';
 import Post from '@/views/Post.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
-// import Dashboard from '@/views/Dashboard.vue';
+import Dashboard from '@/views/Dashboard.vue';
 
 
 Vue.use(Router)
@@ -36,7 +36,7 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('./views/Dashboard.vue')
+      component: Dashboard
     }
   ]
 })

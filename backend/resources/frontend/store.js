@@ -26,14 +26,14 @@ export default new Vuex.Store({
   },
   actions: {
     login({state, commit}, payload) {
-      axios.post('localhost:8000/api/login', payload)
+      axios.post('/api/login', payload)
         .then(({response}) => {
 
         })
     },
 
     register({state, commit}, payload) {
-      axios.post('localhost:8000/api/register', payload)
+      axios.post('/api/register', payload)
         .then(({response}) => {
           console.log(response)
         })

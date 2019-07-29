@@ -15,11 +15,11 @@ const mix = require('laravel-mix');
    resolve: {
      extensions: ['.js', '.vue'],
      alias: {
-       '@': `${__dirname}/resources/js`,
+       '@': `${__dirname}/resources/frontend`,
      }
    }
  });
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/frontend/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .js('resources/js/registerServiceWorker.js', 'public/service-worker.js');
+    // .js('resources/js/registerServiceWorker.js', 'public/service-worker.js');
