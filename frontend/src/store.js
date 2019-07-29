@@ -33,6 +33,13 @@ export default new Vuex.Store({
     },
 
     register({state, commit}, payload) {
+      axios.post('localhost:8000/api/register', payload)
+        .then(({response}) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
 
 

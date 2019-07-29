@@ -80,11 +80,25 @@ export default {
         name: '',
         email: '',
         password: '',
-        password_confimation: '',
+        password_confirmation: '',
       },
       loading: false,
     };
   },
+
+  methods: {
+    async submit() {
+      this.loading = true;
+      let payload = this.input;
+      this.$store.dispatch('register', payload)
+          .then(response => {
+            this.$router.push('/dashboard');
+          })
+          .catch((err) => {
+            console.log(err)
+          });
+    }
+  }
 
 };
 </script>
