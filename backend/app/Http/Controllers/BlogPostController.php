@@ -14,7 +14,9 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = BlogPost::get();
+
+        return $posts;
     }
 
     /**

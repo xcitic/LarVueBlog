@@ -5,10 +5,11 @@
 
           <BlogPost
             v-for="post in posts"
-            :key="post.title"
+            :key="post.id"
             :title="post.title"
             :description="post.description"
             :image="post.image"
+            :text="post.text"
             :createdAt="post.createdAt"
             :votes="post.votes"
             :commentsCount="post.commentsCount"
@@ -30,6 +31,10 @@ export default {
     BlogPost
   },
 
+  mounted() {
+    this.getPosts();
+  },
+
   computed: mapState({
     posts: state => state.posts
   }),
@@ -37,6 +42,12 @@ export default {
   data() {
     return {
 
+    }
+  },
+
+  methods: {
+    getPosts() {
+      this.$store.dispatch('getPosts');
     }
   }
 }

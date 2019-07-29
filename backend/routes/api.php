@@ -27,3 +27,5 @@ Route::group(['middleware' => ['json_response', 'cors']], function() {
   Route::post('/login', 'AuthController@login');
   Route::post('/register', 'AuthController@register');
 });
+
+Route::get('/posts', 'BlogPostController@index');

@@ -6,12 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    posts: [
-      {title: 'post1', description: 'This is the description 1', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2821%29.jpg', createdAt: '2 days ago', votes: 1, commentsCount: 2, liked: true},
-      {title: 'post2', description: 'This is the description 2', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2814%29.jpg', createdAt: '4 days ago', votes: 2, commentsCount: 4, liked: false},
-      {title: 'post3', description: 'This is the description 3', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2837%29.jpg', createdAt: '6 days ago', votes: 33, commentsCount: 8, liked: true},
-      {title: 'post4', description: 'This is the description 4', image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2825%29.jpg', createdAt: '8 days ago', votes: 4, commentsCount: 1, liked: false}
-    ],
+    posts: [],
 
     comments: [
       {username: 'User1', text: 'This is the comment 1', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', createdAt: '2 days ago'},
@@ -19,12 +14,31 @@ export default new Vuex.Store({
     ],
 
     status: '',
+    err: null,
 
   },
   mutations: {
+    getPosts(state, data) {
+      state.status = 'successfully fetched posts';
+      state.posts = [...state.posts, ...data];
+    },
 
+    err(state, err) {
+      state.error = err;
+    }
   },
   actions: {
+
+    async getPosts({commit}) {
+      axios.get('/api/posts')
+        .then(({data}) => {
+          commit('getPosts', data);
+        })
+        .catch((err) => {
+          commit('error', err)
+        })
+    },
+
     login(payload) {
       axios.post('/api/login', payload)
         .then(({response}) => {

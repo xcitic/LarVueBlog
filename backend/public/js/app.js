@@ -2629,12 +2629,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
   components: {
     BlogPost: _components_BlogPost_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    this.getPosts();
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     posts: function posts(state) {
@@ -2643,6 +2647,11 @@ __webpack_require__.r(__webpack_exports__);
   }),
   data: function data() {
     return {};
+  },
+  methods: {
+    getPosts: function getPosts() {
+      this.$store.dispatch('getPosts');
+    }
   }
 });
 
@@ -6151,11 +6160,12 @@ var render = function() {
         { staticClass: "section classic-blog-listing mt-1" },
         _vm._l(_vm.posts, function(post) {
           return _c("BlogPost", {
-            key: post.title,
+            key: post.id,
             attrs: {
               title: post.title,
               description: post.description,
               image: post.image,
+              text: post.text,
               createdAt: post.createdAt,
               votes: post.votes,
               commentsCount: post.commentsCount,
@@ -23112,50 +23122,34 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
-    posts: [{
-      title: 'post1',
-      description: 'This is the description 1',
-      image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2821%29.jpg',
-      createdAt: '2 days ago',
-      votes: 1,
-      commentsCount: 2,
-      liked: true
-    }, {
-      title: 'post2',
-      description: 'This is the description 2',
-      image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2814%29.jpg',
-      createdAt: '4 days ago',
-      votes: 2,
-      commentsCount: 4,
-      liked: false
-    }, {
-      title: 'post3',
-      description: 'This is the description 3',
-      image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2837%29.jpg',
-      createdAt: '6 days ago',
-      votes: 33,
-      commentsCount: 8,
-      liked: true
-    }, {
-      title: 'post4',
-      description: 'This is the description 4',
-      image: 'https://mdbootstrap.com/img/Photos/Horizontal/Work/12-col/img%20%2825%29.jpg',
-      createdAt: '8 days ago',
-      votes: 4,
-      commentsCount: 1,
-      liked: false
-    }],
+    posts: [],
     comments: [{
       username: 'User1',
       text: 'This is the comment 1',
@@ -23167,19 +23161,59 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-3.jpg',
       createdAt: '4 days ago'
     }],
-    status: ''
+    status: '',
+    err: null
   },
-  mutations: {},
+  mutations: {
+    getPosts: function getPosts(state, data) {
+      state.status = 'successfully fetched posts';
+      state.posts = [].concat(_toConsumableArray(state.posts), _toConsumableArray(data));
+    },
+    err: function err(state, _err) {
+      state.error = _err;
+    }
+  },
   actions: {
+    getPosts: function () {
+      var _getPosts = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/posts').then(function (_ref2) {
+                  var data = _ref2.data;
+                  commit('getPosts', data);
+                })["catch"](function (err) {
+                  commit('error', err);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getPosts(_x) {
+        return _getPosts.apply(this, arguments);
+      }
+
+      return getPosts;
+    }(),
     login: function login(payload) {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', payload).then(function (_ref) {
-        var response = _ref.response;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', payload).then(function (_ref3) {
+        var response = _ref3.response;
         console.log(response);
       });
     },
     register: function register(payload) {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/register', payload).then(function (_ref2) {
-        var response = _ref2.response;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', payload).then(function (_ref4) {
+        var response = _ref4.response;
         console.log(response);
       })["catch"](function (err) {
         console.log(err);
