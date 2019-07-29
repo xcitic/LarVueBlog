@@ -7,36 +7,59 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     posts: [],
-
-    comments: [
-      {username: 'User1', text: 'This is the comment 1', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg', createdAt: '2 days ago'},
-      {username: 'User2', text: 'This is the comment 2', image: 'https://mdbootstrap.com/img/Photos/Avatars/avatar-3.jpg', createdAt: '4 days ago'},
-    ],
-
+    post: {},
+    comments: [],
     status: '',
     error: null,
+    user: null,
 
   },
   mutations: {
     getPosts(state, data) {
-      state.status = 'successfully fetched posts';
       state.posts = [...state.posts, ...data];
+    },
+
+    getPost(state, post) {
+      state.post = post;
+    },
+
+    getComments(state, comments) {
+      state.comments = [...comments];
     },
 
     error(state, err) {
       state.error = err;
-    }
+    },
+
+    success(state, info) {
+      state.status = info;
+    },
   },
   actions: {
 
     async getPosts({commit}) {
       axios.get('/api/posts')
         .then(({data}) => {
+          let info = 'successfully fetched posts';
           commit('getPosts', data);
+          commit('success', info);
         })
         .catch((err) => {
           commit('error', err)
         })
+    },
+
+    async getPost({commit}, id) {
+      axios.get(`/api/post/${id}`)
+          .then(({data}) => {
+            let info = `successfully fetched post with id: ${id}`;
+            commit('success', info)
+            commit('getPost', data.post);
+            commit('getComments', data.comments);
+          })
+          .catch((err) => {
+            commit('error', err);
+          });
     },
 
     login(payload) {
@@ -54,7 +77,8 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
+
 
 
   }

@@ -29,3 +29,4 @@ Route::group(['middleware' => ['json_response', 'cors']], function() {
 });
 
 Route::get('/posts', 'BlogPostController@index');
+Route::get('/post/{id}', 'BlogPostController@show');

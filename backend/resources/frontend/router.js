@@ -5,13 +5,14 @@ import Post from '@/views/Post.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Dashboard from '@/views/Dashboard.vue';
+import NotFound from '@/views/NotFound.vue';
 
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -19,7 +20,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/post/:link',
+      path: '/post/:id',
       name: 'post',
       component: Post
     },
@@ -37,6 +38,11 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard
+    },
+    {
+      path: '*',
+      name: '404',
+      component: NotFound,
     }
   ]
 })

@@ -53,9 +53,16 @@ class BlogPostController extends Controller
      * @param  \App\BlogPost  $blogPost
      * @return \Illuminate\Http\Response
      */
-    public function show(BlogPost $blogPost)
+    public function show(int $id)
     {
-        //
+      
+        $post = BlogPost::where('id', $id)->first();
+        $comments = $post->comments;
+        return response()
+          ->json([
+                  'post' => $post,
+                  'comments' => $comments
+                  ], 200);
     }
 
     /**

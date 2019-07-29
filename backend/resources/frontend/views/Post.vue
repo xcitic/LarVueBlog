@@ -19,39 +19,32 @@
 
                           <!--Post data-->
                           <div class="jumbotron">
-                              <h2>Six amazing months in Los Angeles</h2>
+                              <h2>{{post.description}}</h2>
                               <p>Written by <a href="#!" class="black-text">Martha Barnett</a> on 25/08/2016</p>
 
                               <!--Social shares-->
                               <div class="social-counters">
 
-                                  <!--Facebook-->
-                                  <a class="btn btn-fb">
-                                      <i class="fa fa-facebook left"></i>
-                                      <span class="hidden-md-down ">Facebook</span>
-                                  </a>
-                                  <span class="counter">98</span>
-
                                   <!--Twitter-->
                                   <a class="btn btn-tw">
-                                      <i class="fa fa-twitter left"></i>
-                                      <span class="hidden-md-down">Twitter</span>
+                                      <i class="fa fa-eye left"></i>
+                                      <span class="hidden-md-down">Views</span>
                                   </a>
-                                  <span class="counter">75</span>
+                                  <span class="counter">{{post.views}}</span>
 
                                   <!--Google+-->
                                   <a class="btn btn-gplus">
-                                      <i class="fa fa-google-plus left"></i>
-                                      <span class="hidden-md-down">Google+</span>
+                                      <i class="fa fa-heart left"></i>
+                                      <span class="hidden-md-down">Likes</span>
                                   </a>
-                                  <span class="counter">87</span>
+                                  <span class="counter">{{post.likes}}</span>
 
                                   <!--Comments-->
                                   <a class="btn btn-mdb">
                                       <i class="fa fa-comments-o left"></i>
                                       <span class="hidden-md-down">Comments</span>
                                   </a>
-                                  <span class="counter">{{ comments.length }}</span>
+                                  <span class="counter">{{ commentsCount }}</span>
 
                               </div>
                               <!--/.Social shares-->
@@ -60,14 +53,12 @@
                           <!--/Post data-->
 
                           <!--Post text-->
-                          <div class="post-text">
-                              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-
-                              <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad autem vel eum iure reprehenderit qui in ea minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
+                          <div class="post-text my-5">
+                            <p>{{post.content}}</p>
                           </div>
                           <!--/Post text-->
 
-                          <hr>
+                            <hr class="between-sections">
 
                           <div class="text-center">
                               <h3 class="h3-responsive">Do you want to share?</h3>
@@ -78,7 +69,6 @@
                               <!--Google +-->
                               <a href="" target="_blank" class="btn-floating btn-small btn-gplus"><i class="fa fa-google-plus"> </i></a>
                           </div>
-
                       </div>
 
                   </div>
@@ -95,13 +85,13 @@
                 <h1 class="section-heading mb-1">Leave a comment</h1>
                 <!-- If user is logged in ? display comment form : display login button -->
                   <CommentForm
-                    v-if="userIsLoggedIn"
+                    v-if="user"
                   />
 
                   <div v-else>
-                    <a class="btn btn-primary">Login</a>
+                    <router-link class="btn btn-primary" :to="{ name: 'login', params: {} }">Login</router-link>
                       or
-                    <a class="btn btn-secondary">Register</a>
+                      <router-link :to="{ name: 'register', params: {} }">Register</router-link>
                   </div>
 
               </section>
@@ -113,16 +103,16 @@
                   <!--Main wrapper-->
                   <div class="comments-list text-left">
                       <div class="section-heading">
-                          <h3 class="mt-2 mb-3">Comments <span class="badge blue">{{ comments.length }}</span></h3>
+                          <h3 class="mt-2 mb-3">Comments <span class="badge blue">{{ commentsCount }}</span></h3>
                       </div>
 
                       <Comment
-                        v-for="comment in comments"
+                        v-for="comment in post.comments"
                         :key="comment.id"
                         :username="comment.username"
                         :text="comment.text"
                         :image="comment.image"
-                        :createdAt="comment.createdAt"
+                        :createdAt="comment.created_At"
                       />
 
                   </div>
@@ -143,7 +133,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 import Comment from '@/components/Comment.vue';
 import CommentForm from '@/components/CommentForm.vue';
 
@@ -157,18 +147,23 @@ import CommentForm from '@/components/CommentForm.vue';
 
     computed: {
       ...mapState({
-      comments: state => state.comments
+        post: state => state.post,
+        comments: state => state.comments,
+        user: state => state.user
       }),
 
       userIsLoggedIn() {
-        return true
+        return true;
       },
+
+      commentsCount() {
+        return this.post.comments.length;
+      }
     },
 
-    mounted() {
-
-        console.log(this.$router.id);
-
+    beforeMount() {
+      let id = this.$route.params.id;
+      this.$store.dispatch('getPost', id);
     }
 
   }
