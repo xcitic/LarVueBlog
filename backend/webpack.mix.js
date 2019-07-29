@@ -17,6 +17,16 @@ const mix = require('laravel-mix');
      alias: {
        '@': `${__dirname}/resources/frontend`,
      }
+   },
+   module: {
+     rules: [
+       {
+         enforce: 'pre',
+         test: /\.(js|vue)$/,
+         loader: 'eslint-loader',
+         exclude: /node_modules/
+       }
+     ]
    }
  });
 
