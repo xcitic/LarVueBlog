@@ -11,6 +11,7 @@ $factory->define(Comment::class, function (Faker $faker) {
 
     return [
       'user_id' => $user->id,
-      'blog_post_id' => $faker->numberBetween(1,20)
+      'blog_post_id' => $faker->numberBetween(1,20),
+      'text' => $faker->text($faker->numberBetween(30,200)),
     ];
 });

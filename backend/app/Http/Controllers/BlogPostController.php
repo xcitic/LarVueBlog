@@ -55,9 +55,13 @@ class BlogPostController extends Controller
      */
     public function show(int $id)
     {
-      
+
         $post = BlogPost::where('id', $id)->first();
         $comments = $post->comments;
+        foreach($comments as $comment) {
+          $comment->published  = $comment->created_at->diffForHumans();
+          $user = $comment->userInfo;
+        }
         return response()
           ->json([
                   'post' => $post,

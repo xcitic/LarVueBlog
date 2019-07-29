@@ -15,7 +15,7 @@
                       <div class="col-md-12">
 
                           <!--Featured image-->
-                          <img src="https://mdbootstrap.com/img/Photos/Horizontal/City/12-col/img%20(49).jpg">
+                          <img :src="post.image">
 
                           <!--Post data-->
                           <div class="jumbotron">
@@ -91,7 +91,7 @@
                   <div v-else>
                     <router-link class="btn btn-primary" :to="{ name: 'login', params: {} }">Login</router-link>
                       or
-                      <router-link :to="{ name: 'register', params: {} }">Register</router-link>
+                      <router-link class="btn btn-secondary" :to="{ name: 'register', params: {} }">Register</router-link>
                   </div>
 
               </section>
@@ -107,21 +107,19 @@
                       </div>
 
                       <Comment
-                        v-for="comment in post.comments"
+                        v-for="comment in comments"
                         :key="comment.id"
-                        :username="comment.username"
+                        :username="comment.user_info.name"
                         :text="comment.text"
-                        :image="comment.image"
-                        :createdAt="comment.created_At"
+                        :image="comment.user_info.image"
+                        :createdAt="comment.published"
+                        :profile="comment.user_info.profile_link"
                       />
 
                   </div>
                   <!--/.Main wrapper-->
               </section>
               <!--/Section: Comments list-->
-
-
-
 
           </div>
           <!--/.Main listing-->
@@ -157,11 +155,11 @@ import CommentForm from '@/components/CommentForm.vue';
       },
 
       commentsCount() {
-        return this.post.comments.length;
+        return this.comments.length;
       }
     },
 
-    beforeMount() {
+    beforeCreate() {
       let id = this.$route.params.id;
       this.$store.dispatch('getPost', id);
     }

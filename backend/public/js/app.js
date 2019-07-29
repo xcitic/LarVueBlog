@@ -2859,8 +2859,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -2885,10 +2883,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return true;
     },
     commentsCount: function commentsCount() {
-      return this.post.comments.length;
+      return this.comments.length;
     }
   }),
-  beforeMount: function beforeMount() {
+  beforeCreate: function beforeCreate() {
     var id = this.$route.params.id;
     this.$store.dispatch('getPost', id);
   }
@@ -6302,12 +6300,7 @@ var render = function() {
         _c("section", { staticClass: "section section-blog-fw" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("img", {
-                attrs: {
-                  src:
-                    "https://mdbootstrap.com/img/Photos/Horizontal/City/12-col/img%20(49).jpg"
-                }
-              }),
+              _c("img", { attrs: { src: _vm.post.image } }),
               _vm._v(" "),
               _c("div", { staticClass: "jumbotron" }, [
                 _c("h2", [_vm._v(_vm._s(_vm.post.description))]),
@@ -6372,7 +6365,10 @@ var render = function() {
                     _vm._v("\n                    or\n                    "),
                     _c(
                       "router-link",
-                      { attrs: { to: { name: "register", params: {} } } },
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { to: { name: "register", params: {} } }
+                      },
                       [_vm._v("Register")]
                     )
                   ],
@@ -6396,14 +6392,15 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._l(_vm.post.comments, function(comment) {
+              _vm._l(_vm.comments, function(comment) {
                 return _c("Comment", {
                   key: comment.id,
                   attrs: {
-                    username: comment.username,
+                    username: comment.user_info.name,
                     text: comment.text,
-                    image: comment.image,
-                    createdAt: comment.created_At
+                    image: comment.user_info.image,
+                    createdAt: comment.published,
+                    profile: comment.user_info.profile_link
                   }
                 })
               })
@@ -22474,6 +22471,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = "http://localhost:8000";
+_router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
+  window.scrollTo(0, 0);
+  next();
+});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
   store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],

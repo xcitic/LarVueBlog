@@ -9,7 +9,8 @@ class Comment extends Model
     protected $table = 'comments';
     protected $fillable = [
       'user_id',
-      'blog_post_id'
+      'blog_post_id',
+      'text'
     ];
 
     public function owner() {
@@ -18,5 +19,9 @@ class Comment extends Model
 
     public function post() {
       return $this->belongsTo('App\BlogPost', 'user_id');
+    }
+
+    public function userInfo() {
+      return $this->belongsTo('App\User', 'user_id')->select(['name', 'image', 'profile_link']);
     }
 }
