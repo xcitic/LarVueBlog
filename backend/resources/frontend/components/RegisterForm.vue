@@ -92,7 +92,9 @@ export default {
       let payload = this.input;
       this.$store.dispatch('register', payload)
           .then(response => {
-            this.$router.push('/dashboard');
+            if (response == 'success') {
+              this.$router.push('/dashboard');
+            }
           })
           .catch((err) => {
             console.log(err)

@@ -2416,7 +2416,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.loading = true;
                 payload = this.input;
                 this.$store.dispatch('register', payload).then(function (response) {
-                  _this.$router.push('/dashboard');
+                  if (response == 'success') {
+                    _this.$router.push('/dashboard');
+                  }
                 })["catch"](function (err) {
                   console.log(err);
                 });
@@ -22398,15 +22400,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/frontend/router.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/frontend/store.js");
 /* harmony import */ var _registerServiceWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registerServiceWorker */ "./resources/frontend/registerServiceWorker.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+ // Internal Components
 
 
 
+
+ // External packages
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 /* Axios Config */
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = "http://localhost:8000";
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -23164,18 +23171,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   },
   mutations: {},
   actions: {
-    login: function login(_ref, payload) {
-      var state = _ref.state,
-          commit = _ref.commit;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', payload).then(function (_ref2) {
-        var response = _ref2.response;
+    login: function login(payload) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', payload).then(function (_ref) {
+        var response = _ref.response;
+        console.log(response);
       });
     },
-    register: function register(_ref3, payload) {
-      var state = _ref3.state,
-          commit = _ref3.commit;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/register', payload).then(function (_ref4) {
-        var response = _ref4.response;
+    register: function register(payload) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/register', payload).then(function (_ref2) {
+        var response = _ref2.response;
         console.log(response);
       })["catch"](function (err) {
         console.log(err);
