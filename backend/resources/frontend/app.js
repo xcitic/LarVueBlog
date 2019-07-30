@@ -4,8 +4,8 @@ Vue.config.productionTip = false;
 
 // Internal Components
 import App from './App.vue';
-import router from './router';
-import store from './store';
+import router from './router/index.js';
+import store from './store.js';
 import './registerServiceWorker';
 
 // External packages
@@ -27,10 +27,6 @@ window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = process.env.MIX_APP_URL;
 
-router.beforeEach((to, from, next) => {
-    window.scrollTo(0,0);
-    next();
-});
 
 new Vue({
   router,

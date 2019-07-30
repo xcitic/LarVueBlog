@@ -33914,8 +33914,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/frontend/App.vue");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/frontend/router.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/frontend/store.js");
+/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router/index.js */ "./resources/frontend/router/index.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store.js */ "./resources/frontend/store.js");
 /* harmony import */ var _registerServiceWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registerServiceWorker */ "./resources/frontend/registerServiceWorker.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
@@ -33948,13 +33948,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MO
 window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = "http://localhost:8000";
-_router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
-  window.scrollTo(0, 0);
-  next();
-});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
+  router: _router_index_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  store: _store_js__WEBPACK_IMPORTED_MODULE_3__["default"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
   }
@@ -34585,10 +34581,10 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/frontend/router.js":
-/*!**************************************!*\
-  !*** ./resources/frontend/router.js ***!
-  \**************************************/
+/***/ "./resources/frontend/router/index.js":
+/*!********************************************!*\
+  !*** ./resources/frontend/router/index.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -34597,50 +34593,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _views_Home_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/Home.vue */ "./resources/frontend/views/Home.vue");
-/* harmony import */ var _views_Post_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/Post.vue */ "./resources/frontend/views/Post.vue");
-/* harmony import */ var _views_Login_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/Login.vue */ "./resources/frontend/views/Login.vue");
-/* harmony import */ var _views_Register_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/Register.vue */ "./resources/frontend/views/Register.vue");
-/* harmony import */ var _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/views/Dashboard.vue */ "./resources/frontend/views/Dashboard.vue");
-/* harmony import */ var _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/views/NotFound.vue */ "./resources/frontend/views/NotFound.vue");
-
-
-
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/store.js */ "./resources/frontend/store.js");
 
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  // base: process.env.BASE_URL,
-  routes: [{
+  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+router.beforeEach(function (to, from, next) {
+  var token = localStorage.getItem('token');
+
+  if (token) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common.Authorization = "Bearer: ".concat(token);
+  }
+
+  window.scrollTo(0, 0);
+  return next();
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./resources/frontend/router/routes.js":
+/*!*********************************************!*\
+  !*** ./resources/frontend/router/routes.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _views_Home_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/views/Home.vue */ "./resources/frontend/views/Home.vue");
+/* harmony import */ var _views_Post_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/views/Post.vue */ "./resources/frontend/views/Post.vue");
+/* harmony import */ var _views_Login_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/views/Login.vue */ "./resources/frontend/views/Login.vue");
+/* harmony import */ var _views_Register_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/Register.vue */ "./resources/frontend/views/Register.vue");
+/* harmony import */ var _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/views/Dashboard.vue */ "./resources/frontend/views/Dashboard.vue");
+/* harmony import */ var _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/views/NotFound.vue */ "./resources/frontend/views/NotFound.vue");
+// Views
+
+
+
+ // Authenticated Views
+
+ // Catch 404
+
+
+
+var routes = function routes() {
+  return [{
     path: '/',
     name: 'home',
-    component: _views_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _views_Home_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
     path: '/post/:id',
     name: 'post',
-    component: _views_Post_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _views_Post_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
     path: '/login',
     name: 'login',
-    component: _views_Login_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _views_Login_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     path: '/register',
     name: 'register',
-    component: _views_Register_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _views_Register_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/dashboard',
     name: 'dashboard',
-    component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '*',
     name: '404',
-    component: _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }]
-}));
+    component: _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }];
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (routes());
 
 /***/ }),
 

@@ -89,7 +89,7 @@ export default new Vuex.Store({
     async createComment({commit}, payload) {
       let comment = await axios.post(`/api/comment/${payload.postId}/create`, payload);
       commit('addComment', comment);
-    }
+    }, 
 
 
 
