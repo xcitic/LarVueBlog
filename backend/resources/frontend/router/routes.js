@@ -42,13 +42,12 @@ const routes = () => [
   {
     path: '/dashboard/',
     component: DashboardLayout,
-    meta: { requiresAuth: true },
     children: [
       {
-        path: '', name: 'dashboard', component: Dashboard,
+        path: '', name: 'dashboard', component: Dashboard, meta: { requiresAuth: true },
       },
       {
-        path: 'account', name: 'account', component: Account,
+        path: 'account', name: 'account', component: Account, meta: { requiresAuth: true },
       },
       {
         path: 'post', name: 'postCreate', component: PostCreate, meta: { requiresAdmin: true },

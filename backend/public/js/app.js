@@ -34093,9 +34093,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store.js */ "./resources/frontend/store.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/store.js */ "./resources/frontend/store.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -34103,7 +34111,11 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
+ // import config from '@/api/Config.js';
 
+window.axios = axios__WEBPACK_IMPORTED_MODULE_1___default.a;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = "http://localhost:8000";
 
 var Auth =
 /*#__PURE__*/
@@ -34123,15 +34135,15 @@ function () {
     value: function login(token, user) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
     }
   }, {
     key: "logout",
     value: function logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      _store_js__WEBPACK_IMPORTED_MODULE_1__["default"].commit('logout');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = '';
+      _store_js__WEBPACK_IMPORTED_MODULE_2__["default"].commit('logout');
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common.Authorization = '';
     }
   }, {
     key: "check",
@@ -34145,6 +34157,47 @@ function () {
         return false;
       }
     }
+  }, {
+    key: "isAdmin",
+    value: function () {
+      var _isAdmin = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var userInfo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user');
+
+              case 2:
+                userInfo = _context.sent;
+
+                if (!(userInfo.data.role === 'admin')) {
+                  _context.next = 5;
+                  break;
+                }
+
+                return _context.abrupt("return", true);
+
+              case 5:
+                return _context.abrupt("return", false);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function isAdmin() {
+        return _isAdmin.apply(this, arguments);
+      }
+
+      return isAdmin;
+    }()
   }]);
 
   return Auth;
@@ -34916,7 +34969,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
+/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
+
 
 
 
@@ -34924,7 +34979,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 router.beforeEach(function (to, from, next) {
   // Fetch and attach auth token.
@@ -34941,6 +34996,20 @@ router.beforeEach(function (to, from, next) {
   })) {
     if (token) {
       return next();
+    }
+
+    return next('/login');
+  }
+
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAdmin;
+  })) {
+    if (token) {
+      if (_api_Auth_js__WEBPACK_IMPORTED_MODULE_3__["default"].isAdmin() === true) {
+        return next();
+      }
+
+      return next('/login');
     }
 
     return next('/login');
@@ -35021,17 +35090,20 @@ var routes = function routes() {
   }, {
     path: '/dashboard/',
     component: _layouts_Dashboard_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    meta: {
-      requiresAuth: true
-    },
     children: [{
       path: '',
       name: 'dashboard',
-      component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+      component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      meta: {
+        requiresAuth: true
+      }
     }, {
       path: 'account',
       name: 'account',
-      component: _views_Account_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+      component: _views_Account_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      meta: {
+        requiresAuth: true
+      }
     }, {
       path: 'post',
       name: 'postCreate',

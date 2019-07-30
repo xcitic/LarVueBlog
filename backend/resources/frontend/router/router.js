@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
+import Auth from '@/api/Auth.js';
 
 import routes from '@/router/routes.js';
 
@@ -25,6 +26,16 @@ router.beforeEach((to, from, next) => {
         return next();
       }
       return next('/login');
+    }
+
+    if(to.matched.some(record => record.meta.requiresAdmin)) {
+      if (token) {
+        if (Auth.isAdmin() === true) {
+          return next();
+        }
+        return next('/login')
+      }
+      return next('/login')
     }
 
     if (to.matched.some(record => record.meta.guest)) {

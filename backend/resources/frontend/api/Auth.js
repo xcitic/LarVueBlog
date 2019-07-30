@@ -1,5 +1,10 @@
 import axios from 'axios';
 import store from '@/store.js';
+// import config from '@/api/Config.js';
+
+window.axios = axios;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = process.env.MIX_APP_URL;
 
 class Auth {
   constructor(token = null, user = null) {
@@ -28,6 +33,14 @@ class Auth {
       this.logout();
       return false;
     }
+  }
+
+  async isAdmin() {
+    let userInfo = await axios.get('/api/user');
+    if(userInfo.data.role === 'admin') {
+      return true;
+    }
+    return false;
   }
 
 }
