@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\BlogPost;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -35,7 +36,27 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+          'message' => 'required|string|max:255',
+          'postId' => 'required|integer'
+        ]);
+
+        $postExists = BlogPost::where('id', $request->postId)->first();
+        $user = $request->user();
+
+        if($postExists && $user) {
+          $comment = Comment::create([
+            'text' => $request->message,
+            'user_id' => $user->id,
+            'blog_post_id' => $postExists->id,
+          ]);
+          $comment->save();
+
+          return response()->json($comment, 201);
+        }
+
+        return response()->json('Error', 404);
+
     }
 
     /**

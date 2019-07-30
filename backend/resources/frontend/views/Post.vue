@@ -87,6 +87,7 @@
                   <CommentForm
                     v-if="user"
                     :image="user.image"
+                    :postId="post.id"
                   />
 
                   <div v-else>

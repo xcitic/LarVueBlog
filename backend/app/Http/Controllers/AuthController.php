@@ -28,7 +28,7 @@ class AuthController extends Controller
     // Hash password using php recommended password_hash, defaults to bcrypt hash encryption.
     $password = password_hash($request->password, PASSWORD_DEFAULT);
     // create an avatar link
-    $imageLink = 'https://i.pravatar.cc/150/?img=' . rand(1, 500);
+    $imageLink = 'https://i.pravatar.cc/150/?img=' . rand(1, 50);
     // combine name with a random string(5), replace all spaces with - and make all lowercase.
     $profile_link = strtolower( str_replace(' ', '-', trim(( $request->name . Str::random(5)) )) );
 

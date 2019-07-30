@@ -33,6 +33,10 @@ export default new Vuex.Store({
       state.comments = [...comments];
     },
 
+    addComment(state, comment) {
+      state.comments = [...state.comments, comment];
+    },
+
     login(state, user) {
       state.user = user;
     },
@@ -78,9 +82,14 @@ export default new Vuex.Store({
       },
 
     async register({commit}, payload) {
-      let result = await axios.post('/api/register', payload)
+      let result = await axios.post('/api/register', payload);
       commit('login', result.data);
     },
+
+    async createComment({commit}, payload) {
+      let comment = await axios.post(`/api/comment/${payload.postId}/create`, payload);
+      commit('addComment', comment);
+    }
 
 
 

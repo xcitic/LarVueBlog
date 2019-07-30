@@ -2032,6 +2032,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2068,6 +2086,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     image: String
+  },
+  data: function data() {
+    return {
+      message: '',
+      submitted: false
+    };
+  },
+  methods: {
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.submitted = true;
+                this.$validator.validate().then(function (valid) {
+                  if (valid) {
+                    var payload = {
+                      message: _this.message,
+                      postId: _this.$store.state.post.id
+                    };
+                    console.log(payload);
+
+                    _this.$store.dispatch('createComment', payload).then(function () {
+                      _this.flash('Your comment has been created :)', 'success');
+                    })["catch"](function () {
+                      _this.flash('Your comment was rejected. Please avoid profanity', 'error');
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
   }
 });
 
@@ -2455,6 +2522,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RegisterForm',
   data: function data() {
@@ -2479,8 +2549,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.submitted = true;
                 this.$validator.validate().then(function (valid) {
+                  _this.submitted = true;
+
                   if (valid) {
                     var payload = _this.input;
 
@@ -2488,11 +2559,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       _this.auth();
                     })["catch"](function () {
                       _this.flash('Could not register user', 'error');
+
+                      _this.submitted = false;
                     });
                   }
                 });
 
-              case 2:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -2512,6 +2585,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.$router.push('/dashboard');
       } else {
         this.flash('Could not register user', 'error');
+        this.submitted = false;
       }
     }
   }
@@ -2797,6 +2871,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -16533,37 +16608,76 @@ var render = function() {
         _c("img", { attrs: { src: _vm.image } })
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "col-sm-10 col-12" }, [
+        _c("div", { staticClass: "md-form" }, [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.message,
+                expression: "message",
+                modifiers: { trim: true }
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: {
+                  required: true,
+                  regex: /^[A-Za-z0-9.,!' -]*$/,
+                  max: 255
+                },
+                expression:
+                  "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
+              }
+            ],
+            staticClass: "md-textarea",
+            attrs: { type: "text", id: "message", name: "message" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value.trim()
+              },
+              blur: function($event) {
+                return _vm.$forceUpdate()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "message" } }, [_vm._v("Your message")]),
+          _vm._v(" "),
+          _vm.submitted && _vm.errors.has("message")
+            ? _c("span", [
+                _c("p", { staticClass: "red-text" }, [
+                  _vm._v(" " + _vm._s(_vm.errors.first("message")) + " ")
+                ])
+              ])
+            : _vm._e()
+        ])
+      ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "text-center" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
+              }
+            }
+          },
+          [_vm._v("Submit")]
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-10 col-12" }, [
-      _c("div", { staticClass: "md-form" }, [
-        _c("textarea", {
-          staticClass: "md-textarea",
-          attrs: { type: "text", id: "form8" }
-        }),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "form8" } }, [_vm._v("Your message")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Submit")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -17164,6 +17278,7 @@ var render = function() {
                   expression: "'required|max:50'"
                 }
               ],
+              ref: "password",
               staticClass: "form-control",
               attrs: {
                 type: "password",
@@ -17212,7 +17327,8 @@ var render = function() {
                 type: "password",
                 autocomplete: "new-password",
                 placeholder: "Repeat Password",
-                name: "password_confirmation"
+                name: "password_confirmation",
+                "data-vv-as": "password"
               },
               domProps: { value: _vm.input.password_confirmation },
               on: {
@@ -17246,7 +17362,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { disabled: _vm.submitted },
+              attrs: { type: "submit", disabled: _vm.submitted },
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -17694,7 +17810,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm.user
-              ? _c("CommentForm", { attrs: { image: _vm.user.image } })
+              ? _c("CommentForm", {
+                  attrs: { image: _vm.user.image, postId: _vm.post.id }
+                })
               : _c(
                   "div",
                   [
@@ -34584,6 +34702,9 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     getComments: function getComments(state, comments) {
       state.comments = _toConsumableArray(comments);
     },
+    addComment: function addComment(state, comment) {
+      state.comments = [].concat(_toConsumableArray(state.comments), [comment]);
+    },
     login: function login(state, user) {
       state.user = user;
     },
@@ -34723,6 +34844,37 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return register;
+    }(),
+    createComment: function () {
+      var _createComment = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref7, payload) {
+        var commit, comment;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref7.commit;
+                _context5.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/comment/".concat(payload.postId, "/create"), payload);
+
+              case 3:
+                comment = _context5.sent;
+                commit('addComment', comment);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function createComment(_x8, _x9) {
+        return _createComment.apply(this, arguments);
+      }
+
+      return createComment;
     }()
   }
 }));

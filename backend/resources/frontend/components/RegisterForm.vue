@@ -40,6 +40,7 @@
                  autocomplete="new-password"
                  placeholder="Password"
                  name="password"
+                 ref="password"
                  v-validate="'required|max:50'"
             />
             <span v-if="submitted && errors.has('password')">
@@ -55,6 +56,7 @@
                  placeholder="Repeat Password"
                  name="password_confirmation"
                  v-validate="'required|confirmed:password'"
+                 data-vv-as="password"
             />
             <span v-if="submitted && errors.has('password_confirmation')">
                 <p class="red-text"> {{ errors.first('password_confirmation') }} </p>
@@ -63,6 +65,7 @@
 
         <button class="btn btn-lg btn-primary btn-block text-uppercase"
                 @click.prevent="submit"
+                type="submit"
                 :disabled="submitted">
                 Register
         </button>
@@ -104,10 +107,10 @@ export default {
 
   methods: {
     async submit() {
-      this.submitted = true;
 
       this.$validator.validate().then(
         valid => {
+          this.submitted = true;
           if(valid) {
             let payload = this.input;
             this.$store.dispatch('register', payload)
@@ -116,6 +119,7 @@ export default {
               })
               .catch(() => {
                 this.flash('Could not register user', 'error');
+                this.submitted = false;
               })
           }
         })
@@ -128,6 +132,7 @@ export default {
       }
       else {
         this.flash('Could not register user', 'error');
+        this.submitted = false;
         }
       },
   }
