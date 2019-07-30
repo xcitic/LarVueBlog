@@ -85,7 +85,7 @@
                 <h1 class="section-heading mb-1">Leave a comment</h1>
                 <!-- If user is logged in ? display comment form : display login button -->
                   <CommentForm
-                    v-if="authenticated"
+                    v-if="authenticated && user"
                     :userImage="userImage"
                     :postId="post.id"
                   />

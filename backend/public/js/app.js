@@ -2175,12 +2175,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SideNav'
+  name: 'SideNav',
+  computed: {
+    user: function user() {
+      return this.$store.state.user;
+    }
+  }
 });
 
 /***/ }),
@@ -2359,6 +2360,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2369,6 +2385,12 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     authenticated: function authenticated() {
       return _api_Auth_js__WEBPACK_IMPORTED_MODULE_0__["default"].check();
+    },
+    dashboard: function dashboard() {
+      return this.$route.name === "dashboard";
+    },
+    homepage: function homepage() {
+      return this.$route.name === "home";
     }
   }
 });
@@ -2384,6 +2406,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth */ "./resources/frontend/api/Auth.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2399,13 +2430,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.$store.dispatch('getUser');
+  },
+  methods: {
+    logout: function () {
+      var _logout = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _api_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].logout();
+
+              case 2:
+                this.$router.push('/');
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function logout() {
+        return _logout.apply(this, arguments);
+      }
+
+      return logout;
+    }()
   }
 });
 
@@ -16700,89 +16758,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "ul",
+    {
+      staticClass: "side-nav fixed custom-scrollbar",
+      attrs: { id: "slide-out" }
+    },
+    [
+      _c("li", [
+        _vm.user
+          ? _c("div", { staticClass: "user-box" }, [
+              _c("img", {
+                staticClass: "img-fluid rounded-circle",
+                attrs: { src: _vm.user ? _vm.user.image : "" }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "user text-center black-text" }, [
+                _vm._v(_vm._s(_vm.user.name))
+              ])
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "side-nav fixed custom-scrollbar",
-        attrs: { id: "slide-out" }
-      },
-      [
+    return _c("li", [
+      _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
         _c("li", [
-          _c("div", { staticClass: "user-box" }, [
-            _c("img", {
-              staticClass: "img-fluid rounded-circle",
-              attrs: {
-                src: "https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
-              }
-            }),
-            _vm._v(" "),
-            _c("p", { staticClass: "user text-center black-text" }, [
-              _vm._v("Jane Doe")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
-            _c("li", [
-              _c(
-                "a",
-                { staticClass: "collapsible-header waves-effect arrow-r" },
-                [
-                  _c("i", { staticClass: "fa fa-code" }),
-                  _vm._v(" Dashboards"),
-                  _c("i", { staticClass: "fa fa-angle-down rotate-icon" })
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "collapsible-body" }, [
-                _c("ul", [
-                  _c("li", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "waves-effect",
-                        attrs: { href: "home.html" }
-                      },
-                      [_vm._v("Dahboard v1")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "waves-effect",
-                        attrs: { href: "home%20v2.html" }
-                      },
-                      [_vm._v("Dahboard v2")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "waves-effect",
-                        attrs: { href: "home%20v3.html" }
-                      },
-                      [_vm._v("Dahboard v3")]
-                    )
-                  ])
+          _c("a", { staticClass: "collapsible-header waves-effect arrow-r" }, [
+            _c("i", { staticClass: "fa fa-code" }),
+            _vm._v(" Dashboard"),
+            _c("i", { staticClass: "fa fa-angle-down rotate-icon" })
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "collapsible-body", attrs: { id: "dashboard" } },
+            [
+              _c("ul", [
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "waves-effect",
+                      attrs: { href: "home.html" }
+                    },
+                    [_vm._v("Dahboard v1")]
+                  )
                 ])
               ])
-            ])
-          ])
+            ]
+          )
         ])
-      ]
-    )
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -16981,7 +17017,62 @@ var render = function() {
       ),
       _vm._v(" "),
       _vm.authenticated
-        ? _c("ProfileIcon")
+        ? _c(
+            "ul",
+            { staticClass: "nav navbar-nav nav-flex-icons ml-auto" },
+            [
+              !_vm.homepage
+                ? _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "home" } }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-comments-o" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "hidden-sm-down" }, [
+                            _vm._v("Go To Blog")
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.dashboard
+                ? _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "dashboard" } }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-tachometer" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "hidden-sm-down" }, [
+                            _vm._v("Dashboard")
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("ProfileIcon")
+            ],
+            1
+          )
         : _c("ul", { staticClass: "nav navbar-nav nav-flex-icons ml-auto" }, [
             _c(
               "li",
@@ -17005,8 +17096,7 @@ var render = function() {
               1
             )
           ])
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = [
@@ -17047,27 +17137,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("ul", { staticClass: "nav navbar-nav nav-flex-icons ml-auto" }, [
-    _c(
-      "li",
-      { staticClass: "nav-item" },
-      [
-        _c(
-          "router-link",
-          { staticClass: "nav-link", attrs: { to: { name: "home" } } },
-          [
-            _c("i", { staticClass: "fa fa-comments-o" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "hidden-sm-down" }, [
-              _vm._v("Go To Blog")
-            ])
-          ]
-        )
-      ],
-      1
-    ),
+  return _c("li", { staticClass: "nav-item dropdown" }, [
+    _vm._m(0),
     _vm._v(" "),
-    _vm._m(0)
+    _c(
+      "div",
+      {
+        staticClass: "dropdown-menu dropdown-ins dropdown-menu-right",
+        attrs: { id: "userDropdown", "aria-labelledby": "userDropdown" }
+      },
+      [
+        _c("a", { staticClass: "dropdown-item", on: { click: _vm.logout } }, [
+          _vm._v("Log Out")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "dropdown-item" }, [
+          _vm._v("\n          My account\n        ")
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -17075,43 +17163,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item dropdown" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link dropdown-toggle",
-          attrs: {
-            href: "#",
-            id: "userDropdown",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          }
-        },
-        [
-          _c("i", { staticClass: "fa fa-user" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "hidden-sm-down" }, [_vm._v("Profile")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dropdown-menu dropdown-ins dropdown-menu-right",
-          attrs: { "aria-labelledby": "userDropdown" }
-        },
-        [
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("Log Out")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("My Profile")
-          ])
-        ]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link dropdown-toggle",
+        attrs: {
+          "data-target": "#userDropdown",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("i", { staticClass: "fa fa-user" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "hidden-sm-down" }, [_vm._v("Profile")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -17771,7 +17839,7 @@ var render = function() {
               _vm._v("Leave a comment")
             ]),
             _vm._v(" "),
-            _vm.authenticated
+            _vm.authenticated && _vm.user
               ? _c("CommentForm", {
                   attrs: { userImage: _vm.userImage, postId: _vm.post.id }
                 })
