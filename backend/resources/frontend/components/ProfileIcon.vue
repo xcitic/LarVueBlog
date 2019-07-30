@@ -5,9 +5,9 @@
       </a>
       <div class="dropdown-menu dropdown-ins dropdown-menu-right" id="userDropdown" aria-labelledby="userDropdown">
           <a class="dropdown-item" @click="logout">Log Out</a>
-          <a class="dropdown-item">
+          <router-link class="dropdown-item" :to="{ name: 'account', params: {} }">
             My account
-          </a>
+          </router-link>
 
       </div>
   </li>
