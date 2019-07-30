@@ -2429,7 +2429,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         password: '',
         password_confirmation: ''
       },
-      loading: false
+      isLoading: false
     };
   },
   methods: {
@@ -2437,29 +2437,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
-
         var payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.loading = true;
+                this.isLoading = true;
                 payload = this.input;
-                this.$store.dispatch('register', payload).then(function (response) {
-                  if (response == 'success') {
-                    _this.$router.push('/dashboard');
-                  }
-                })["catch"](function (err) {
-                  console.log(err);
-                });
+                _context.prev = 2;
+                _context.next = 5;
+                return this.$store.dispatch('register', payload);
 
-              case 3:
+              case 5:
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](2);
+                this.isLoading = false;
+
+              case 10:
+                _context.prev = 10;
+                this.auth();
+                return _context.finish(10);
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[2, 7, 10, 13]]);
       }));
 
       function submit() {
@@ -2467,7 +2475,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return submit;
-    }()
+    }(),
+    auth: function auth() {
+      if (this.$store.state.user) {
+        this.$router.push('/dashboard');
+      } else {
+        console.log('error');
+      }
+    }
   }
 });
 
@@ -5926,7 +5941,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { disabled: _vm.loading },
+              attrs: { disabled: _vm.isLoading },
               on: {
                 click: function($event) {
                   $event.preventDefault()

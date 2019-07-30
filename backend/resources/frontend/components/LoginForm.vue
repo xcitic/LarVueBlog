@@ -62,7 +62,6 @@ export default {
         email: this.email,
         password: this.password
       };
-
       try {
         await this.$store.dispatch('login', payload)
       } catch (error) {

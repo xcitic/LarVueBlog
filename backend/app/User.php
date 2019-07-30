@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name', 'email', 'password', 'image', 'profile_link'
     ];
 
     /**
@@ -42,11 +42,24 @@ class User extends Authenticatable
       return $this->hasMany('App\Comment');
     }
 
+    /**
+     * Check if user is admin
+     * @return boolean [description]
+     */
     public function isAdmin() {
       if ($this->role === 'admin') {
         return true;
       }
       return false;
+    }
 
+    public function getInfo() {
+      $info = [
+        'name' => $this->name,
+        'email' => $this->email,
+        'image' => $this->image,
+        'profile' => $this->profile_link,
+      ];
+      return $info;
     }
 }

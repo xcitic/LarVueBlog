@@ -20,6 +20,3 @@
 // Auth::routes();
 
 Route::get('{any?}', 'AppController@main')->where('any', '.*');
-
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -16,22 +17,44 @@ class AuthController extends Controller
    */
   public function register(Request $request)
   {
-    // $validator = $request->validate([
-    //   'name' => 'required|string|max:255',
-    //   'email' => 'required|string|email|max:255|unique:users',
-    //   'password' => 'required|string|min:6|max:150|confirmed'
-    // ]);
+
+    $validator = $request->validate([
+      'name' => 'required|string|max:255',
+      'email' => 'required|string|email|max:255|unique:users',
+      'password' => 'required|string|min:6|max:150|confirmed'
+    ]);
+
 
     // Hash password using php recommended password_hash, defaults to bcrypt hash encryption.
-    $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
-    $user = User::create([$request->toArray()]);
-    $user->save();
+    $password = password_hash($request->password, PASSWORD_DEFAULT);
+    // create an avatar link
+    $imageLink = 'https://i.pravatar.cc/150/?img=' . rand(1, 500);
+    // combine name with a random string(5), replace all spaces with - and make all lowercase.
+    $profile_link = strtolower( str_replace(' ', '-', trim(( $request->name . Str::random(5)) )) );
 
+    try {
+      $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => $password,
+        'type' => 'user',
+        'image' => $imageLink,
+        'profile_link' => $profile_link
+      ]);
+      $user->save();
 
-    $token = $user->createToken('bearer')->accessToken;
-    $response = ['token' => $token, 'user' => $user];
+      // Generate token with passport
+      $token = $user->createToken('bearer')->accessToken;
+      // generate response, return only public parts of user info getInfo()
+      $response = ['token' => $token, 'user' => $user->getInfo()];
 
-    return response()->json($response, 200);
+      return response()->json($response, 200);
+
+    } catch (Exception $e) {
+      return response()->json(['errors' => 'Invalid input'], 422);
+    }
+
+    return response()->json(['errors' => 'Invalid input'], 422);
 
   }
 
@@ -48,8 +71,11 @@ class AuthController extends Controller
     if ($user) {
       if (password_verify($request->password, $user->password))
       {
+        // Generate token with passport
         $token = $user->createToken('bearer')->accessToken;
-        $response = ['token' => $token, 'user' => $user];
+        // generate response, return only public parts of user info getInfo()
+        $response = ['token' => $token, 'user' => $user->getInfo()];
+
         return response()->json($response, 200);
       }
     }

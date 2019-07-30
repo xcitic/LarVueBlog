@@ -47,7 +47,7 @@
 
         <button class="btn btn-lg btn-primary btn-block text-uppercase"
                 @click.prevent="submit"
-                :disabled="loading">
+                :disabled="isLoading">
                 Register
         </button>
         <hr class="my-4">
@@ -82,24 +82,33 @@ export default {
         password: '',
         password_confirmation: '',
       },
-      loading: false,
+      isLoading: false,
     };
   },
 
   methods: {
     async submit() {
-      this.loading = true;
+      this.isLoading = true;
       let payload = this.input;
-      this.$store.dispatch('register', payload)
-          .then(response => {
-            if (response == 'success') {
-              this.$router.push('/dashboard');
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          });
-    }
+
+      try {
+        await this.$store.dispatch('register', payload)
+      } catch (err) {
+        this.isLoading = false;
+      } finally {
+        this.auth();
+      }
+
+    },
+
+    auth() {
+      if(this.$store.state.user) {
+        this.$router.push('/dashboard');
+      }
+      else {
+        console.log('error')
+        }
+      },
   }
 
 };
