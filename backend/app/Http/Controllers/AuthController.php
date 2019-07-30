@@ -46,8 +46,10 @@ class AuthController extends Controller
       // Generate token with passport
       $token = $user->createToken('bearer')->accessToken;
       // generate response, return only public parts of user info getInfo()
-      $response = ['token' => $token, 'user' => $user->getInfo()];
-
+      $userInfo = $user->getInfo();
+      $token = ['token' => $token];
+      $response = $userInfo + $token;
+      
       return response()->json($response, 200);
 
     } catch (Exception $e) {
@@ -74,8 +76,10 @@ class AuthController extends Controller
         // Generate token with passport
         $token = $user->createToken('bearer')->accessToken;
         // generate response, return only public parts of user info getInfo()
-        $response = ['token' => $token, 'user' => $user->getInfo()];
-
+        $userInfo = $user->getInfo();
+        $token = ['token' => $token];
+        // $response = array_merge($userInfo, $token);
+        $response = $userInfo + $token;
         return response()->json($response, 200);
       }
     }

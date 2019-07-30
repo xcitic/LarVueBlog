@@ -86,6 +86,7 @@
                 <!-- If user is logged in ? display comment form : display login button -->
                   <CommentForm
                     v-if="user"
+                    :image="user.image"
                   />
 
                   <div v-else>

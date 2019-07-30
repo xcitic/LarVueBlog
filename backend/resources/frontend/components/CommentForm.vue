@@ -6,7 +6,7 @@
       <div class="row">
           <!--Image column-->
           <div class="col-sm-2 col-12">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg">
+              <img :src="image">
           </div>
           <!--/.Image column-->
 
@@ -33,6 +33,9 @@
 
 <script>
 export default {
+  props: {
+    image: String,
+  }
 }
 </script>
 
