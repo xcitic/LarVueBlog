@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import axios from 'axios';
+import axios from 'axios';
 
 import routes from '@/router/routes.js';
 
@@ -12,13 +12,29 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    // Fetch and attach auth token.
     const token = localStorage.getItem('token');
-
     if (token) {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`
     }
 
     window.scrollTo(0,0);
+    // Authenticated routes require token
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+      if (token) {
+        return next();
+      }
+      return next('/login');
+    }
+
+    if (to.matched.some(record => record.meta.guest)) {
+      if (token) {
+        return next('/dashboard');
+      }
+      return next();
+    }
+
+    // default action
     return next();
 
 });

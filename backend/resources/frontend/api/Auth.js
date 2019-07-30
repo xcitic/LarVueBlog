@@ -2,20 +2,26 @@ import axios from 'axios';
 
 
 class Auth {
-  constructor(token = null, user = null) {
+  constructor(token = null) {
     this.token = token;
-    this.user = user;
   }
 
-  login(token, user) {
+  login(token) {
     localStorage.setItem('token', token);
-    // localStorage.setItem('user')
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
 
   logout() {
     localStorage.removeItem('token');
     axios.defaults.headers.common.Authorization = '';
+  }
+
+  check() {
+    let token = localStorage.getItem('token');
+    if (token) {
+      return true;
+    }
+    return false;
   }
 
 }

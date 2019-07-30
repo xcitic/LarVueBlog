@@ -33926,19 +33926,16 @@ var Auth =
 function () {
   function Auth() {
     var token = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
     _classCallCheck(this, Auth);
 
     this.token = token;
-    this.user = user;
   }
 
   _createClass(Auth, [{
     key: "login",
-    value: function login(token, user) {
-      localStorage.setItem('token', token); // localStorage.setItem('user')
-
+    value: function login(token) {
+      localStorage.setItem('token', token);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
     }
   }, {
@@ -33946,6 +33943,17 @@ function () {
     value: function logout() {
       localStorage.removeItem('token');
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = '';
+    }
+  }, {
+    key: "check",
+    value: function check() {
+      var token = localStorage.getItem('token');
+
+      if (token) {
+        return true;
+      }
+
+      return false;
     }
   }]);
 
@@ -34647,24 +34655,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
 
- // import axios from 'axios';
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_2__["default"]
+  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 router.beforeEach(function (to, from, next) {
+  // Fetch and attach auth token.
   var token = localStorage.getItem('token');
 
   if (token) {
-    axios.defaults.headers.common.Authorization = "Bearer ".concat(token);
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
   }
 
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0); // Authenticated routes require token
+
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    if (token) {
+      return next();
+    }
+
+    return next('/login');
+  }
+
+  if (to.matched.some(function (record) {
+    return record.meta.guest;
+  })) {
+    if (token) {
+      return next('/dashboard');
+    }
+
+    return next();
+  } // default action
+
+
   return next();
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
@@ -34708,15 +34741,24 @@ var routes = function routes() {
   }, {
     path: '/login',
     name: 'login',
-    component: _views_Login_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _views_Login_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      guest: true
+    }
   }, {
     path: '/register',
     name: 'register',
-    component: _views_Register_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _views_Register_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    meta: {
+      guest: true
+    }
   }, {
     path: '/dashboard',
     name: 'dashboard',
-    component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _views_Dashboard_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '*',
     name: '404',

@@ -25,17 +25,20 @@ const routes = () => [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: { guest: true }
   },
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: Register,
+    meta: { guest: true }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: { requiresAuth: true }
   },
   {
     path: '*',
