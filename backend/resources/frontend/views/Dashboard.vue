@@ -2,7 +2,6 @@
   <div>
 
     <SideNav />
-    <TopNav />
 
     <div class="container-fluid">
       <div class="row">
@@ -132,13 +131,11 @@
 
 <script>
 import SideNav from '@/components/Dashboard/SideNav.vue';
-import TopNav from '@/components/Dashboard/TopNav.vue';
 
 
 export default {
   components: {
     SideNav,
-    TopNav,
   }
 }
 </script>

@@ -51,6 +51,9 @@ class CommentController extends Controller
             'blog_post_id' => $postExists->id,
           ]);
           $comment->save();
+          
+          $comment->published  = $comment->created_at->diffForHumans();
+          $userInfo = $comment->userInfo;
 
           return response()->json($comment, 201);
         }

@@ -22,31 +22,49 @@ export default new Vuex.Store({
     user: null,
 
   },
+
+  getters: {
+    getComments(state) {
+      return state.comments;
+    },
+
+    getUser(state) {
+      return state.user
+    },
+
+    getPosts(state) {
+      return state.posts
+    }
+  },
   mutations: {
-    getPosts(state, data) {
+    setPosts(state, data) {
       state.posts = [...state.posts, ...data];
     },
 
-    getPost(state, post) {
+    setPost(state, post) {
       state.post = post;
     },
 
-    getComments(state, comments) {
-      state.comments = [...comments];
+    setComments(state, comments) {
+      Vue.set(state, 'comments', comments);
     },
 
-    addComment(state, comment) {
-      state.comments = [...state.comments, comment];
+    setComment(state, comment) {
+      let data = [comment, ...state.comments];
+      Vue.set(state, 'comments', data);
     },
 
-    login(state, user) {
-      state.user = user;
-      Auth.login(user.token, user);
+    login(state, userInfo) {
+      state.user = userInfo;
+      Auth.login(userInfo.token, userInfo);
     },
 
     logout(state) {
       state.user = null;
-      Auth.logout();
+    },
+
+    setUser(state, userInfo) {
+      state.user = userInfo;
     },
 
     error(state, err) {
@@ -58,12 +76,11 @@ export default new Vuex.Store({
     },
   },
   actions: {
-
     async getPosts({commit}) {
       axios.get('/api/posts')
         .then(({data}) => {
           let info = 'successfully fetched posts';
-          commit('getPosts', data);
+          commit('setPosts', data);
           commit('success', info);
         })
         .catch((err) => {
@@ -76,8 +93,8 @@ export default new Vuex.Store({
           .then(({data}) => {
             let info = `successfully fetched post with id: ${id}`;
             commit('success', info)
-            commit('getPost', data.post);
-            commit('getComments', data.comments);
+            commit('setPost', data.post);
+            commit('setComments', data.comments);
           })
           .catch((err) => {
             commit('error', err);
@@ -96,8 +113,13 @@ export default new Vuex.Store({
 
     async createComment({commit}, payload) {
       let comment = await axios.post(`/api/comment/${payload.postId}/create`, payload);
-      commit('addComment', comment);
+      commit('setComment', comment.data);
     },
+
+    async getUser({commit}) {
+      let userInfo = await axios.get('/api/user');
+      commit('setUser', userInfo.data);
+    }
 
   }
 });

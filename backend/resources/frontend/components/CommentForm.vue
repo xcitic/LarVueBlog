@@ -6,7 +6,7 @@
       <div class="row">
           <!--Image column-->
           <div class="col-sm-2 col-12">
-              <img :src="image">
+              <img :src="userImage" />
           </div>
           <!--/.Image column-->
 
@@ -43,9 +43,9 @@
 
 <script>
 export default {
-  props: {
-    image: String
-  },
+  props: [
+    'userImage'
+  ],
 
   data() {
     return {
@@ -53,6 +53,7 @@ export default {
       submitted: false,
     }
   },
+
 
   methods: {
     async submit() {
@@ -64,7 +65,6 @@ export default {
               message: this.message,
               postId: this.$store.state.post.id
             };
-            console.log(payload);
             this.$store.dispatch('createComment', payload)
               .then(() => {
                 this.flash('Your comment has been created :)', 'success');

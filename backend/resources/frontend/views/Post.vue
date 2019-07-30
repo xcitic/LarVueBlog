@@ -85,8 +85,8 @@
                 <h1 class="section-heading mb-1">Leave a comment</h1>
                 <!-- If user is logged in ? display comment form : display login button -->
                   <CommentForm
-                    v-if="user"
-                    :image="user.image"
+                    v-if="authenticated"
+                    :userImage="userImage"
                     :postId="post.id"
                   />
 
@@ -109,8 +109,8 @@
                       </div>
 
                       <Comment
-                        v-for="comment in comments"
-                        :key="comment.id"
+                        v-for="(comment, index) in comments"
+                        :key="index"
                         :username="comment.user_info.name"
                         :text="comment.text"
                         :image="comment.user_info.image"
@@ -134,6 +134,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import Auth from '@/api/Auth.js';
 import Comment from '@/components/Comment.vue';
 import CommentForm from '@/components/CommentForm.vue';
 
@@ -143,6 +144,11 @@ import CommentForm from '@/components/CommentForm.vue';
     components: {
       Comment,
       CommentForm
+    },
+
+    data() {
+      return {
+      }
     },
 
     computed: {
@@ -158,13 +164,21 @@ import CommentForm from '@/components/CommentForm.vue';
 
       commentsCount() {
         return this.comments.length;
+      },
+
+      authenticated() {
+        return Auth.check();
+      },
+
+      userImage() {
+        return this.user.image;
       }
     },
 
-    beforeCreate() {
+    mounted() {
       let id = this.$route.params.id;
       this.$store.dispatch('getPost', id);
-    }
+    },
 
   }
 
