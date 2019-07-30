@@ -33902,6 +33902,60 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/frontend/api/Auth.js":
+/*!****************************************!*\
+  !*** ./resources/frontend/api/Auth.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Auth =
+/*#__PURE__*/
+function () {
+  function Auth() {
+    var token = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+    _classCallCheck(this, Auth);
+
+    this.token = token;
+    this.user = user;
+  }
+
+  _createClass(Auth, [{
+    key: "login",
+    value: function login(token, user) {
+      localStorage.setItem('token', token); // localStorage.setItem('user')
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+      localStorage.removeItem('token');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = '';
+    }
+  }]);
+
+  return Auth;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (new Auth());
+
+/***/ }),
+
 /***/ "./resources/frontend/app.js":
 /*!***********************************!*\
   !*** ./resources/frontend/app.js ***!
@@ -33914,7 +33968,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/frontend/App.vue");
-/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router/index.js */ "./resources/frontend/router/index.js");
+/* harmony import */ var _router_router_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/router/router.js */ "./resources/frontend/router/router.js");
 /* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store.js */ "./resources/frontend/store.js");
 /* harmony import */ var _registerServiceWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registerServiceWorker */ "./resources/frontend/registerServiceWorker.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -33949,7 +34003,7 @@ window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = "http://localhost:8000";
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: _router_index_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  router: _router_router_js__WEBPACK_IMPORTED_MODULE_2__["default"],
   store: _store_js__WEBPACK_IMPORTED_MODULE_3__["default"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -34581,10 +34635,10 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/frontend/router/index.js":
-/*!********************************************!*\
-  !*** ./resources/frontend/router/index.js ***!
-  \********************************************/
+/***/ "./resources/frontend/router/router.js":
+/*!*********************************************!*\
+  !*** ./resources/frontend/router/router.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -34593,25 +34647,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/store.js */ "./resources/frontend/store.js");
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
 
-
-
+ // import axios from 'axios';
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 router.beforeEach(function (to, from, next) {
   var token = localStorage.getItem('token');
 
   if (token) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common.Authorization = "Bearer: ".concat(token);
+    axios.defaults.headers.common.Authorization = "Bearer ".concat(token);
   }
 
   window.scrollTo(0, 0);
@@ -34694,6 +34744,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -34707,6 +34758,7 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 
 
@@ -34741,6 +34793,11 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     },
     login: function login(state, user) {
       state.user = user;
+      _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__["default"].login(user.token, user);
+    },
+    logout: function logout(state) {
+      state.user = null;
+      _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__["default"].logout();
     },
     error: function error(state, err) {
       state.error = err;

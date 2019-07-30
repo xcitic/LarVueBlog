@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 
+import Auth from '@/api/Auth.js';
+
 Vue.use(Vuex);
 
 /* Axios Config */
@@ -39,6 +41,12 @@ export default new Vuex.Store({
 
     login(state, user) {
       state.user = user;
+      Auth.login(user.token, user);
+    },
+
+    logout(state) {
+      state.user = null;
+      Auth.logout();
     },
 
     error(state, err) {
@@ -89,9 +97,7 @@ export default new Vuex.Store({
     async createComment({commit}, payload) {
       let comment = await axios.post(`/api/comment/${payload.postId}/create`, payload);
       commit('addComment', comment);
-    }, 
-
-
+    },
 
   }
 });
