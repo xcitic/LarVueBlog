@@ -2231,7 +2231,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       email: '',
       password: '',
-      loading: false
+      isLoading: false
     };
   },
   methods: {
@@ -2244,18 +2244,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.isLoading = true;
                 payload = {
-                  'email': this.email,
-                  'password': this.password
+                  email: this.email,
+                  password: this.password
                 };
-                this.$store.dispatch('login', payload);
+                _context.prev = 2;
+                _context.next = 5;
+                return this.$store.dispatch('login', payload);
 
-              case 2:
+              case 5:
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](2);
+                this.isLoading = false;
+
+              case 10:
+                _context.prev = 10;
+                this.auth();
+                return _context.finish(10);
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[2, 7, 10, 13]]);
       }));
 
       function login() {
@@ -2263,7 +2280,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return login;
-    }()
+    }(),
+    auth: function auth() {
+      if (this.$store.state.user) {
+        this.$router.push('/dashboard');
+      } else {
+        console.log('error');
+      }
+    }
   }
 });
 
@@ -5628,7 +5652,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { disable: _vm.loading, type: "submit" },
+              attrs: { type: "submit", disable: _vm.isLoading },
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -22466,7 +22490,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
-/* Axios Config */
+/* Axios Config Global */
 
 window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -23201,6 +23225,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* Axios Config */
+
+window.axios = axios__WEBPACK_IMPORTED_MODULE_3___default.a;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = "http://localhost:8000";
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
     posts: [],
@@ -23219,6 +23248,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     getComments: function getComments(state, comments) {
       state.comments = _toConsumableArray(comments);
+    },
+    login: function login(state, user) {
+      state.user = user;
     },
     error: function error(state, err) {
       state.error = err;
@@ -23295,20 +23327,68 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
       return getPost;
     }(),
-    login: function login(payload) {
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', payload).then(function (_ref5) {
-        var response = _ref5.response;
-        console.log(response);
-      });
-    },
-    register: function register(payload) {
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', payload).then(function (_ref6) {
-        var response = _ref6.response;
-        console.log(response);
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    }
+    login: function () {
+      var _login = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref5, payload) {
+        var commit, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', payload);
+
+              case 3:
+                result = _context3.sent;
+                commit('login', result.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function login(_x4, _x5) {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }(),
+    register: function () {
+      var _register = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref6, payload) {
+        var commit, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref6.commit;
+                _context4.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', payload);
+
+              case 3:
+                result = _context4.sent;
+                commit('login', result.data);
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function register(_x6, _x7) {
+        return _register.apply(this, arguments);
+      }
+
+      return register;
+    }()
   }
 }));
 

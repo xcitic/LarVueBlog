@@ -23,10 +23,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // });
 
 
-Route::group(['middleware' => ['json_response', 'cors']], function() {
-  Route::post('/login', 'AuthController@login');
-  Route::post('/register', 'AuthController@register');
-});
+
+Route::post('/login', 'AuthController@login');
+Route::post('/register', 'AuthController@register');
 
 Route::get('/posts', 'BlogPostController@index');
 Route::get('/post/{id}', 'BlogPostController@show');

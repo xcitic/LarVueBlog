@@ -32,8 +32,8 @@
             </label>
           </div>
           <button class="btn btn-lg btn-primary btn-block text-uppercase"
-                  :disable="loading"
                   type="submit"
+                  :disable="isLoading"
                   @click.prevent="login">
                   Log In
           </button>
@@ -50,21 +50,41 @@ export default {
     return {
       email: '',
       password: '',
-      loading: false,
+      isLoading: false,
     };
   },
 
   methods: {
-    
+
     async login () {
+      this.isLoading = true;
       let payload = {
-        'email': this.email,
-        'password': this.password
+        email: this.email,
+        password: this.password
       };
-      this.$store.dispatch('login', payload);
+
+      try {
+        await this.$store.dispatch('login', payload)
+      } catch (error) {
+        this.isLoading = false;
+      } finally {
+        this.auth();
+      }
+
+    },
+
+    auth() {
+      if(this.$store.state.user) {
+        this.$router.push('/dashboard');
+      }
+      else {
+        console.log('error')
+        }
+      },
+
     }
-  }
-};
+
+  };
 </script>
 
 <style lang="css" scoped>

@@ -4,6 +4,12 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
+/* Axios Config */
+window.axios = axios;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = process.env.MIX_APP_URL;
+
+
 export default new Vuex.Store({
   state: {
     posts: [],
@@ -25,6 +31,10 @@ export default new Vuex.Store({
 
     getComments(state, comments) {
       state.comments = [...comments];
+    },
+
+    login(state, user) {
+      state.user = user;
     },
 
     error(state, err) {
@@ -62,24 +72,17 @@ export default new Vuex.Store({
           });
     },
 
-    login(payload) {
-      axios.post('/api/login', payload)
-        .then(({response}) => {
-          console.log(response)
-        })
-    },
+    async login({commit}, payload) {
+      let result = await axios.post('/api/login', payload);
+      commit('login', result.data);
+      },
 
-    register(payload) {
-      axios.post('/api/register', payload)
-        .then(({response}) => {
-          console.log(response)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async register({commit}, payload) {
+      let result = await axios.post('/api/register', payload)
+      commit('login', result.data);
     },
 
 
 
   }
-})
+});
