@@ -12,12 +12,15 @@ import './registerServiceWorker';
 import axios from 'axios';
 import VueFlashMessage from 'vue-flash-message';
 require('vue-flash-message/dist/vue-flash-message.min.css');
+import VeeValidate from 'vee-validate';
 
 Vue.use(VueFlashMessage, {
   messageOptions: {
     timeout: 3000
   }
 });
+
+Vue.vue(VeeValidate);
 
 /* Axios Config Global */
 window.axios = axios;
