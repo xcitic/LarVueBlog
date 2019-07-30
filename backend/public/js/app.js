@@ -2280,6 +2280,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                     _this.$store.dispatch('login', payload).then(function () {
                       _this.auth();
+                    })["catch"](function () {
+                      _this.flash('Wrong username or password', 'error');
                     });
                   }
                 });
@@ -2437,6 +2439,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RegisterForm',
   data: function data() {
@@ -2447,7 +2465,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         password: '',
         password_confirmation: ''
       },
-      isLoading: false
+      submitted: false
     };
   },
   methods: {
@@ -2455,37 +2473,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var payload;
+        var _this = this;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.isLoading = true;
-                payload = this.input;
-                _context.prev = 2;
-                _context.next = 5;
-                return this.$store.dispatch('register', payload);
+                this.submitted = true;
+                this.$validator.validate().then(function (valid) {
+                  if (valid) {
+                    var payload = _this.input;
 
-              case 5:
-                _context.next = 10;
-                break;
+                    _this.$store.dispatch('register', payload).then(function () {
+                      _this.auth();
+                    })["catch"](function () {
+                      _this.flash('Could not register user', 'error');
+                    });
+                  }
+                });
 
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](2);
-                this.isLoading = false;
-
-              case 10:
-                _context.prev = 10;
-                this.auth();
-                return _context.finish(10);
-
-              case 13:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 7, 10, 13]]);
+        }, _callee, this);
       }));
 
       function submit() {
@@ -2496,9 +2508,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     auth: function auth() {
       if (this.$store.state.user) {
+        this.flash('Successfully registered user.', 'success');
         this.$router.push('/dashboard');
       } else {
-        console.log('error');
+        this.flash('Could not register user', 'error');
       }
     }
   }
@@ -17056,6 +17069,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.input.name,
                   expression: "input.name"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|alpha_spaces|min:4|max:50",
+                  expression: "'required|alpha_spaces|min:4|max:50'"
                 }
               ],
               staticClass: "form-control",
@@ -17064,7 +17083,6 @@ var render = function() {
                 autocomplete: "name",
                 placeholder: "Name",
                 name: "name",
-                required: "",
                 autofocus: ""
               },
               domProps: { value: _vm.input.name },
@@ -17076,7 +17094,15 @@ var render = function() {
                   _vm.$set(_vm.input, "name", $event.target.value)
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("name")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(" " + _vm._s(_vm.errors.first("name")) + " ")
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-control-group my-4" }, [
@@ -17087,6 +17113,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.input.email,
                   expression: "input.email"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|email|max:50",
+                  expression: "'required|email|max:50'"
                 }
               ],
               staticClass: "form-control",
@@ -17094,8 +17126,7 @@ var render = function() {
                 type: "email",
                 autocomplete: "username",
                 placeholder: "Email address",
-                name: "email",
-                required: ""
+                name: "email"
               },
               domProps: { value: _vm.input.email },
               on: {
@@ -17106,7 +17137,15 @@ var render = function() {
                   _vm.$set(_vm.input, "email", $event.target.value)
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("email")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(" " + _vm._s(_vm.errors.first("email")) + " ")
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-control-group my-4" }, [
@@ -17117,6 +17156,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.input.password,
                   expression: "input.password"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|max:50",
+                  expression: "'required|max:50'"
                 }
               ],
               staticClass: "form-control",
@@ -17124,8 +17169,7 @@ var render = function() {
                 type: "password",
                 autocomplete: "new-password",
                 placeholder: "Password",
-                name: "password",
-                required: ""
+                name: "password"
               },
               domProps: { value: _vm.input.password },
               on: {
@@ -17136,7 +17180,15 @@ var render = function() {
                   _vm.$set(_vm.input, "password", $event.target.value)
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("password")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(" " + _vm._s(_vm.errors.first("password")) + " ")
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-control-group my-4" }, [
@@ -17147,6 +17199,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.input.password_confirmation,
                   expression: "input.password_confirmation"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|confirmed:password",
+                  expression: "'required|confirmed:password'"
                 }
               ],
               staticClass: "form-control",
@@ -17154,8 +17212,7 @@ var render = function() {
                 type: "password",
                 autocomplete: "new-password",
                 placeholder: "Repeat Password",
-                name: "password_confirmation",
-                required: ""
+                name: "password_confirmation"
               },
               domProps: { value: _vm.input.password_confirmation },
               on: {
@@ -17170,14 +17227,26 @@ var render = function() {
                   )
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("password_confirmation")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.errors.first("password_confirmation")) +
+                        " "
+                    )
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c(
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { disabled: _vm.isLoading },
+              attrs: { disabled: _vm.submitted },
               on: {
                 click: function($event) {
                   $event.preventDefault()

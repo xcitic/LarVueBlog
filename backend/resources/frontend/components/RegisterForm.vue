@@ -11,8 +11,12 @@
                   autocomplete="name"
                   placeholder="Name"
                   name="name"
-                  required
-                  autofocus>
+                  autofocus
+                  v-validate="'required|alpha_spaces|min:4|max:50'"
+            />
+            <span v-if="submitted && errors.has('name')">
+                <p class="red-text"> {{ errors.first('name') }} </p>
+            </span>
         </div>
 
         <div class="form-control-group my-4">
@@ -22,7 +26,11 @@
                  autocomplete="username"
                  placeholder="Email address"
                  name="email"
-                 required>
+                 v-validate="'required|email|max:50'"
+            />
+            <span v-if="submitted && errors.has('email')">
+                <p class="red-text"> {{ errors.first('email') }} </p>
+            </span>
         </div>
 
         <div class="form-control-group my-4">
@@ -32,7 +40,11 @@
                  autocomplete="new-password"
                  placeholder="Password"
                  name="password"
-                 required>
+                 v-validate="'required|max:50'"
+            />
+            <span v-if="submitted && errors.has('password')">
+                <p class="red-text"> {{ errors.first('password') }} </p>
+            </span>
         </div>
 
         <div class="form-control-group my-4">
@@ -42,12 +54,16 @@
                  autocomplete="new-password"
                  placeholder="Repeat Password"
                  name="password_confirmation"
-                 required>
+                 v-validate="'required|confirmed:password'"
+            />
+            <span v-if="submitted && errors.has('password_confirmation')">
+                <p class="red-text"> {{ errors.first('password_confirmation') }} </p>
+            </span>
         </div>
 
         <button class="btn btn-lg btn-primary btn-block text-uppercase"
                 @click.prevent="submit"
-                :disabled="isLoading">
+                :disabled="submitted">
                 Register
         </button>
         <hr class="my-4">
@@ -82,31 +98,36 @@ export default {
         password: '',
         password_confirmation: '',
       },
-      isLoading: false,
+      submitted: false,
     };
   },
 
   methods: {
     async submit() {
-      this.isLoading = true;
-      let payload = this.input;
+      this.submitted = true;
 
-      try {
-        await this.$store.dispatch('register', payload)
-      } catch (err) {
-        this.isLoading = false;
-      } finally {
-        this.auth();
-      }
-
+      this.$validator.validate().then(
+        valid => {
+          if(valid) {
+            let payload = this.input;
+            this.$store.dispatch('register', payload)
+              .then(() => {
+                this.auth();
+              })
+              .catch(() => {
+                this.flash('Could not register user', 'error');
+              })
+          }
+        })
     },
 
     auth() {
       if(this.$store.state.user) {
+        this.flash('Successfully registered user.', 'success');
         this.$router.push('/dashboard');
       }
       else {
-        console.log('error')
+        this.flash('Could not register user', 'error');
         }
       },
   }

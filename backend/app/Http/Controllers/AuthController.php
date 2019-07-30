@@ -18,11 +18,11 @@ class AuthController extends Controller
   public function register(Request $request)
   {
 
-    $validator = $request->validate([
-      'name' => 'required|string|max:255',
-      'email' => 'required|string|email|max:255|unique:users',
-      'password' => 'required|string|min:6|max:150|confirmed'
-    ]);
+      $validator = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6|max:150|confirmed'
+      ]);
 
 
     // Hash password using php recommended password_hash, defaults to bcrypt hash encryption.
@@ -49,7 +49,7 @@ class AuthController extends Controller
       $userInfo = $user->getInfo();
       $token = ['token' => $token];
       $response = $userInfo + $token;
-      
+
       return response()->json($response, 200);
 
     } catch (Exception $e) {

@@ -85,6 +85,9 @@ export default {
             .then(() => {
               this.auth();
             })
+            .catch(() => {
+              this.flash('Wrong username or password', 'error');
+            })
           }
         })
     },
