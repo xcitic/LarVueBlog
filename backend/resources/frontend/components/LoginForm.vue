@@ -5,23 +5,37 @@
       <div class="form-signin">
         <form>
           <div class="form-control-group">
+
             <input type="email"
                    autocomplete="username"
                    v-model="email"
                    class="form-control"
                    placeholder="Email address"
-                   required autofocus>
+                   autofocus
+                   name="email"
+                   v-validate="'required|email|max:75'"
+             />
+             <span v-if="submitted && errors.has('email')">
+               <p class="red-text"> {{ errors.first('email') }} </p>
+             </span>
+
           </div>
+
 
           <div class="form-control-group my-4">
             <input type="password"
                    autocomplete="current-password"
-                   name="password"
                    v-model="password"
                    class="form-control"
                    placeholder="Password"
-                   required>
+                   name="password"
+                   v-validate="'required|max:50'"
+             />
+             <span v-if="submitted && errors.has('password')">
+                 <p class="red-text"> {{ errors.first('password') }} </p>
+             </span>
           </div>
+
 
           <div class="custom-control custom-checkbox mb-3">
             <input type="checkbox"
@@ -33,7 +47,7 @@
           </div>
           <button class="btn btn-lg btn-primary btn-block text-uppercase"
                   type="submit"
-                  :disable="isLoading"
+                  :disable="submitted"
                   @click.prevent="login">
                   Log In
           </button>
@@ -44,41 +58,44 @@
 </template>
 
 <script>
+
 export default {
   name: 'LoginForm',
   data () {
     return {
       email: '',
       password: '',
-      isLoading: false,
+      submitted: false,
     };
   },
 
   methods: {
 
     async login () {
-      this.isLoading = true;
-      let payload = {
-        email: this.email,
-        password: this.password
-      };
-      try {
-        await this.$store.dispatch('login', payload)
-      } catch (error) {
-        this.isLoading = false;
-      } finally {
-        this.auth();
-      }
+      this.submitted = true;
+      this.$validator.validate().then(
+        valid => {
+          if (valid) {
 
+            let payload = {
+              email: this.email,
+              password: this.password
+            };
+            this.$store.dispatch('login', payload)
+            .then(() => {
+              this.auth();
+            })
+          }
+        })
     },
 
     auth() {
       if(this.$store.state.user) {
-        this.flash('Successfully logged in');
+        this.flash('Successfully logged in', 'success');
         this.$router.push('/dashboard');
       }
       else {
-        console.log('error')
+        this.flash('Wrong username or password', 'error');
         }
       },
 

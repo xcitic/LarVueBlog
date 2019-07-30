@@ -2236,13 +2236,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LoginForm',
   data: function data() {
     return {
       email: '',
       password: '',
-      isLoading: false
+      submitted: false
     };
   },
   methods: {
@@ -2250,40 +2264,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _login = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var payload;
+        var _this = this;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.isLoading = true;
-                payload = {
-                  email: this.email,
-                  password: this.password
-                };
-                _context.prev = 2;
-                _context.next = 5;
-                return this.$store.dispatch('login', payload);
+                this.submitted = true;
+                this.$validator.validate().then(function (valid) {
+                  if (valid) {
+                    var payload = {
+                      email: _this.email,
+                      password: _this.password
+                    };
 
-              case 5:
-                _context.next = 10;
-                break;
+                    _this.$store.dispatch('login', payload).then(function () {
+                      _this.auth();
+                    });
+                  }
+                });
 
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](2);
-                this.isLoading = false;
-
-              case 10:
-                _context.prev = 10;
-                this.auth();
-                return _context.finish(10);
-
-              case 13:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 7, 10, 13]]);
+        }, _callee, this);
       }));
 
       function login() {
@@ -2294,10 +2300,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     auth: function auth() {
       if (this.$store.state.user) {
-        this.flash('Successfully logged in');
+        this.flash('Successfully logged in', 'success');
         this.$router.push('/dashboard');
       } else {
-        console.log('error');
+        this.flash('Wrong username or password', 'error');
       }
     }
   }
@@ -16812,6 +16818,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.email,
                   expression: "email"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|email|max:75",
+                  expression: "'required|email|max:75'"
                 }
               ],
               staticClass: "form-control",
@@ -16819,8 +16831,8 @@ var render = function() {
                 type: "email",
                 autocomplete: "username",
                 placeholder: "Email address",
-                required: "",
-                autofocus: ""
+                autofocus: "",
+                name: "email"
               },
               domProps: { value: _vm.email },
               on: {
@@ -16831,7 +16843,15 @@ var render = function() {
                   _vm.email = $event.target.value
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("email")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(" " + _vm._s(_vm.errors.first("email")) + " ")
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-control-group my-4" }, [
@@ -16842,15 +16862,20 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.password,
                   expression: "password"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|max:50",
+                  expression: "'required|max:50'"
                 }
               ],
               staticClass: "form-control",
               attrs: {
                 type: "password",
                 autocomplete: "current-password",
-                name: "password",
                 placeholder: "Password",
-                required: ""
+                name: "password"
               },
               domProps: { value: _vm.password },
               on: {
@@ -16861,7 +16886,15 @@ var render = function() {
                   _vm.password = $event.target.value
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.submitted && _vm.errors.has("password")
+              ? _c("span", [
+                  _c("p", { staticClass: "red-text" }, [
+                    _vm._v(" " + _vm._s(_vm.errors.first("password")) + " ")
+                  ])
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -16870,7 +16903,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { type: "submit", disable: _vm.isLoading },
+              attrs: { type: "submit", disable: _vm.submitted },
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -33722,7 +33755,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_flash_message__WEBPACK_IMPORT
     timeout: 3000
   }
 });
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.vue(vee_validate__WEBPACK_IMPORTED_MODULE_7__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_7__["default"]);
 /* Axios Config Global */
 
 window.axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a;

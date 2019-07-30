@@ -20,7 +20,7 @@ Vue.use(VueFlashMessage, {
   }
 });
 
-Vue.vue(VeeValidate);
+Vue.use(VeeValidate);
 
 /* Axios Config Global */
 window.axios = axios;
