@@ -74,6 +74,7 @@ export default {
 
     auth() {
       if(this.$store.state.user) {
+        this.flash('Successfully logged in');
         this.$router.push('/dashboard');
       }
       else {

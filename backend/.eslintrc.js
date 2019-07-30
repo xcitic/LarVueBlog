@@ -11,6 +11,7 @@ module.exports = {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
         "process": false,
+        "require": false,
     },
     "parserOptions": {
         "ecmaVersion": 2018,

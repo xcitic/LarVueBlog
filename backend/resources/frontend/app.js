@@ -1,4 +1,7 @@
+// Core
 import Vue from 'vue';
+Vue.config.productionTip = false;
+
 // Internal Components
 import App from './App.vue';
 import router from './router';
@@ -7,8 +10,14 @@ import './registerServiceWorker';
 
 // External packages
 import axios from 'axios';
-Vue.config.productionTip = false;
+import VueFlashMessage from 'vue-flash-message';
+require('vue-flash-message/dist/vue-flash-message.min.css');
 
+Vue.use(VueFlashMessage, {
+  messageOptions: {
+    timeout: 3000
+  }
+});
 
 /* Axios Config Global */
 window.axios = axios;

@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+
+    <div class="col-md-12">
+      <div class="offset-md-4">
+        <flash-message style="position:fixed; z-index:9998; top:0;" class="text-center"></flash-message>
+      </div>
+    </div>
+
     <NavBar />
     <div class="content">
         <router-view/>
