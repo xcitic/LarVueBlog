@@ -2115,6 +2115,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     })["catch"](function () {
                       _this.flash('Your comment was rejected. Please avoid profanity', 'error');
                     });
+
+                    _this.reset();
                   }
                 });
 
@@ -2131,7 +2133,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return submit;
-    }()
+    }(),
+    reset: function reset() {
+      this.submitted = false;
+      this.message = '';
+    }
   }
 });
 
@@ -2334,8 +2340,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
-/* harmony import */ var _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/ProfileIcon */ "./resources/frontend/components/ProfileIcon.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ProfileIcon */ "./resources/frontend/components/ProfileIcon.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2375,16 +2388,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NavBar',
   components: {
-    ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  computed: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    user: function user(state) {
+      return state.authenticated;
+    }
+  }), {
     authenticated: function authenticated() {
-      return _api_Auth_js__WEBPACK_IMPORTED_MODULE_0__["default"].check();
+      return _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__["default"].check();
     },
     dashboard: function dashboard() {
       return this.$route.name === "dashboard";
@@ -2392,7 +2410,7 @@ __webpack_require__.r(__webpack_exports__);
     homepage: function homepage() {
       return this.$route.name === "home";
     }
-  }
+  })
 });
 
 /***/ }),
@@ -34111,7 +34129,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
- // import config from '@/api/Config.js';
 
 window.axios = axios__WEBPACK_IMPORTED_MODULE_1___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -34152,10 +34169,10 @@ function () {
 
       if (token) {
         return true;
-      } else {
-        this.logout();
-        return false;
       }
+
+      this.logout();
+      return false;
     }
   }, {
     key: "isAdmin",
@@ -34204,6 +34221,92 @@ function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (new Auth());
+
+/***/ }),
+
+/***/ "./resources/frontend/api/Endpoints.js":
+/*!*********************************************!*\
+  !*** ./resources/frontend/api/Endpoints.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var authToken = localStorage.getItem('token');
+var csrfToken = document.head.querySelector('meta[name="csrf-token"]');
+var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
+  baseURL: 'http://localhost:8000/api',
+  json: true,
+  headers: {
+    'Authorization': 'Bearer ' + authToken,
+    'x-requested-with': 'XMLHttpRequest',
+    'x-csrf-token': csrfToken.content
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  apiCall: function () {
+    var _apiCall = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(method, resource, data) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt("return", endpoint({
+                method: method,
+                url: resource,
+                data: data
+              }).then(function (res) {
+                return res.data;
+              })["catch"](function (err) {
+                return err.message;
+              }));
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function apiCall(_x, _x2, _x3) {
+      return _apiCall.apply(this, arguments);
+    }
+
+    return apiCall;
+  }(),
+  getPosts: function getPosts() {
+    return this.apiCall('get', '/posts');
+  },
+  getPost: function getPost(id) {
+    return this.apiCall('get', "/post/".concat(id));
+  },
+  login: function login(payload) {
+    return this.apiCall('post', '/login', payload);
+  },
+  register: function register(payload) {
+    return this.apiCall('post', '/register', payload);
+  },
+  createComment: function createComment(payload) {
+    return this.apiCall('post', "/comment/".concat(payload.postId, "/create"), payload);
+  },
+  getUser: function getUser() {
+    return this.apiCall('get', '/user');
+  }
+});
 
 /***/ }),
 
@@ -34967,11 +35070,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
-/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
-
+/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/router/routes.js */ "./resources/frontend/router/routes.js");
 
 
 
@@ -34979,16 +35079,11 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_4__["default"]
+  routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 router.beforeEach(function (to, from, next) {
   // Fetch and attach auth token.
   var token = localStorage.getItem('token');
-
-  if (token) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common.Authorization = "Bearer ".concat(token);
-  }
-
   window.scrollTo(0, 0); // Authenticated routes require token
 
   if (to.matched.some(function (record) {
@@ -35005,7 +35100,7 @@ router.beforeEach(function (to, from, next) {
     return record.meta.requiresAdmin;
   })) {
     if (token) {
-      if (_api_Auth_js__WEBPACK_IMPORTED_MODULE_3__["default"].isAdmin() === true) {
+      if (_api_Auth_js__WEBPACK_IMPORTED_MODULE_2__["default"].isAdmin() === true) {
         return next();
       }
 
@@ -35140,6 +35235,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/api/Endpoints.js */ "./resources/frontend/api/Endpoints.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -35153,6 +35249,7 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 
 
@@ -35220,22 +35317,20 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       var _getPosts = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-        var commit;
+        var commit, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/posts').then(function (_ref2) {
-                  var data = _ref2.data;
-                  var info = 'successfully fetched posts';
-                  commit('setPosts', data);
-                  commit('success', info);
-                })["catch"](function (err) {
-                  commit('error', err);
-                });
+                _context.next = 3;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].getPosts();
 
-              case 2:
+              case 3:
+                result = _context.sent;
+                commit('setPosts', result);
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -35252,24 +35347,22 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     getPost: function () {
       var _getPost = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref3, id) {
-        var commit;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, id) {
+        var commit, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref3.commit;
-                axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/post/".concat(id)).then(function (_ref4) {
-                  var data = _ref4.data;
-                  var info = "successfully fetched post with id: ".concat(id);
-                  commit('success', info);
-                  commit('setPost', data.post);
-                  commit('setComments', data.comments);
-                })["catch"](function (err) {
-                  commit('error', err);
-                });
+                commit = _ref2.commit;
+                _context2.next = 3;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].getPost(id);
 
-              case 2:
+              case 3:
+                result = _context2.sent;
+                commit('setPost', result.post);
+                commit('setComments', result.comments);
+
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -35286,19 +35379,19 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     login: function () {
       var _login = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref5, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, payload) {
         var commit, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref5.commit;
+                commit = _ref3.commit;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', payload);
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].login(payload);
 
               case 3:
                 result = _context3.sent;
-                commit('login', result.data);
+                commit('login', result);
 
               case 5:
               case "end":
@@ -35317,19 +35410,19 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     register: function () {
       var _register = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref6, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref4, payload) {
         var commit, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref6.commit;
+                commit = _ref4.commit;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', payload);
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].register(payload);
 
               case 3:
                 result = _context4.sent;
-                commit('login', result.data);
+                commit('login', result);
 
               case 5:
               case "end":
@@ -35348,19 +35441,19 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     createComment: function () {
       var _createComment = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref7, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref5, payload) {
         var commit, comment;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                commit = _ref7.commit;
+                commit = _ref5.commit;
                 _context5.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/comment/".concat(payload.postId, "/create"), payload);
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].createComment(payload);
 
               case 3:
                 comment = _context5.sent;
-                commit('setComment', comment.data);
+                commit('setComment', comment);
 
               case 5:
               case "end":
@@ -35379,19 +35472,19 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     getUser: function () {
       var _getUser = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref6) {
         var commit, userInfo;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                commit = _ref8.commit;
+                commit = _ref6.commit;
                 _context6.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/user');
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].getUser();
 
               case 3:
                 userInfo = _context6.sent;
-                commit('setUser', userInfo.data);
+                commit('setUser', userInfo);
 
               case 5:
               case "end":

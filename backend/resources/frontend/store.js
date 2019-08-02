@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 
 import Auth from '@/api/Auth.js';
+import API from '@/api/Endpoints.js';
 
 Vue.use(Vuex);
 
@@ -77,48 +78,34 @@ export default new Vuex.Store({
   },
   actions: {
     async getPosts({commit}) {
-      axios.get('/api/posts')
-        .then(({data}) => {
-          let info = 'successfully fetched posts';
-          commit('setPosts', data);
-          commit('success', info);
-        })
-        .catch((err) => {
-          commit('error', err)
-        })
+      let result = await API.getPosts();
+      commit('setPosts', result);
     },
 
     async getPost({commit}, id) {
-      axios.get(`/api/post/${id}`)
-          .then(({data}) => {
-            let info = `successfully fetched post with id: ${id}`;
-            commit('success', info)
-            commit('setPost', data.post);
-            commit('setComments', data.comments);
-          })
-          .catch((err) => {
-            commit('error', err);
-          });
+      let result = await API.getPost(id);
+      commit('setPost', result.post);
+      commit('setComments', result.comments);
     },
 
     async login({commit}, payload) {
-      let result = await axios.post('/api/login', payload);
-      commit('login', result.data);
+      let result = await API.login(payload);
+      commit('login', result);
       },
 
     async register({commit}, payload) {
-      let result = await axios.post('/api/register', payload);
-      commit('login', result.data);
+      let result = await API.register(payload);
+      commit('login', result);
     },
 
     async createComment({commit}, payload) {
-      let comment = await axios.post(`/api/comment/${payload.postId}/create`, payload);
-      commit('setComment', comment.data);
+      let comment = await API.createComment(payload);
+      commit('setComment', comment);
     },
 
     async getUser({commit}) {
-      let userInfo = await axios.get('/api/user');
-      commit('setUser', userInfo.data);
+      let userInfo = await API.getUser()
+      commit('setUser', userInfo);
     }
 
   }

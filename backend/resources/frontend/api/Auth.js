@@ -1,6 +1,5 @@
 import axios from 'axios';
 import store from '@/store.js';
-// import config from '@/api/Config.js';
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -29,10 +28,9 @@ class Auth {
     let token = localStorage.getItem('token');
     if (token) {
       return true;
-    } else {
+    }
       this.logout();
       return false;
-    }
   }
 
   async isAdmin() {

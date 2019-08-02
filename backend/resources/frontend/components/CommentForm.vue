@@ -72,10 +72,17 @@ export default {
               .catch(() => {
                 this.flash('Your comment was rejected. Please avoid profanity', 'error');
               })
+              this.reset();
 
           }
         })
     },
+
+    reset() {
+      this.submitted = false;
+      this.message = '';
+    }
+
 
   }
 }

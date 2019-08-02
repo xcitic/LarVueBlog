@@ -8,8 +8,8 @@
             <div class="breadcrumb-dn mr-auto">
               <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>
             </div>
-            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
 
+            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
                 <li class="nav-item" v-if="!homepage">
                   <router-link class="nav-link" :to="{ name: 'home' }">
                      <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
@@ -38,8 +38,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Auth from '@/api/Auth.js';
 import ProfileIcon from '@/components/ProfileIcon';
+
 
 export default {
   name: 'NavBar',
@@ -49,6 +51,10 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      user: state => state.authenticated
+    }),
+
     authenticated() {
       return Auth.check();
     },
