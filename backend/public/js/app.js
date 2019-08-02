@@ -2397,12 +2397,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    user: function user(state) {
+    authenticated: function authenticated(state) {
       return state.authenticated;
     }
   }), {
-    authenticated: function authenticated() {
-      return _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__["default"].check();
+    authCheck: function authCheck() {
+      return this.authenticated;
     },
     dashboard: function dashboard() {
       return this.$route.name === "dashboard";
@@ -17090,7 +17090,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.authenticated
+      _vm.authCheck
         ? _c(
             "ul",
             { staticClass: "nav navbar-nav nav-flex-icons ml-auto" },
@@ -35268,7 +35268,8 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     comments: [],
     status: '',
     error: null,
-    user: null
+    user: null,
+    authenticated: false
   },
   getters: {
     getComments: function getComments(state) {
@@ -35298,9 +35299,11 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     login: function login(state, userInfo) {
       state.user = userInfo;
       _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__["default"].login(userInfo.token, userInfo);
+      state.authenticated = true;
     },
     logout: function logout(state) {
       state.user = null;
+      state.authenticated = false;
     },
     setUser: function setUser(state, userInfo) {
       state.user = userInfo;

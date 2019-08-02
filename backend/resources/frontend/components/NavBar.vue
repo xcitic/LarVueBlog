@@ -9,7 +9,7 @@
               <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>
             </div>
 
-            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
+            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authCheck">
                 <li class="nav-item" v-if="!homepage">
                   <router-link class="nav-link" :to="{ name: 'home' }">
                      <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
@@ -52,11 +52,11 @@ export default {
 
   computed: {
     ...mapState({
-      user: state => state.authenticated
+      authenticated: state => state.authenticated
     }),
 
-    authenticated() {
-      return Auth.check();
+    authCheck() {
+      return this.authenticated;
     },
 
     dashboard() {

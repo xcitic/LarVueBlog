@@ -21,7 +21,7 @@ export default new Vuex.Store({
     status: '',
     error: null,
     user: null,
-
+    authenticated: false,
   },
 
   getters: {
@@ -58,10 +58,12 @@ export default new Vuex.Store({
     login(state, userInfo) {
       state.user = userInfo;
       Auth.login(userInfo.token, userInfo);
+      state.authenticated = true;
     },
 
     logout(state) {
       state.user = null;
+      state.authenticated = false;
     },
 
     setUser(state, userInfo) {
