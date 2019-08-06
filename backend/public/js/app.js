@@ -2340,15 +2340,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
-/* harmony import */ var _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ProfileIcon */ "./resources/frontend/components/ProfileIcon.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+/* harmony import */ var _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/ProfileIcon */ "./resources/frontend/components/ProfileIcon.vue");
 //
 //
 //
@@ -2388,21 +2380,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NavBar',
   components: {
-    ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    authenticated: function authenticated(state) {
-      return state.authenticated;
-    }
-  }), {
-    authCheck: function authCheck() {
-      return this.authenticated;
+  mounted: function mounted() {
+    return this.$store.dispatch('getUser');
+  },
+  computed: {
+    authenticated: function authenticated() {
+      return this.$store.state.authenticated;
     },
     dashboard: function dashboard() {
       return this.$route.name === "dashboard";
@@ -2410,7 +2399,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     homepage: function homepage() {
       return this.$route.name === "home";
     }
-  })
+  }
 });
 
 /***/ }),
@@ -2688,6 +2677,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SideNav: _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('getUser');
   }
 });
 
@@ -2858,7 +2850,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BlogPost_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/BlogPost.vue */ "./resources/frontend/components/BlogPost.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -2876,7 +2867,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
@@ -2886,11 +2876,11 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getPosts();
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
-    posts: function posts(state) {
-      return state.posts;
+  computed: {
+    posts: function posts() {
+      return this.$store.state.posts;
     }
-  }),
+  },
   data: function data() {
     return {};
   },
@@ -17090,7 +17080,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.authCheck
+      _vm.authenticated
         ? _c(
             "ul",
             { staticClass: "nav navbar-nav nav-flex-icons ml-auto" },
@@ -34270,8 +34260,6 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
                 data: data
               }).then(function (res) {
                 return res.data;
-              })["catch"](function (err) {
-                return err.message;
               }));
 
             case 1:
@@ -34303,9 +34291,36 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   createComment: function createComment(payload) {
     return this.apiCall('post', "/comment/".concat(payload.postId, "/create"), payload);
   },
-  getUser: function getUser() {
-    return this.apiCall('get', '/user');
-  }
+  getUser: function () {
+    var _getUser = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              return _context2.abrupt("return", this.apiCall('get', '/user'));
+
+            case 4:
+              _context2.prev = 4;
+              _context2.t0 = _context2["catch"](0);
+              console.log('error dude');
+
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this, [[0, 4]]);
+    }));
+
+    function getUser() {
+      return _getUser.apply(this, arguments);
+    }
+
+    return getUser;
+  }()
 });
 
 /***/ }),
@@ -35307,6 +35322,17 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     },
     setUser: function setUser(state, userInfo) {
       state.user = userInfo;
+
+      if (state.user.name) {
+        state.authenticated = true;
+      }
+    },
+    setAuth: function setAuth(state, userInfo) {
+      if (userInfo.name) {
+        state.authenticated = true;
+      } else {
+        state.authenticated = false;
+      }
     },
     error: function error(state, err) {
       state.error = err;
@@ -35395,8 +35421,9 @@ window.axios.defaults.baseURL = "http://localhost:8000";
               case 3:
                 result = _context3.sent;
                 commit('login', result);
+                commit('setAuth', result);
 
-              case 5:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -35420,19 +35447,28 @@ window.axios.defaults.baseURL = "http://localhost:8000";
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref4.commit;
-                _context4.next = 3;
+                _context4.prev = 1;
+                _context4.next = 4;
                 return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].register(payload);
 
-              case 3:
+              case 4:
                 result = _context4.sent;
                 commit('login', result);
+                commit('setAuth');
+                _context4.next = 12;
+                break;
 
-              case 5:
+              case 9:
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](1);
+                commit('error', _context4.t0);
+
+              case 12:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[1, 9]]);
       }));
 
       function register(_x6, _x7) {
@@ -35482,19 +35518,27 @@ window.axios.defaults.baseURL = "http://localhost:8000";
             switch (_context6.prev = _context6.next) {
               case 0:
                 commit = _ref6.commit;
-                _context6.next = 3;
+                _context6.prev = 1;
+                _context6.next = 4;
                 return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].getUser();
 
-              case 3:
+              case 4:
                 userInfo = _context6.sent;
                 commit('setUser', userInfo);
+                _context6.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](1);
+                commit('error', _context6.t0.message);
+
+              case 11:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6);
+        }, _callee6, null, [[1, 8]]);
       }));
 
       function getUser(_x10) {
@@ -35502,6 +35546,32 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return getUser;
+    }(),
+    setAuth: function () {
+      var _setAuth = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref7) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                commit = _ref7.commit;
+                commit('setAuth');
+
+              case 2:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function setAuth(_x11) {
+        return _setAuth.apply(this, arguments);
+      }
+
+      return setAuth;
     }()
   }
 }));

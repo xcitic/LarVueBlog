@@ -68,6 +68,17 @@ export default new Vuex.Store({
 
     setUser(state, userInfo) {
       state.user = userInfo;
+      if (state.user.name) {
+        state.authenticated = true;
+      }
+    },
+
+    setAuth(state, userInfo) {
+      if (userInfo.name) {
+        state.authenticated = true;
+      } else {
+        state.authenticated = false;
+      }
     },
 
     error(state, err) {
@@ -91,13 +102,19 @@ export default new Vuex.Store({
     },
 
     async login({commit}, payload) {
-      let result = await API.login(payload);
-      commit('login', result);
+        let result = await API.login(payload);
+        commit('login', result);
+        commit('setAuth', result);
       },
 
     async register({commit}, payload) {
-      let result = await API.register(payload);
-      commit('login', result);
+      try {
+        let result = await API.register(payload);
+        commit('login', result);
+        commit('setAuth');
+      } catch (err) {
+        commit('error', err);
+      }
     },
 
     async createComment({commit}, payload) {
@@ -106,8 +123,16 @@ export default new Vuex.Store({
     },
 
     async getUser({commit}) {
-      let userInfo = await API.getUser()
-      commit('setUser', userInfo);
+      try {
+        let userInfo = await API.getUser()
+        commit('setUser', userInfo);
+      } catch (err) {
+        commit('error', err.message);
+      }
+    },
+
+    async setAuth({commit}) {
+      commit('setAuth');
     }
 
   }

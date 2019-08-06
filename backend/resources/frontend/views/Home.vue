@@ -17,7 +17,6 @@
 
 <script>
 import BlogPost from '@/components/BlogPost.vue';
-import { mapState } from 'vuex';
 
 export default {
   name: 'home',
@@ -29,9 +28,11 @@ export default {
     this.getPosts();
   },
 
-  computed: mapState({
-    posts: state => state.posts
-  }),
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    }
+  },
 
   data() {
     return {
@@ -42,7 +43,8 @@ export default {
   methods: {
     getPosts() {
       this.$store.dispatch('getPosts');
-    }
+    },
+
   }
 }
 </script>

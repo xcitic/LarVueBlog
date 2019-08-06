@@ -24,7 +24,7 @@
                   <i class="fa fa-user"></i> <span class="hidden-sm-down">Profile</span>
               </a>
               <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown">
-                  <a class="dropdown-item" href="#">Log Out</a>
+                  <a class="dropdown-item" @click="logout">Log Out</a>
                   <a class="dropdown-item" href="#">My Profile</a>
               </div>
           </li>
@@ -38,7 +38,13 @@
 
 <script>
 export default {
-  name: 'TopNav'
+  name: 'TopNav',
+
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+    }
+  }
 }
 </script>
 

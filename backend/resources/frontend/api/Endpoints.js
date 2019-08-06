@@ -26,9 +26,6 @@ export default {
     .then(res => {
       return res.data
     })
-    .catch(err => {
-      return err.message
-    })
   },
 
   getPosts() {
@@ -51,7 +48,12 @@ export default {
     return this.apiCall('post', `/comment/${payload.postId}/create`, payload);
   },
 
-  getUser() {
-    return this.apiCall('get', '/user');
+  async getUser() {
+    try {
+        return this.apiCall('get', '/user');
+    } catch (err) {
+      console.log('error dude');
+    }
+
   }
 }
