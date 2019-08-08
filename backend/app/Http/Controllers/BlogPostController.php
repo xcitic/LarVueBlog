@@ -58,10 +58,10 @@ class BlogPostController extends Controller
           try {
             $image = $request->get('image');
             $title = $request->title;
-            $imageName = trim(strtolower(preg_replace('/\s+/', '', $title)));
+            $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
 
             $imageLink = public_path('/images/');
-            \Image::make($image)->save($imageLink.$imageName);
+            \Image::make($image)->encode('png')->save($imageLink.$imageName);
           } catch (\Exception $e) {
 
             return response($e, 415);
@@ -74,7 +74,7 @@ class BlogPostController extends Controller
               'title' => $request->title,
               'description' => $request->description,
               'content' => $request->content,
-              'image' => '/images/test',
+              'image' => '/images/'.$imageName,
               'likes'=> 0,
               'views'=> 0,
             ]);
