@@ -22,6 +22,10 @@ export default new Vuex.Store({
     error: null,
     user: null,
     authenticated: false,
+    new: {
+      title: '',
+      content: '',
+    }
   },
 
   getters: {

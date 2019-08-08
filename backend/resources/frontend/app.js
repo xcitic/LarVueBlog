@@ -1,3 +1,5 @@
+"use strict";
+
 // Core
 import Vue from 'vue';
 Vue.config.productionTip = false;
@@ -9,10 +11,10 @@ import store from './store.js';
 import './registerServiceWorker';
 
 // External packages
-import axios from 'axios';
 import VueFlashMessage from 'vue-flash-message';
 require('vue-flash-message/dist/vue-flash-message.min.css');
 import VeeValidate from 'vee-validate';
+
 
 Vue.use(VueFlashMessage, {
   messageOptions: {
@@ -21,12 +23,6 @@ Vue.use(VueFlashMessage, {
 });
 
 Vue.use(VeeValidate);
-
-/* Axios Config Global */
-window.axios = axios;
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = process.env.MIX_APP_URL;
-
 
 new Vue({
   router,
