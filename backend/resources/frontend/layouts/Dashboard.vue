@@ -17,9 +17,6 @@ export default {
   components: {
     SideNav,
   },
-  mounted() {
-      this.$store.dispatch('getUser');
-  }
 
 }
 </script>

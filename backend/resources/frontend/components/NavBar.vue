@@ -48,9 +48,9 @@ export default {
     ProfileIcon
   },
 
-  mounted() {
-    return this.$store.dispatch('getUser');
-  },
+  // mounted() {
+  //   return this.$store.dispatch('checkAuth');
+  // },
 
   computed: {
     authenticated() {

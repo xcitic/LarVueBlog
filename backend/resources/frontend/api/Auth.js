@@ -34,6 +34,13 @@ class Auth {
       return false;
   }
 
+  async authFill() {
+    let user = await JSON.parse(localStorage.getItem('user'));
+    return user;
+  }
+
+
+
   async isAdmin() {
     let userInfo = await API.getUser();
     if(userInfo.role === "admin") {

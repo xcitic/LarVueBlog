@@ -17,9 +17,7 @@
 import Auth from '@/api/Auth';
 
 export default {
-  mounted() {
-    this.$store.dispatch('getUser');
-  },
+
 
   methods: {
     async logout() {
@@ -30,5 +28,5 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 </style>

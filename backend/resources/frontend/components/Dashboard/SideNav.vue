@@ -3,7 +3,7 @@
   <!-- Logo -->
   <li>
     <div class="user-box" v-if="user">
-      <img :src="user ? user.image : ''" class="img-fluid rounded-circle">
+      <img :src="user.image" class="img-fluid rounded-circle">
       <p class="user text-center black-text">{{user.name}}</p>
     </div>
   </li>
@@ -30,7 +30,7 @@ export default {
 
   computed: {
     user() {
-      return this.getUser();
+      return this.$store.state.user;
     },
 
     isAdmin() {
@@ -39,10 +39,6 @@ export default {
   },
 
   methods: {
-
-    getUser() {
-      return this.$store.state.user;
-    },
 
 
   }

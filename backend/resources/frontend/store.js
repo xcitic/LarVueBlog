@@ -72,7 +72,7 @@ export default new Vuex.Store({
 
     setUser(state, userInfo) {
       state.user = userInfo;
-      if (state.user.name) {
+      if (userInfo) {
         state.authenticated = true;
       }
     },
@@ -137,6 +137,11 @@ export default new Vuex.Store({
       } catch (err) {
         commit('error', err.message);
       }
+    },
+
+    async checkUser({commit}) {
+      let userInfo = await Auth.authFill();
+      commit('setUser', userInfo);
     },
 
     async setAuth({commit}) {

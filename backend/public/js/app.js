@@ -1925,6 +1925,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     NavBar: _components_NavBar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    return this.$store.dispatch('checkUser');
   }
 });
 
@@ -2214,17 +2217,13 @@ __webpack_require__.r(__webpack_exports__);
   name: 'SideNav',
   computed: {
     user: function user() {
-      return this.getUser();
+      return this.$store.state.user;
     },
     isAdmin: function isAdmin() {
       return true;
     }
   },
-  methods: {
-    getUser: function getUser() {
-      return this.$store.state.user;
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -2423,9 +2422,9 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     ProfileIcon: _components_ProfileIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {
-    return this.$store.dispatch('getUser');
-  },
+  // mounted() {
+  //   return this.$store.dispatch('checkAuth');
+  // },
   computed: {
     authenticated: function authenticated() {
       return this.$store.state.authenticated;
@@ -2476,9 +2475,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.$store.dispatch('getUser');
-  },
   methods: {
     logout: function () {
       var _logout = _asyncToGenerator(
@@ -2714,9 +2710,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SideNav: _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  mounted: function mounted() {
-    this.$store.dispatch('getUser');
   }
 });
 
@@ -17007,7 +17000,7 @@ var render = function() {
           ? _c("div", { staticClass: "user-box" }, [
               _c("img", {
                 staticClass: "img-fluid rounded-circle",
-                attrs: { src: _vm.user ? _vm.user.image : "" }
+                attrs: { src: _vm.user.image }
               }),
               _vm._v(" "),
               _c("p", { staticClass: "user text-center black-text" }, [
@@ -34506,38 +34499,70 @@ function () {
       return false;
     }
   }, {
-    key: "isAdmin",
+    key: "authFill",
     value: function () {
-      var _isAdmin = _asyncToGenerator(
+      var _authFill = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var userInfo;
+        var user;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_3__["default"].getUser();
+                return JSON.parse(localStorage.getItem('user'));
 
               case 2:
-                userInfo = _context.sent;
+                user = _context.sent;
+                return _context.abrupt("return", user);
 
-                if (!(userInfo.role === "admin")) {
-                  _context.next = 5;
-                  break;
-                }
-
-                return _context.abrupt("return", true);
-
-              case 5:
-                return _context.abrupt("return", false);
-
-              case 6:
+              case 4:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }));
+
+      function authFill() {
+        return _authFill.apply(this, arguments);
+      }
+
+      return authFill;
+    }()
+  }, {
+    key: "isAdmin",
+    value: function () {
+      var _isAdmin = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var userInfo;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_3__["default"].getUser();
+
+              case 2:
+                userInfo = _context2.sent;
+
+                if (!(userInfo.role === "admin")) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                return _context2.abrupt("return", true);
+
+              case 5:
+                return _context2.abrupt("return", false);
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }));
 
       function isAdmin() {
@@ -35707,7 +35732,7 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     setUser: function setUser(state, userInfo) {
       state.user = userInfo;
 
-      if (state.user.name) {
+      if (userInfo) {
         state.authenticated = true;
       }
     },
@@ -35934,19 +35959,24 @@ window.axios.defaults.baseURL = "http://localhost:8000";
 
       return getUser;
     }(),
-    setAuth: function () {
-      var _setAuth = _asyncToGenerator(
+    checkUser: function () {
+      var _checkUser = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref7) {
-        var commit;
+        var commit, userInfo;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 commit = _ref7.commit;
-                commit('setAuth');
+                _context7.next = 3;
+                return _api_Auth_js__WEBPACK_IMPORTED_MODULE_4__["default"].authFill();
 
-              case 2:
+              case 3:
+                userInfo = _context7.sent;
+                commit('setUser', userInfo);
+
+              case 5:
               case "end":
                 return _context7.stop();
             }
@@ -35954,7 +35984,33 @@ window.axios.defaults.baseURL = "http://localhost:8000";
         }, _callee7);
       }));
 
-      function setAuth(_x11) {
+      function checkUser(_x11) {
+        return _checkUser.apply(this, arguments);
+      }
+
+      return checkUser;
+    }(),
+    setAuth: function () {
+      var _setAuth = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref8) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                commit = _ref8.commit;
+                commit('setAuth');
+
+              case 2:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function setAuth(_x12) {
         return _setAuth.apply(this, arguments);
       }
 
@@ -35963,29 +36019,29 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     createPost: function () {
       var _createPost = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref8, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(_ref9, payload) {
         var commit, newPost;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                commit = _ref8.commit;
-                _context8.next = 3;
+                commit = _ref9.commit;
+                _context9.next = 3;
                 return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].createPost(payload);
 
               case 3:
-                newPost = _context8.sent;
+                newPost = _context9.sent;
                 commit('setNewPost', newPost);
 
               case 5:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8);
+        }, _callee9);
       }));
 
-      function createPost(_x12, _x13) {
+      function createPost(_x13, _x14) {
         return _createPost.apply(this, arguments);
       }
 
