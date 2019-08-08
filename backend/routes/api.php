@@ -32,4 +32,5 @@ Route::get('/post/{id}', 'BlogPostController@show');
 
 Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
+  Route::post('/post/create', 'BlogPostController@store');
 });

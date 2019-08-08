@@ -8,6 +8,7 @@ class BlogPost extends Model
 {
     protected $table = 'blog_posts';
     protected $fillable = [
+      'user_id',
       'title',
       'description',
       'content',

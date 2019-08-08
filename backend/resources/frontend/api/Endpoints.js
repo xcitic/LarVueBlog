@@ -54,6 +54,11 @@ export default {
     } catch (err) {
       console.log('error dude');
     }
+  },
 
+  createPost(payload) {
+    return this.apiCall('post', '/post/create', payload);
   }
+
+
 }

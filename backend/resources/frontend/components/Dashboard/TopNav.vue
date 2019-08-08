@@ -4,13 +4,7 @@
       <!-- SideNav slide-out button -->
       <div class="float-left">
           <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
-
       </div>
-
-      <!-- Breadcrumb-->
-      <ol class="breadcrumb hidden-lg-down">
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-      </ol>
 
       <!--Navbar links-->
       <ul class="nav navbar-nav nav-flex-icons ml-auto">

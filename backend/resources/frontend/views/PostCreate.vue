@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>CreatePost</h1>
-    <section class="section">
+    <h1>Create New Blog Post</h1>
+    <section class="section mt-2">
         <!-- First row -->
         <div class="row">
             <!-- First col -->
@@ -9,13 +9,21 @@
                 <!-- First card -->
                 <div class="card mb-r">
                     <div class="card-block">
-                        <div class="md-form mt-1 mb-0">
-                            <input v-model="title" type="text" id="title" class="form-control">
+                        <div class="md-form mt-1 mb-0 ml-1">
+                            <input v-model="title" type="text" id="title" class="form-control" />
                             <label for="title" class="">Post title</label>
                         </div>
                     </div>
                 </div>
                 <!-- /.First card -->
+
+                <div class="card mb-r">
+                    <div class="card-block">
+                        <div class="md-form mt-1 mb-0 ml-1">
+                            <textarea v-model="description" type="text" id="description" class="form-control" value="Short Dec"></textarea>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Second card -->
                 <div class="card mb-r">
@@ -23,16 +31,20 @@
                 </div>
                 <!-- /.Second card -->
 
-                <!-- Third Card -->
                 <div class="card mb-r">
                     <div class="card-block">
-                        <div class="md-form mb-0">
-                            <textarea type="text" id="form7" class="md-textarea"></textarea>
-                            <label for="form7">Custom CSS Code</label>
+                        <div class="md-form mt-1 mb-0 ml-1">
+                          <input type="file" @change="processImage"  />
                         </div>
                     </div>
                 </div>
-                <!-- /.Third Card -->
+
+                <div class="card mb-r" v-if="image">
+                    <div class="card-block">
+                      <img :src="image" alt="">
+                    </div>
+                </div>
+
             </div>
             <!-- /.First col -->
             <!-- Second col -->
@@ -48,53 +60,16 @@
                         <!--Card content-->
                         <div class="card-block">
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
-                            <p><i class="fa fa-eye mr-1" aria-hidden="true"></i> Visibility <strong>Public</strong></p>
-                            <p><i class="fa fa-archive mr-1 mr-1" aria-hidden="true"></i> Revisions: <strong>2</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
-                                <button class="btn-flat waves-effect">Discard</button>
-                                <button class="btn btn-primary">Publish</button>
+                                <button class="btn-flat waves-effect" @click="reset">Discard</button>
+                                <button class="btn btn-primary" @click="save">Publish</button>
                             </div>
                         </div>
                         <!--/.Card content-->
                     </div>
                 </div>
                 <!-- /.First card -->
-                <!-- Second card -->
-                <div class="card card-cascade narrower mb-r">
-                    <div class="admin-panel info-admin-panel">
-                        <!--Card image-->
-                        <div class="view primary-color">
-                            <h5>Categories</h5>
-                        </div>
-                        <!--/Card image-->
-                        <!--Card content-->
-                        <div class="card-block">
-                            <fieldset class="form-group">
-                                <input type="checkbox" id="color-1">
-                                <label for="color-1">Material Design</label>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" id="color-2">
-                                <label for="color-2">Tutorials</label>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" id="color-3">
-                                <label for="color-3">Marketing Automation</label>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" id="color-4">
-                                <label for="color-4">Design Resources</label>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" id="color-5">
-                                <label for="color-5">Random Stories</label>
-                            </fieldset>
-                        </div>
-                        <!--/.Card content-->
-                    </div>
-                </div>
-                <!-- /.Second card -->
             </div>
             <!-- /.Second col -->
         </div>
@@ -116,9 +91,57 @@ export default {
   data() {
     return {
       title: '',
+      description: '',
       content: '',
+      image: '',
       editor: ClassicEditor,
     }
+  },
+
+  methods: {
+    processImage(e) {
+      let files = e.target.files || e.dataTransfer.files;
+      if(!files.length) {
+        return;
+      }
+      this.createImage(files[0]);
+    },
+
+    createImage(file) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+
+
+    save() {
+      let payload = {
+        'title': this.title,
+        'description': this.description,
+        'content': this.content,
+        'image': this.image,
+      }
+
+      this.$store.dispatch('createPost', payload)
+      .then(() => {
+        this.flash('Successfully created new post', 'success');
+        this.$router.push('/dashboard');
+      }).catch((err) => {
+        this.flash('Error: ' + err.message, 'error');
+      })
+
+    },
+
+    reset() {
+      this.title = '';
+      this.description = '';
+      this.content = '';
+      this.image = '';
+    },
+
+
   }
 }
 </script>

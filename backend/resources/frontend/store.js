@@ -85,6 +85,10 @@ export default new Vuex.Store({
       }
     },
 
+    setNewPost(state, post) {
+      state.posts = [post, ...state.posts];
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -137,6 +141,11 @@ export default new Vuex.Store({
 
     async setAuth({commit}) {
       commit('setAuth');
+    },
+
+    async createPost({commit}, payload) {
+      let newPost = await API.createPost(payload);
+      commit('setNewPost', newPost);
     }
 
   }

@@ -2210,13 +2210,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SideNav',
   computed: {
     user: function user() {
+      return this.getUser();
+    },
+    isAdmin: function isAdmin() {
+      return true;
+    }
+  },
+  methods: {
+    getUser: function getUser() {
       return this.$store.state.user;
     }
   }
@@ -3267,31 +3272,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3301,9 +3281,56 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       title: '',
+      description: '',
       content: '',
+      image: '',
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a
     };
+  },
+  methods: {
+    processImage: function processImage(e) {
+      var files = e.target.files || e.dataTransfer.files;
+
+      if (!files.length) {
+        return;
+      }
+
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var _this = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this.image = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    save: function save() {
+      var _this2 = this;
+
+      var payload = {
+        'title': this.title,
+        'description': this.description,
+        'content': this.content,
+        'image': this.image
+      };
+      this.$store.dispatch('createPost', payload).then(function () {
+        _this2.flash('Successfully created new post', 'success');
+
+        _this2.$router.push('/dashboard');
+      })["catch"](function (err) {
+        _this2.flash('Error: ' + err.message, 'error');
+      });
+    },
+    reset: function reset() {
+      this.title = '';
+      this.description = '';
+      this.content = '';
+      this.image = '';
+    }
   }
 });
 
@@ -16990,47 +17017,48 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("li", [
+        _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
+          _c(
+            "li",
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "collapsible-header waves-effect arrow-r",
+                  attrs: { to: { name: "dashboard" } }
+                },
+                [_c("i", { staticClass: "fa fa-code" }), _vm._v(" Dashboard")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.isAdmin
+            ? _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "collapsible-header waves-effect arrow-r",
+                      attrs: { to: { name: "postCreate" } }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-envelope" }),
+                      _vm._v(" Create Post")
+                    ]
+                  )
+                ],
+                1
+              )
+            : _vm._e()
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
-        _c("li", [
-          _c("a", { staticClass: "collapsible-header waves-effect arrow-r" }, [
-            _c("i", { staticClass: "fa fa-code" }),
-            _vm._v(" Dashboard"),
-            _c("i", { staticClass: "fa fa-angle-down rotate-icon" })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "collapsible-body", attrs: { id: "dashboard" } },
-            [
-              _c("ul", [
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "waves-effect",
-                      attrs: { href: "home.html" }
-                    },
-                    [_vm._v("Dahboard v1")]
-                  )
-                ])
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -18282,14 +18310,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h1", [_vm._v("CreatePost")]),
+    _c("h1", [_vm._v("Create New Blog Post")]),
     _vm._v(" "),
-    _c("section", { staticClass: "section" }, [
+    _c("section", { staticClass: "section mt-2" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-lg-8" }, [
           _c("div", { staticClass: "card mb-r" }, [
             _c("div", { staticClass: "card-block" }, [
-              _c("div", { staticClass: "md-form mt-1 mb-0" }, [
+              _c("div", { staticClass: "md-form mt-1 mb-0 ml-1" }, [
                 _c("input", {
                   directives: [
                     {
@@ -18317,6 +18345,38 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
+          _c("div", { staticClass: "card mb-r" }, [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "md-form mt-1 mb-0 ml-1" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.description,
+                      expression: "description"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "description",
+                    value: "Short Dec"
+                  },
+                  domProps: { value: _vm.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.description = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "card mb-r" },
@@ -18335,10 +18395,56 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "card mb-r" }, [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "md-form mt-1 mb-0 ml-1" }, [
+                _c("input", {
+                  attrs: { type: "file" },
+                  on: { change: _vm.processImage }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.image
+            ? _c("div", { staticClass: "card mb-r" }, [
+                _c("div", { staticClass: "card-block" }, [
+                  _c("img", { attrs: { src: _vm.image, alt: "" } })
+                ])
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
-        _vm._m(1)
+        _c("div", { staticClass: "col-lg-4" }, [
+          _c("div", { staticClass: "card card-cascade narrower mb-r" }, [
+            _c("div", { staticClass: "admin-panel info-admin-panel" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-block" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn-flat waves-effect",
+                      on: { click: _vm.reset }
+                    },
+                    [_vm._v("Discard")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn btn-primary", on: { click: _vm.save } },
+                    [_vm._v("Publish")]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
       ])
     ])
   ])
@@ -18348,127 +18454,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card mb-r" }, [
-      _c("div", { staticClass: "card-block" }, [
-        _c("div", { staticClass: "md-form mb-0" }, [
-          _c("textarea", {
-            staticClass: "md-textarea",
-            attrs: { type: "text", id: "form7" }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "form7" } }, [_vm._v("Custom CSS Code")])
-        ])
-      ])
+    return _c("div", { staticClass: "view primary-color" }, [
+      _c("h5", [_vm._v("Publish")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-cascade narrower mb-r" }, [
-        _c("div", { staticClass: "admin-panel info-admin-panel" }, [
-          _c("div", { staticClass: "view primary-color" }, [
-            _c("h5", [_vm._v("Publish")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-block" }, [
-            _c("p", [
-              _c("i", {
-                staticClass: "fa fa-flag mr-1",
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" Status: "),
-              _c("strong", [_vm._v("Draft")])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                staticClass: "fa fa-eye mr-1",
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" Visibility "),
-              _c("strong", [_vm._v("Public")])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                staticClass: "fa fa-archive mr-1 mr-1",
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" Revisions: "),
-              _c("strong", [_vm._v("2")])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                staticClass: "fa fa-calendar mr-1",
-                attrs: { "aria-hidden": "true" }
-              }),
-              _vm._v(" Publish: "),
-              _c("strong", [_vm._v("Immediately")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-right" }, [
-              _c("button", { staticClass: "btn-flat waves-effect" }, [
-                _vm._v("Discard")
-              ]),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-primary" }, [
-                _vm._v("Publish")
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card card-cascade narrower mb-r" }, [
-        _c("div", { staticClass: "admin-panel info-admin-panel" }, [
-          _c("div", { staticClass: "view primary-color" }, [
-            _c("h5", [_vm._v("Categories")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-block" }, [
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", { attrs: { type: "checkbox", id: "color-1" } }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "color-1" } }, [
-                _vm._v("Material Design")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", { attrs: { type: "checkbox", id: "color-2" } }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "color-2" } }, [_vm._v("Tutorials")])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", { attrs: { type: "checkbox", id: "color-3" } }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "color-3" } }, [
-                _vm._v("Marketing Automation")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", { attrs: { type: "checkbox", id: "color-4" } }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "color-4" } }, [
-                _vm._v("Design Resources")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", { attrs: { type: "checkbox", id: "color-5" } }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "color-5" } }, [
-                _vm._v("Random Stories")
-              ])
-            ])
-          ])
-        ])
-      ])
+    return _c("p", [
+      _c("i", {
+        staticClass: "fa fa-flag mr-1",
+        attrs: { "aria-hidden": "true" }
+      }),
+      _vm._v(" Status: "),
+      _c("strong", [_vm._v("Draft")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("i", {
+        staticClass: "fa fa-calendar mr-1",
+        attrs: { "aria-hidden": "true" }
+      }),
+      _vm._v(" Publish: "),
+      _c("strong", [_vm._v("Immediately")])
     ])
   }
 ]
@@ -34648,7 +34661,10 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
     }
 
     return getUser;
-  }()
+  }(),
+  createPost: function createPost(payload) {
+    return this.apiCall('post', '/post/create', payload);
+  }
 });
 
 /***/ }),
@@ -35702,6 +35718,9 @@ window.axios.defaults.baseURL = "http://localhost:8000";
         state.authenticated = false;
       }
     },
+    setNewPost: function setNewPost(state, post) {
+      state.posts = [post].concat(_toConsumableArray(state.posts));
+    },
     error: function error(state, err) {
       state.error = err;
     },
@@ -35940,6 +35959,37 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return setAuth;
+    }(),
+    createPost: function () {
+      var _createPost = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref8, payload) {
+        var commit, newPost;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                commit = _ref8.commit;
+                _context8.next = 3;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].createPost(payload);
+
+              case 3:
+                newPost = _context8.sent;
+                commit('setNewPost', newPost);
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function createPost(_x12, _x13) {
+        return _createPost.apply(this, arguments);
+      }
+
+      return createPost;
     }()
   }
 }));

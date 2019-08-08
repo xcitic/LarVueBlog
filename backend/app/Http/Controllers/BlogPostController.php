@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BlogPost;
+use App\User;
 use Illuminate\Http\Request;
 
 class BlogPostController extends Controller
@@ -44,7 +45,55 @@ class BlogPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $auth = $request->user('api');
+
+        if ($auth->role === 'admin') {
+          $validate = $request->validate([
+            'title' => 'required|string|max:100',
+            'description' => 'required|string|max:150',
+            'content' => 'required|max:1000',
+            'image' => 'required',
+          ]);
+
+          try {
+            $image = $request->get('image');
+            $title = $request->title;
+            $imageName = trim(strtolower(preg_replace('/\s+/', '', $title)));
+
+            $imageLink = public_path('/images/');
+            \Image::make($image)->save($imageLink.$imageName);
+          } catch (\Exception $e) {
+
+            return response($e, 415);
+          }
+
+          try {
+
+            $post = new BlogPost([
+              'user_id' => $auth->id,
+              'title' => $request->title,
+              'description' => $request->description,
+              'content' => $request->content,
+              'image' => '/images/test',
+              'likes'=> 0,
+              'views'=> 0,
+            ]);
+
+            $post->save();
+
+            return response($post, 201);
+
+          } catch (\Exception $e) {
+
+            return response ($e, 500);
+
+          }
+
+        }
+
+        return response('Not authorized', 401);
+
+
     }
 
     /**

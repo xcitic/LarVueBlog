@@ -11,13 +11,10 @@
   <!-- Side navigation links -->
   <li>
     <ul class="collapsible collapsible-accordion">
-      <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Dashboard<i class="fa fa-angle-down rotate-icon"></i></a>
-        <div id="dashboard" class="collapsible-body">
-          <ul>
-            <li><a href="home.html" class="waves-effect">Dahboard v1</a>
-            </li>
-          </ul>
-        </div>
+      <li><router-link :to="{name: 'dashboard'}" class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Dashboard</router-link>
+      </li>
+      <li v-if="isAdmin">
+        <router-link :to="{name: 'postCreate'}" class="collapsible-header waves-effect arrow-r"><i class="fa fa-envelope"></i> Create Post</router-link>
       </li>
     </ul>
   </li>
@@ -33,9 +30,23 @@ export default {
 
   computed: {
     user() {
+      return this.getUser();
+    },
+
+    isAdmin() {
+      return true;
+    },
+  },
+
+  methods: {
+
+    getUser() {
       return this.$store.state.user;
-    }
+    },
+
+
   }
+
 
 }
 </script>

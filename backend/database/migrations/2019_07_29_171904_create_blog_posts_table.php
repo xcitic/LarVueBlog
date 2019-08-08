@@ -20,8 +20,8 @@ class CreateBlogPostsTable extends Migration
             $table->string('description');
             $table->text('content');
             $table->string('image');
-            $table->integer('likes');
-            $table->integer('views');
+            $table->integer('likes')->default(0);
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
