@@ -33,6 +33,43 @@ class AdminController extends Controller
 
     public function updatePost(int $id, Request $request) {
       $post = BlogPost::where('id', $id)->first();
-      return response($post);
+
+      $validate = $request->validate([
+        'title' => 'required|string|max:100',
+        'description' => 'required|string|max:150',
+        'content' => 'required|max:1000',
+      ]);
+
+      if(isset($request->image)) {
+        try {
+          $image = $request->image;
+          $title = $request->title;
+          $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
+
+          $imageLink = public_path('/images/');
+          \Image::make($image)->encode('png')->save($imageLink.$imageName);
+        } catch (\Exception $e) {
+
+          return response($e, 415);
+        }
+      }
+
+      try {
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->content = $request->content;
+        if(isset($request->image)) {
+          $post->image = '/images/'.$imageName;
+        }
+        $post->save();
+
+        return response($post);
+
+      } catch (\Exception $e) {
+
+        return response($e, 500);
+
+      }
+
     }
 }

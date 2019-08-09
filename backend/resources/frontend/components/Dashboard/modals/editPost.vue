@@ -41,7 +41,7 @@
 
                 <div class="card mb-r" v-if="post.image">
                     <div class="card-block">
-                      <img :src="post.image" alt="">
+                      <img :src="post.image">
                     </div>
                 </div>
 
@@ -133,13 +133,6 @@ export default {
         this.flash('Error: ' + err.message, 'error');
       })
 
-    },
-
-    reset() {
-      this.post.title = '';
-      this.post.description = '';
-      this.post.content = '';
-      this.post.image = '';
     },
 
 

@@ -199,7 +199,8 @@ export default new Vuex.Store({
 
     async updatePost({commit}, payload) {
       try {
-        await API.updatePost(payload);
+        let result = await API.updatePost(payload);
+        commit('success', result);
       } catch (err) {
         commit('error', err);
       }

@@ -2658,12 +2658,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this2.flash('Error: ' + err.message, 'error');
       });
-    },
-    reset: function reset() {
-      this.post.title = '';
-      this.post.description = '';
-      this.post.content = '';
-      this.post.image = '';
     }
   }
 });
@@ -17999,7 +17993,7 @@ var render = function() {
           _vm.post.image
             ? _c("div", { staticClass: "card mb-r" }, [
                 _c("div", { staticClass: "card-block" }, [
-                  _c("img", { attrs: { src: _vm.post.image, alt: "" } })
+                  _c("img", { attrs: { src: _vm.post.image } })
                 ])
               ])
             : _vm._e()
@@ -37294,7 +37288,7 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       var _updatePost = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13, payload) {
-        var commit;
+        var commit, result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -37305,20 +37299,22 @@ window.axios.defaults.baseURL = "http://localhost:8000";
                 return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].updatePost(payload);
 
               case 4:
-                _context13.next = 9;
+                result = _context13.sent;
+                commit('success', result);
+                _context13.next = 11;
                 break;
 
-              case 6:
-                _context13.prev = 6;
+              case 8:
+                _context13.prev = 8;
                 _context13.t0 = _context13["catch"](1);
                 commit('error', _context13.t0);
 
-              case 9:
+              case 11:
               case "end":
                 return _context13.stop();
             }
           }
-        }, _callee13, null, [[1, 6]]);
+        }, _callee13, null, [[1, 8]]);
       }));
 
       function updatePost(_x19, _x20) {
