@@ -74,6 +74,10 @@ export default {
 
   updatePost(payload) {
     return this.apiCall('post', `/post/${payload.id}/update`, payload);
+  },
+
+  deleteComment(id) {
+    return this.apiCall('post', `/comment/${id}/delete`, id);
   }
 
 

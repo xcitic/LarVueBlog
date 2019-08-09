@@ -107,6 +107,10 @@ export default new Vuex.Store({
       state.posts.splice(index,1);
     },
 
+    removeComment(state, index) {
+      state.comments.splice(index,1);
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -194,6 +198,7 @@ export default new Vuex.Store({
         await API.deletePost(id);
       } catch (err) {
         commit('error', err.message);
+        throw err;
       }
     },
 
@@ -203,6 +208,16 @@ export default new Vuex.Store({
         commit('success', result);
       } catch (err) {
         commit('error', err);
+        throw err;
+      }
+    },
+
+    async deleteComment({commit}, id) {
+      try {
+        await API.deleteComment(id);
+      } catch (err) {
+        commit('error', err.message);
+        throw err;
       }
     }
 

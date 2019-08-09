@@ -84,7 +84,7 @@
                                     <td>
                                         <a class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="See Message"><i class="fa fa-envelope"></i></a>
                                         <a class="teal-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <a class="red-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times"></i></a>
+                                        <a @click="deleteComment(index, comment.id)" class="red-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -181,16 +181,31 @@ export default {
       });
     },
 
-    deletePost(index, id) {
-      this.$store.dispatch('deletePost', id);
-      this.$store.commit('removePost', index);
+    async deletePost(index, id) {
+      try {
+        await this.$store.dispatch('deletePost', id)
+        .then((value) => {
+          this.flash(`Deleted Post with id: ${id}`, 'success');
+          this.$store.commit('removePost', index);
+        })
+      } catch (err) {
+        this.flash('Error deleting post: ' + err.message, 'error');
+      }
+
     },
 
     editComment(id) {
-
+      console.log(id);
     },
 
-    deleteComment() {
+    async deleteComment(index, id) {
+      try {
+        await this.$store.dispatch('deleteComment', id)
+        this.flash(`Deleted comment with id: ${id}`, 'success');
+        this.$store.commit('removeComment', index);
+      } catch (err) {
+          this.flash('Error deleting comment: ' + err.message, 'error');
+      }
 
     },
 

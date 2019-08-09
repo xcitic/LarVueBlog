@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h1>Create New Blog Post</h1>
+    <h1>Edit Blog Post</h1>
     <section class="section mt-2">
         <!-- First row -->
         <div class="row">

@@ -2187,8 +2187,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Dashboard_modals_editPost_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/Dashboard/modals/editPost.vue */ "./resources/frontend/components/Dashboard/modals/editPost.vue");
-/* harmony import */ var _components_Dashboard_modals_editComment_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Dashboard/modals/editComment.vue */ "./resources/frontend/components/Dashboard/modals/editComment.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Dashboard_modals_editPost_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Dashboard/modals/editPost.vue */ "./resources/frontend/components/Dashboard/modals/editPost.vue");
+/* harmony import */ var _components_Dashboard_modals_editComment_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Dashboard/modals/editComment.vue */ "./resources/frontend/components/Dashboard/modals/editComment.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2354,7 +2362,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = this.posts.find(function (post) {
         return post.id === id;
       });
-      this.$modal.show(_components_Dashboard_modals_editPost_vue__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      this.$modal.show(_components_Dashboard_modals_editPost_vue__WEBPACK_IMPORTED_MODULE_1__["default"], {
         post: data
       }, {
         height: 'auto',
@@ -2362,12 +2370,87 @@ __webpack_require__.r(__webpack_exports__);
         scrollable: true
       });
     },
-    deletePost: function deletePost(index, id) {
-      this.$store.dispatch('deletePost', id);
-      this.$store.commit('removePost', index);
+    deletePost: function () {
+      var _deletePost = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(index, id) {
+        var _this = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$store.dispatch('deletePost', id).then(function (value) {
+                  _this.flash("Deleted Post with id: ".concat(id), 'success');
+
+                  _this.$store.commit('removePost', index);
+                });
+
+              case 3:
+                _context.next = 8;
+                break;
+
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](0);
+                this.flash('Error deleting post: ' + _context.t0.message, 'error');
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 5]]);
+      }));
+
+      function deletePost(_x, _x2) {
+        return _deletePost.apply(this, arguments);
+      }
+
+      return deletePost;
+    }(),
+    editComment: function editComment(id) {
+      console.log(id);
     },
-    editComment: function editComment(id) {},
-    deleteComment: function deleteComment() {},
+    deleteComment: function () {
+      var _deleteComment = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(index, id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$store.dispatch('deleteComment', id);
+
+              case 3:
+                this.flash("Deleted comment with id: ".concat(id), 'success');
+                this.$store.commit('removeComment', index);
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                this.flash('Error deleting comment: ' + _context2.t0.message, 'error');
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function deleteComment(_x3, _x4) {
+        return _deleteComment.apply(this, arguments);
+      }
+
+      return deleteComment;
+    }(),
     editUser: function editUser() {},
     deleteUser: function deleteUser() {}
   }
@@ -17452,7 +17535,30 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(comment.blog_post_id))]),
                         _vm._v(" "),
-                        _vm._m(4, true)
+                        _c("td", [
+                          _vm._m(4, true),
+                          _vm._v(" "),
+                          _vm._m(5, true),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "red-text",
+                              attrs: {
+                                "data-toggle": "tooltip",
+                                "data-placement": "top",
+                                title: "",
+                                "data-original-title": "Remove"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteComment(index, comment.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-times" })]
+                          )
+                        ])
                       ])
                     }),
                     0
@@ -17471,7 +17577,7 @@ var render = function() {
             [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table" }, [
-                  _vm._m(5),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -17489,7 +17595,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.created_at))]),
                         _vm._v(" "),
-                        _vm._m(6, true)
+                        _vm._m(7, true)
                       ])
                     }),
                     0
@@ -17618,49 +17724,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "a",
-        {
-          staticClass: "blue-text",
-          attrs: {
-            "data-toggle": "tooltip",
-            "data-placement": "top",
-            title: "",
-            "data-original-title": "See Message"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-envelope" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "teal-text",
-          attrs: {
-            "data-toggle": "tooltip",
-            "data-placement": "top",
-            title: "",
-            "data-original-title": "Edit"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-pencil" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "red-text",
-          attrs: {
-            "data-toggle": "tooltip",
-            "data-placement": "top",
-            title: "",
-            "data-original-title": "Remove"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-times" })]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "blue-text",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "top",
+          title: "",
+          "data-original-title": "See Message"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-envelope" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "teal-text",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "top",
+          title: "",
+          "data-original-title": "Edit"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-pencil" })]
+    )
   },
   function() {
     var _vm = this
@@ -17886,7 +17980,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("h1", [_vm._v("Create New Blog Post")]),
+    _c("h1", [_vm._v("Edit Blog Post")]),
     _vm._v(" "),
     _c("section", { staticClass: "section mt-2" }, [
       _c("div", { staticClass: "row" }, [
@@ -35512,6 +35606,9 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   },
   updatePost: function updatePost(payload) {
     return this.apiCall('post', "/post/".concat(payload.id, "/update"), payload);
+  },
+  deleteComment: function deleteComment(id) {
+    return this.apiCall('post', "/comment/".concat(id, "/delete"), id);
   }
 });
 
@@ -36868,6 +36965,9 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     removePost: function removePost(state, index) {
       state.posts.splice(index, 1);
     },
+    removeComment: function removeComment(state, index) {
+      state.comments.splice(index, 1);
+    },
     error: function error(state, err) {
       state.error = err;
     },
@@ -37262,15 +37362,16 @@ window.axios.defaults.baseURL = "http://localhost:8000";
                 return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].deletePost(id);
 
               case 4:
-                _context12.next = 9;
+                _context12.next = 10;
                 break;
 
               case 6:
                 _context12.prev = 6;
                 _context12.t0 = _context12["catch"](1);
                 commit('error', _context12.t0.message);
+                throw _context12.t0;
 
-              case 9:
+              case 10:
               case "end":
                 return _context12.stop();
             }
@@ -37301,15 +37402,16 @@ window.axios.defaults.baseURL = "http://localhost:8000";
               case 4:
                 result = _context13.sent;
                 commit('success', result);
-                _context13.next = 11;
+                _context13.next = 12;
                 break;
 
               case 8:
                 _context13.prev = 8;
                 _context13.t0 = _context13["catch"](1);
                 commit('error', _context13.t0);
+                throw _context13.t0;
 
-              case 11:
+              case 12:
               case "end":
                 return _context13.stop();
             }
@@ -37322,6 +37424,44 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return updatePost;
+    }(),
+    deleteComment: function () {
+      var _deleteComment = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(_ref14, id) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                commit = _ref14.commit;
+                _context14.prev = 1;
+                _context14.next = 4;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].deleteComment(id);
+
+              case 4:
+                _context14.next = 10;
+                break;
+
+              case 6:
+                _context14.prev = 6;
+                _context14.t0 = _context14["catch"](1);
+                commit('error', _context14.t0.message);
+                throw _context14.t0;
+
+              case 10:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14, null, [[1, 6]]);
+      }));
+
+      function deleteComment(_x21, _x22) {
+        return _deleteComment.apply(this, arguments);
+      }
+
+      return deleteComment;
     }()
   }
 }));

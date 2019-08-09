@@ -72,4 +72,10 @@ class AdminController extends Controller
       }
 
     }
+
+    public function deleteComment(int $id) {
+      $comment = Comment::where('id', $id)->first();
+      $comment->delete();
+      return response('Deleted', 200);
+    }
 }
