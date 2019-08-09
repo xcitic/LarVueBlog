@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import Auth from '@/api/Auth.js';
+
 export default {
   name: 'SideNav',
 
@@ -34,12 +36,24 @@ export default {
     },
 
     isAdmin() {
-      return true;
-    },
+      return this.$store.state.isAdmin;
+    }
+
+  },
+
+  mounted() {
+    this.checkAdmin()
   },
 
   methods: {
 
+    async checkAdmin() {
+      let response = await Auth.isAdmin();
+      if (response === true) {
+        return this.$store.commit('setAdmin', true);
+      }
+      this.$store.commit('setAdmin', false);
+    },
 
   }
 

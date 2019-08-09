@@ -25,7 +25,9 @@ export default new Vuex.Store({
     new: {
       title: '',
       content: '',
-    }
+    },
+    isAdmin: false,
+    users: [],
   },
 
   getters: {
@@ -87,6 +89,22 @@ export default new Vuex.Store({
 
     setNewPost(state, post) {
       state.posts = [post, ...state.posts];
+    },
+
+    setAdmin(state, status) {
+      state.isAdmin = status;
+    },
+
+    setAllUsers(state, users) {
+      state.users = users;
+    },
+
+    setAllComments(state, comments) {
+      state.comments = comments;
+    },
+
+    removePost(state, index) {
+      state.posts.splice(index,1);
     },
 
     error(state, err) {
@@ -151,6 +169,40 @@ export default new Vuex.Store({
     async createPost({commit}, payload) {
       let newPost = await API.createPost(payload);
       commit('setNewPost', newPost);
+    },
+
+    async getAllComments({commit}) {
+      try {
+        let comments = await API.getAllComments();
+        commit('setAllComments', comments);
+      } catch (err) {
+        commit('error', err.message);
+      }
+    },
+
+    async getAllUsers({commit}) {
+      try {
+        let users = await API.getAllUsers();
+        commit('setAllUsers', users);
+      } catch (err) {
+        commit('error', err.message);
+      }
+    },
+
+    async deletePost({commit}, id) {
+      try {
+        await API.deletePost(id);
+      } catch (err) {
+        commit('error', err.message);
+      }
+    },
+
+    async updatePost({commit}, payload) {
+      try {
+        await API.updatePost(payload);
+      } catch (err) {
+        commit('error', err);
+      }
     }
 
   }

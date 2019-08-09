@@ -32,5 +32,13 @@ Route::get('/post/{id}', 'BlogPostController@show');
 
 Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
-  Route::post('/post/create', 'BlogPostController@store');
+
+});
+
+Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {
+    Route::post('/post/create', 'BlogPostController@store');
+    Route::get('/comments/all', 'AdminController@getComments');
+    Route::get('/users/all', 'AdminController@getUsers');
+    Route::post('/post/{id}/delete', 'AdminController@deletePost');
+    Route::post('/post/{id}/update', 'AdminController@updatePost');
 });

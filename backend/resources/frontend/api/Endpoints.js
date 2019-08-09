@@ -58,6 +58,22 @@ export default {
 
   createPost(payload) {
     return this.apiCall('post', '/post/create', payload);
+  },
+
+  getAllComments() {
+    return this.apiCall('get', '/comments/all');
+  },
+
+  getAllUsers() {
+    return this.apiCall('get', '/users/all');
+  },
+
+  deletePost(id) {
+    return this.apiCall('post', `/post/${id}/delete`, id);
+  },
+
+  updatePost(payload) {
+    return this.apiCall('post', `/post/${payload.id}/update`, payload);
   }
 
 

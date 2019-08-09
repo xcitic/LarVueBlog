@@ -27,15 +27,6 @@ class BlogPostController extends Controller
         return $posts;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,6 +36,7 @@ class BlogPostController extends Controller
      */
     public function store(Request $request)
     {
+        // Use API guard to authenticate the user request.
         $auth = $request->user('api');
 
         if ($auth->role === 'admin') {
@@ -55,6 +47,9 @@ class BlogPostController extends Controller
             'image' => 'required',
           ]);
 
+          // Generate image from blob64 with Intervention\Image and upload to public directory
+          // Remember to install php*-gd package to process the image unless you want to use
+          // imagick
           try {
             $image = $request->get('image');
             $title = $request->title;
@@ -90,9 +85,8 @@ class BlogPostController extends Controller
           }
 
         }
-
-        return response('Not authorized', 401);
-
+        // Default if user auth fails
+        return response('Unauthorized', 401);
 
     }
 
