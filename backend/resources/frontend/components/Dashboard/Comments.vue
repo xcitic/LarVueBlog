@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="col-md-12 mb-1">
+    <div class="col-md-12 mb-1 mt-2">
       <!-- Tabs -->
       <!-- Nav tabs -->
       <div class="tabs-wrapper">
