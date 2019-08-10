@@ -62,8 +62,8 @@
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
-                                <button class="btn-flat waves-effect" @click="$emit('close')">Cancel</button>
                                 <button class="btn btn-primary" @click="save">Update</button>
+                                <button class="btn btn-secondary" @click="$emit('close')">Cancel</button>
                             </div>
                         </div>
                         <!--/.Card content-->

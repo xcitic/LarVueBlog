@@ -111,6 +111,10 @@ export default new Vuex.Store({
       state.comments.splice(index,1);
     },
 
+    removeUser(state, index) {
+      state.users.splice(index,1);
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -215,6 +219,26 @@ export default new Vuex.Store({
     async deleteComment({commit}, id) {
       try {
         await API.deleteComment(id);
+      } catch (err) {
+        commit('error', err.message);
+        throw err;
+      }
+    },
+
+    async updateComment({commit}, payload) {
+      try {
+        let result = await API.updateComment(payload);
+        commit('success', result);
+      } catch (err) {
+        commit('error', err.message);
+        throw err
+      }
+    },
+
+    async deleteUser({commit}, id) {
+      try {
+        let result = await API.deleteUser(id);
+        commit('success', result);
       } catch (err) {
         commit('error', err.message);
         throw err;

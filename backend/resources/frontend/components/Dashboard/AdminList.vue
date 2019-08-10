@@ -49,9 +49,8 @@
                                     <td>{{post.likes}}</td>
                                     <td>{{post.published}}</td>
                                     <td>
-                                      <a @click="editPost(post.id)" class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="See Message"><i class="fa fa-envelope"></i></a>
-                                        <a class="teal-text" data-toggle="modal" data-placement="top" title="Edit" data-original-title="Edit" ><i class="fa fa-pencil"></i></a>
-                                        <a @click="deletePost(index, post.id)" class="red-text" data-toggle="tooltip" data-placement="top" title="Delete" data-original-title="Remove"><i class="fa fa-times"></i></a>
+                                      <a @click="editPost(post.id)" class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="See Message"><i class="fa fa-pencil"></i></a>
+                                      <a @click="deletePost(index, post.id)" class="red-text" data-toggle="tooltip" data-placement="top" title="Delete" data-original-title="Remove"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
 
@@ -75,15 +74,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(comment, index) in comments" :key="index">
+                                <tr v-for="(comment, index) in comments" :key="comment.id">
                                     <th scope="row">{{comment.id}}</th>
                                     <td>{{comment.created_at}}</td>
                                     <td>{{comment.text}}</td>
                                     <td>{{comment.user_id}}</td>
                                     <td>{{comment.blog_post_id}}</td>
                                     <td>
-                                        <a class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="See Message"><i class="fa fa-envelope"></i></a>
-                                        <a class="teal-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a @click="editComment(comment.id)" class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
                                         <a @click="deleteComment(index, comment.id)" class="red-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
@@ -106,16 +104,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(user, index) in users" :key="index">
+                                <tr v-for="(user, index) in users" :key="user.id">
                                     <th scope="row">{{user.id}}</th>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.role}}</td>
                                     <td>{{user.created_at}}</td>
                                     <td>
-                                        <a class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="See Message"><i class="fa fa-envelope"></i></a>
-                                        <a class="teal-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <a class="red-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times"></i></a>
+                                        <a @click="editUser(user.id)" class="blue-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a @click="deleteUser(index, user.id)" class="red-text" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -133,6 +130,7 @@
 <script>
 import editPost from '@/components/Dashboard/modals/editPost.vue';
 import editComment from '@/components/Dashboard/modals/editComment.vue';
+import editUser from '@/components/Dashboard/modals/editUser.vue';
 
 export default {
 
@@ -177,7 +175,10 @@ export default {
       }, {
         height: 'auto',
         width: '80%',
+        adaptive: true,
+        overlayTransition: 'fade',
         scrollable: true,
+        reset: true,
       });
     },
 
@@ -195,26 +196,53 @@ export default {
     },
 
     editComment(id) {
-      console.log(id);
+      let data = this.comments.find(comment => comment.id === id);
+      this.$modal.show(editComment, {
+        comment: data
+      }, {
+        height: 'auto',
+        width: '80%',
+        adaptive: true,
+        overlayTransition: 'fade',
+        scrollable: true,
+        reset: true,
+      })
     },
+
 
     async deleteComment(index, id) {
       try {
-        await this.$store.dispatch('deleteComment', id)
+        await this.$store.dispatch('deleteComment', id);
         this.flash(`Deleted comment with id: ${id}`, 'success');
         this.$store.commit('removeComment', index);
       } catch (err) {
           this.flash('Error deleting comment: ' + err.message, 'error');
       }
-
     },
 
-    editUser() {
-
+    editUser(id) {
+      let user = this.users.find(user => user.id === id);
+      this.$modal.show(editUser, {
+        user: user
+      }, {
+        height: 'auto',
+        width: '80%',
+        adaptive: true,
+        overlayTransition: 'fade',
+        scrollable: true,
+        reset: true,
+      })
     },
 
-    deleteUser() {
-
+    async deleteUser(index, id) {
+      try {
+        let name = this.users.find(user => user.id === id).name;
+        await this.$store.dispatch('deleteUser', id);
+        this.flash(`Deleted user with name: ${name}`, 'success');
+        this.$store.commit('removeUser', index);
+      } catch (err) {
+        this.flash('Error deleting user: ' + err.message, 'error');
+      }
     },
 
 

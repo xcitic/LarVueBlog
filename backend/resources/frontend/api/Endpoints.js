@@ -78,6 +78,16 @@ export default {
 
   deleteComment(id) {
     return this.apiCall('post', `/comment/${id}/delete`, id);
+  },
+
+  updateComment(payload) {
+    return this.apiCall('post', `/comment/${payload.id}/update`, payload);
+  },
+
+
+  deleteUser(id) {
+    let parsedId = Number(id);
+    return this.apiCall('post', `/user/${parsedId}/delete`, parsedId);
   }
 
 

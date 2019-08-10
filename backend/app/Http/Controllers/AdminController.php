@@ -78,4 +78,27 @@ class AdminController extends Controller
       $comment->delete();
       return response('Deleted', 200);
     }
+
+    public function updateComment(Request $request) {
+      // Sanitization & VALIDATION
+      
+      $comment = Comment::where('id', $request->id)->first();
+      if(isset($comment)) {
+        $comment->text = $request->text;
+        $comment->update();
+        return response('Updated', 200);
+      }
+      return response('Comment not found', 403);
+    }
+
+    public function deleteUser(int $id) {
+      $user = User::where('id', $id)->first();
+
+      if(isset($user)) {
+        $user->delete();
+        return response('Deleted', 200);
+      }
+
+      return response('User not found', 403);
+    }
 }

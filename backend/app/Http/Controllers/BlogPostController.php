@@ -36,6 +36,7 @@ class BlogPostController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO Move to dedicated Admin Controller
         // Use API guard to authenticate the user request.
         $auth = $request->user('api');
 

@@ -23,7 +23,12 @@ Vue.use(VueFlashMessage, {
   }
 });
 Vue.use(VeeValidate);
-Vue.use(VModal, { dynamic: true, dynamicDefaults: { clickToClose: false } });
+Vue.use(VModal, {
+  dynamic: true,
+  dynamicDefaults: {
+    clickToClose: false,
+  }
+});
 
 new Vue({
   router,

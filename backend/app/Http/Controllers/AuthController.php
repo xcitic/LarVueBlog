@@ -62,16 +62,18 @@ class AuthController extends Controller
 
   public function login(Request $request)
   {
+    // validate data
     $validator = $request->validate([
       'email' => 'required|string|email|max:150',
       'password' => 'required|string|min:6|max:150'
     ]);
 
-
+    // find the user
     $user = User::where('email', $request->email)->first();
-    
+
 
     if ($user) {
+      // check the hashed password
       if (password_verify($request->password, $user->password))
       {
         // Generate token with passport
