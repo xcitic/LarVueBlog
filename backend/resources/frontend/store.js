@@ -266,6 +266,16 @@ export default new Vuex.Store({
         commit('error', err.message);
         throw err;
       }
+    },
+
+    async updatePassword({commit}, payload) {
+      try {
+        let result = await API.updatePassword(payload);
+        commit('success', result);
+      } catch (err) {
+        commit('error', err.message);
+        throw err;
+      }
     }
 
   }

@@ -3424,203 +3424,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/frontend/views/Account.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    processImage: function () {
-      var _processImage = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
-        var files;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                files = e.target.files || e.dataTransfer.files;
-
-                if (files.length) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                this.createImage(files[0]);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function processImage(_x) {
-        return _processImage.apply(this, arguments);
-      }
-
-      return processImage;
-    }(),
-    createImage: function createImage(file) {
-      var _this = this;
-
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        var image = e.target.result;
-        _this.user.image = image;
-
-        _this.saveImage(image);
-      };
-
-      reader.readAsDataURL(file);
-    },
-    saveImage: function saveImage(image) {
-      var _this2 = this;
-
-      var payload = {
-        'image': image
-      };
-      this.$store.dispatch('updatePicture', payload).then(function () {
-        _this2.flash('Successfully updated picture', 'success');
-      })["catch"](function () {
-        _this2.flash('Error updating picture', 'error');
-      });
-    },
-    saveInfo: function saveInfo() {
-      var _this3 = this;
-
-      var payload = {
-        name: this.user.name,
-        email: this.user.email
-      };
-      this.$store.dispatch('updateAccount', payload).then(function () {
-        _this3.flash('Successfully updated your account.', 'success'); // this.$router.push('/dashboard');
-
-      })["catch"](function (err) {
-        _this3.flash('Error: ' + err.message, 'error');
-      });
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/sphinx/Vuezee/LarVueBlog/backend/resources/frontend/views/Account.vue: Unexpected token, expected \",\" (250:45)\n\n\u001b[0m \u001b[90m 248 | \u001b[39m          \u001b[36mif\u001b[39m(valid) {\u001b[0m\n\u001b[0m \u001b[90m 249 | \u001b[39m            let payload \u001b[33m=\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 250 | \u001b[39m              old_password\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcur_password\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 251 | \u001b[39m              password\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnew_password\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 252 | \u001b[39m              password_confirmation\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnew_password_confirmation\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 253 | \u001b[39m            }\u001b[0m\n    at Parser.raise (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Parser.unexpected (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Parser.expect (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:7628:28)\n    at Parser.parseObj (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9150:14)\n    at Parser.parseExprAtom (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8784:28)\n    at Parser.parseExprSubscripts (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseVar (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10480:26)\n    at Parser.parseVarStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10299:10)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9896:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9905:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseIfStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10183:28)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9874:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseFunctionBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9424:24)\n    at Parser.parseArrowExpression (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9365:10)\n    at Parser.parseExprAtom (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8715:18)\n    at Parser.parseExprSubscripts (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseExprListItem (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9491:18)\n    at Parser.parseCallExpressionArguments (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8621:22)\n    at Parser.parseSubscript (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8514:29)");
 
 /***/ }),
 
@@ -19342,10 +19148,22 @@ var render = function() {
                             rawName: "v-model",
                             value: _vm.user.name,
                             expression: "user.name"
+                          },
+                          {
+                            name: "validate",
+                            rawName: "v-validate",
+                            value: "required|alpha_spaces|min:4|max:50",
+                            expression: "'required|alpha_spaces|min:4|max:50'"
                           }
                         ],
                         staticClass: "form-control validate",
-                        attrs: { type: "text", id: "name" },
+                        attrs: {
+                          type: "text",
+                          autocomplete: "name",
+                          placeholder: "Name",
+                          name: "name",
+                          autofocus: ""
+                        },
                         domProps: { value: _vm.user.name },
                         on: {
                           input: function($event) {
@@ -19356,6 +19174,16 @@ var render = function() {
                           }
                         }
                       }),
+                      _vm._v(" "),
+                      _vm.submitted && _vm.errors.has("name")
+                        ? _c("span", [
+                            _c("p", { staticClass: "red-text" }, [
+                              _vm._v(
+                                " " + _vm._s(_vm.errors.first("name")) + " "
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "label",
@@ -19377,10 +19205,21 @@ var render = function() {
                             rawName: "v-model",
                             value: _vm.user.email,
                             expression: "user.email"
+                          },
+                          {
+                            name: "validate",
+                            rawName: "v-validate",
+                            value: "required|email|max:50",
+                            expression: "'required|email|max:50'"
                           }
                         ],
                         staticClass: "form-control validate",
-                        attrs: { type: "text", id: "email" },
+                        attrs: {
+                          type: "email",
+                          autocomplete: "email",
+                          placeholder: "Email address",
+                          name: "email"
+                        },
                         domProps: { value: _vm.user.email },
                         on: {
                           input: function($event) {
@@ -19391,6 +19230,16 @@ var render = function() {
                           }
                         }
                       }),
+                      _vm._v(" "),
+                      _vm.submitted && _vm.errors.has("email")
+                        ? _c("span", [
+                            _c("p", { staticClass: "red-text" }, [
+                              _vm._v(
+                                " " + _vm._s(_vm.errors.first("email")) + " "
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "label",
@@ -19404,10 +19253,185 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm.changePassword
+                  ? _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("div", { staticClass: "md-form" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cur_password,
+                                expression: "cur_password"
+                              },
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|max:50",
+                                expression: "'required|max:50'"
+                              }
+                            ],
+                            ref: "cur_password",
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "password",
+                              autocomplete: "old-password",
+                              placeholder: "Enter current password",
+                              name: "cur_password",
+                              "data-vv-as": "Old Password"
+                            },
+                            domProps: { value: _vm.cur_password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.cur_password = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted && _vm.errors.has("cur_password")
+                            ? _c("span", [
+                                _c("p", { staticClass: "red-text" }, [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm.errors.first("cur_password")) +
+                                      " "
+                                  )
+                                ])
+                              ])
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("div", { staticClass: "md-form" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.new_password,
+                                expression: "new_password"
+                              },
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|max:50",
+                                expression: "'required|max:50'"
+                              }
+                            ],
+                            ref: "new_password",
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "password",
+                              autocomplete: "new-password",
+                              placeholder: "Enter New Password",
+                              name: "new_password",
+                              "data-vv-as": "New Password"
+                            },
+                            domProps: { value: _vm.new_password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.new_password = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted && _vm.errors.has("new_password")
+                            ? _c("span", [
+                                _c("p", { staticClass: "red-text" }, [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm.errors.first("new_password")) +
+                                      " "
+                                  )
+                                ])
+                              ])
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("div", { staticClass: "md-form" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.new_password_confirmation,
+                                expression: "new_password_confirmation"
+                              },
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|confirmed:new_password",
+                                expression: "'required|confirmed:new_password'"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "password",
+                              autocomplete: "new-password",
+                              placeholder: "Repeat New Password",
+                              name: "new_password_confirmation",
+                              "data-vv-as": "Password Confirmation"
+                            },
+                            domProps: { value: _vm.new_password_confirmation },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.new_password_confirmation =
+                                  $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted &&
+                          _vm.errors.has("new_password_confirmation")
+                            ? _c("span", [
+                                _c("p", { staticClass: "red-text" }, [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.errors.first(
+                                          "new_password_confirmation"
+                                        )
+                                      ) +
+                                      " "
+                                  )
+                                ])
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-12 text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary waves-light",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.showPassword($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Change Password")]
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
                     _c(
                       "button",
                       {
@@ -19447,36 +19471,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "view primary-color" }, [
       _c("h5", [_vm._v("Edit Account")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            staticClass: "form-control validate",
-            attrs: { type: "password", id: "password" }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "password" } }, [_vm._v("Password")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            staticClass: "form-control validate",
-            attrs: { type: "password", id: "confirm_password" }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "confirm_password" } }, [
-            _vm._v("Confirm Password")
-          ])
-        ])
-      ])
     ])
   }
 ]
@@ -36273,6 +36267,9 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   },
   updateAccount: function updateAccount(payload) {
     return this.apiCall('post', '/user/update', payload);
+  },
+  updatePassword: function updatePassword(payload) {
+    return this.apiCall('post', '/user/update/password', payload);
   }
 });
 
@@ -38361,6 +38358,46 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return updateAccount;
+    }(),
+    updatePassword: function () {
+      var _updatePassword = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19(_ref19, payload) {
+        var commit, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                commit = _ref19.commit;
+                _context19.prev = 1;
+                _context19.next = 4;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].updatePassword(payload);
+
+              case 4:
+                result = _context19.sent;
+                commit('success', result);
+                _context19.next = 12;
+                break;
+
+              case 8:
+                _context19.prev = 8;
+                _context19.t0 = _context19["catch"](1);
+                commit('error', _context19.t0.message);
+                throw _context19.t0;
+
+              case 12:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19, null, [[1, 8]]);
+      }));
+
+      function updatePassword(_x31, _x32) {
+        return _updatePassword.apply(this, arguments);
+      }
+
+      return updatePassword;
     }()
   }
 }));

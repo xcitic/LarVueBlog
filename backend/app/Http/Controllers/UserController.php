@@ -74,6 +74,15 @@ class UserController extends Controller
 
       }
 
+      public function updatePassword(Request $request) {
+        
+
+        $user = $request->user('api');
+
+
+
+      }
+
 
     private function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

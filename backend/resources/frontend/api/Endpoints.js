@@ -93,9 +93,12 @@ export default {
     return this.apiCall('post', '/user/update/picture', image);
   },
 
-
   updateAccount(payload) {
     return this.apiCall('post', '/user/update', payload);
+  },
+
+  updatePassword(payload) {
+    return this.apiCall('post', '/user/update/password', payload);
   }
 
 

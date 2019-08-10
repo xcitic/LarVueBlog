@@ -45,43 +45,101 @@
                                   <!--First column-->
                                   <div class="col-md-6">
                                       <div class="md-form">
-                                          <input type="text" id="name" class="form-control validate" v-model="user.name">
+
+                                        <input type="text"
+                                                v-model="user.name"
+                                                class="form-control validate"
+                                                autocomplete="name"
+                                                placeholder="Name"
+                                                name="name"
+                                                autofocus
+                                                v-validate="'required|alpha_spaces|min:4|max:50'"
+                                          />
+                                          <span v-if="submitted && errors.has('name')">
+                                              <p class="red-text"> {{ errors.first('name') }} </p>
+                                          </span>
                                           <label :class="user.name ? 'active' : ''" for="name">Name</label>
                                       </div>
                                   </div>
                                   <!--Second column-->
                                   <div class="col-md-6">
                                       <div class="md-form">
-                                          <input type="text" id="email" class="form-control validate" v-model="user.email">
+                                        <input type="email"
+                                               v-model="user.email"
+                                               class="form-control validate"
+                                               autocomplete="email"
+                                               placeholder="Email address"
+                                               name="email"
+                                               v-validate="'required|email|max:50'"
+                                          />
+                                          <span v-if="submitted && errors.has('email')">
+                                              <p class="red-text"> {{ errors.first('email') }} </p>
+                                          </span>
                                           <label :class="user.email ? 'active' : ''" for="email">Email</label>
                                       </div>
                                   </div>
                               </div>
                               <!--/.First row-->
                               <!--First row-->
-                              <div class="row">
+                              <div class="row" v-if="changePassword">
                                   <!--First column-->
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                                       <div class="md-form">
-                                          <input type="password" id="password" class="form-control validate">
-                                          <label for="password">Password</label>
+                                        <input type="password"
+                                               v-model="cur_password"
+                                               class="form-control"
+                                               autocomplete="old-password"
+                                               placeholder="Enter current password"
+                                               name="cur_password"
+                                               ref="cur_password"
+                                               v-validate="'required|max:50'"
+                                               data-vv-as="Old Password"
+                                          />
+                                          <span v-if="submitted && errors.has('cur_password')">
+                                              <p class="red-text"> {{ errors.first('cur_password') }} </p>
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="md-form">
+                                        <input type="password"
+                                               v-model="new_password"
+                                               class="form-control"
+                                               autocomplete="new-password"
+                                               placeholder="Enter New Password"
+                                               name="new_password"
+                                               ref="new_password"
+                                               v-validate="'required|max:50'"
+                                               data-vv-as="New Password"
+                                          />
+                                          <span v-if="submitted && errors.has('new_password')">
+                                              <p class="red-text"> {{ errors.first('new_password') }} </p>
+                                          </span>
                                       </div>
                                   </div>
                                   <!--Second column-->
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                                       <div class="md-form">
-                                          <input type="password" id="confirm_password" class="form-control validate">
-                                          <label for="confirm_password">Confirm Password</label>
+                                        <input type="password"
+                                               v-model="new_password_confirmation"
+                                               class="form-control"
+                                               autocomplete="new-password"
+                                               placeholder="Repeat New Password"
+                                               name="new_password_confirmation"
+                                               v-validate="'required|confirmed:new_password'"
+                                               data-vv-as="Password Confirmation"
+                                          />
+                                          <span v-if="submitted && errors.has('new_password_confirmation')">
+                                              <p class="red-text"> {{ errors.first('new_password_confirmation') }} </p>
+                                          </span>
                                       </div>
                                   </div>
                               </div>
-                              <!--/.First row-->
-                              <!--Second row-->
-                              <!-- Fourth row -->
                               <div class="row">
-                                  <div class="col-md-12 text-center">
-                                      <button class="btn btn-primary waves-light" @click.prevent="saveInfo">Update Account</button><br>
-                                  </div>
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-secondary waves-light" @click.prevent="showPassword">Change Password</button><br>
+                                    <button class="btn btn-primary waves-light" @click.prevent="saveInfo">Update Account</button><br>
+                                </div>
                               </div>
                               <!-- /.Fourth row -->
                           </form>
@@ -109,15 +167,29 @@ export default {
     }
   },
 
+  data() {
+    return {
+      cur_password: '',
+      new_password: '',
+      new_password_confirmation: '',
+      submitted: false,
+      changePassword: false,
+    }
+  },
+
   methods: {
 
-  async processImage(e) {
-      let files = e.target.files || e.dataTransfer.files;
-      if(!files.length) {
-        return;
-      }
-      this.createImage(files[0]);
+    showPassword() {
+      return this.changePassword = !this.changePassword;
     },
+
+    async processImage(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if(!files.length) {
+          return;
+        }
+        this.createImage(files[0]);
+      },
 
     createImage(file) {
       let reader = new FileReader();
@@ -141,19 +213,56 @@ export default {
       })
     },
 
-    saveInfo() {
-      let payload = {
-        name: this.user.name,
-        email: this.user.email
+    submit() {
+      if(this.password && this.password === this.password_confirmation) {
+        this.savePassword()
       }
-      this.$store.dispatch('updateAccount', payload)
-      .then(() => {
-        this.flash('Successfully updated your account.', 'success');
-        // this.$router.push('/dashboard');
-      }).catch((err) => {
-        this.flash('Error: ' + err.message, 'error');
-      })
+      this.saveInfo()
     },
+
+    async saveInfo() {
+      this.$validator.validate().then(
+        valid => {
+          this.submitted = true;
+          if(valid) {
+            let payload = {
+              name: this.user.name,
+              email: this.user.email
+            }
+            this.$store.dispatch('updateAccount', payload)
+            .then(() => {
+              this.flash('Successfully updated your account.', 'success');
+              // this.$router.push('/dashboard');
+            }).catch((err) => {
+              this.flash('Error: ' + err.message, 'error');
+            })
+          }
+        }
+      )
+    },
+
+
+    async savePassword() {
+      this.$validator.validate().then(
+        valid => {
+          if(valid) {
+            let payload = {
+              old_password: this.cur_password;
+              password: this.new_password,
+              password_confirmation: this.new_password_confirmation,
+            }
+            try {
+              this.$store.dispatch('updatePassword', payload)
+              this.flash('Success updating password', 'success');
+            } catch (err) {
+              this.flash('Error updating password', 'error');
+            }
+          }
+        }
+      )
+    },
+
+
 
 
   }

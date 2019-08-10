@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
   Route::post('/user/update', 'UserController@updateUser');
   Route::post('/user/update/picture', 'UserController@updatePicture');
+  Route::post('/user/update/password', 'UserController@update');
 });
 
 Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {
