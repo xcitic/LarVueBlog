@@ -3424,9 +3424,374 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/frontend/views/Account.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/sphinx/Vuezee/LarVueBlog/backend/resources/frontend/views/Account.vue: Unexpected token, expected \",\" (250:45)\n\n\u001b[0m \u001b[90m 248 | \u001b[39m          \u001b[36mif\u001b[39m(valid) {\u001b[0m\n\u001b[0m \u001b[90m 249 | \u001b[39m            let payload \u001b[33m=\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 250 | \u001b[39m              old_password\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcur_password\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 251 | \u001b[39m              password\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnew_password\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 252 | \u001b[39m              password_confirmation\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnew_password_confirmation\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 253 | \u001b[39m            }\u001b[0m\n    at Parser.raise (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Parser.unexpected (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Parser.expect (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:7628:28)\n    at Parser.parseObj (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9150:14)\n    at Parser.parseExprAtom (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8784:28)\n    at Parser.parseExprSubscripts (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseVar (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10480:26)\n    at Parser.parseVarStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10299:10)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9896:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9905:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseIfStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10183:28)\n    at Parser.parseStatementContent (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9874:21)\n    at Parser.parseStatement (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseFunctionBody (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9424:24)\n    at Parser.parseArrowExpression (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9365:10)\n    at Parser.parseExprAtom (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8715:18)\n    at Parser.parseExprSubscripts (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseExprListItem (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:9491:18)\n    at Parser.parseCallExpressionArguments (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8621:22)\n    at Parser.parseSubscript (/home/sphinx/Vuezee/LarVueBlog/backend/node_modules/@babel/parser/lib/index.js:8514:29)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  computed: {
+    user: function user() {
+      return this.$store.state.user;
+    }
+  },
+  data: function data() {
+    return {
+      cur_password: '',
+      new_password: '',
+      new_password_confirmation: '',
+      submitted: false,
+      changePassword: false
+    };
+  },
+  methods: {
+    showPassword: function showPassword() {
+      return this.changePassword = !this.changePassword;
+    },
+    processImage: function () {
+      var _processImage = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
+        var files;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                files = e.target.files || e.dataTransfer.files;
+
+                if (files.length) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                this.createImage(files[0]);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function processImage(_x) {
+        return _processImage.apply(this, arguments);
+      }
+
+      return processImage;
+    }(),
+    createImage: function createImage(file) {
+      var _this = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var image = e.target.result;
+        _this.user.image = image;
+
+        _this.saveImage(image);
+      };
+
+      reader.readAsDataURL(file);
+    },
+    saveImage: function saveImage(image) {
+      var _this2 = this;
+
+      var payload = {
+        'image': image
+      };
+      this.$store.dispatch('updatePicture', payload).then(function () {
+        _this2.flash('Successfully updated picture', 'success');
+      })["catch"](function () {
+        _this2.flash('Error updating picture', 'error');
+      });
+    },
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(this.cur_password && this.new_password && this.new_password === this.new_password_confirmation)) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                _context2.next = 3;
+                return this.savePassword();
+
+              case 3:
+                this.saveInfo();
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }(),
+    saveInfo: function () {
+      var _saveInfo = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this3 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.$validator.validate().then(function (valid) {
+                  _this3.submitted = true;
+
+                  if (valid) {
+                    var payload = {
+                      name: _this3.user.name,
+                      email: _this3.user.email
+                    };
+
+                    _this3.$store.dispatch('updateAccount', payload).then(function () {
+                      _this3.flash('Successfully updated your account.', 'success'); // this.$router.push('/dashboard');
+
+                    })["catch"](function (err) {
+                      _this3.flash('Error: ' + err.message, 'error');
+                    });
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function saveInfo() {
+        return _saveInfo.apply(this, arguments);
+      }
+
+      return saveInfo;
+    }(),
+    savePassword: function () {
+      var _savePassword = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var _this4 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.$validator.validate().then(function (valid) {
+                  if (valid) {
+                    var payload = {
+                      old_password: _this4.cur_password,
+                      new_password: _this4.new_password,
+                      new_password_confirmation: _this4.new_password_confirmation
+                    };
+
+                    _this4.$store.dispatch('updatePassword', payload).then(function () {
+                      _this4.flash('Success updating password', 'success');
+                    })["catch"](function (err) {
+                      _this4.flash('Error updating password', 'error');
+                    });
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function savePassword() {
+        return _savePassword.apply(this, arguments);
+      }
+
+      return savePassword;
+    }()
+  }
+});
 
 /***/ }),
 
@@ -19439,7 +19804,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.saveInfo($event)
+                            return _vm.submit($event)
                           }
                         }
                       },

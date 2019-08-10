@@ -138,7 +138,7 @@
                               <div class="row">
                                 <div class="col-md-12 text-center">
                                     <button class="btn btn-secondary waves-light" @click.prevent="showPassword">Change Password</button><br>
-                                    <button class="btn btn-primary waves-light" @click.prevent="saveInfo">Update Account</button><br>
+                                    <button class="btn btn-primary waves-light" @click.prevent="submit">Update Account</button><br>
                                 </div>
                               </div>
                               <!-- /.Fourth row -->
@@ -213,9 +213,9 @@ export default {
       })
     },
 
-    submit() {
-      if(this.password && this.password === this.password_confirmation) {
-        this.savePassword()
+    async submit() {
+      if(this.cur_password && this.new_password && (this.new_password === this.new_password_confirmation) ) {
+        await this.savePassword()
       }
       this.saveInfo()
     },
@@ -247,16 +247,16 @@ export default {
         valid => {
           if(valid) {
             let payload = {
-              old_password: this.cur_password;
-              password: this.new_password,
-              password_confirmation: this.new_password_confirmation,
+              old_password: this.cur_password,
+              new_password: this.new_password,
+              new_password_confirmation: this.new_password_confirmation,
             }
-            try {
               this.$store.dispatch('updatePassword', payload)
-              this.flash('Success updating password', 'success');
-            } catch (err) {
-              this.flash('Error updating password', 'error');
-            }
+                .then(() => {
+                this.flash('Success updating password', 'success');
+              }).catch((err) => {
+                this.flash('Error updating password', 'error');
+              })
           }
         }
       )
