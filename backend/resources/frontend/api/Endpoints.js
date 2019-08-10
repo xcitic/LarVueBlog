@@ -103,6 +103,10 @@ export default {
 
   getMyComments() {
     return this.apiCall('get', '/user/comments');
+  },
+
+  viewedPost(id) {
+    return this.apiCall('post', `/stats/post/${id}`, id);
   }
 
 

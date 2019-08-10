@@ -35,8 +35,8 @@
                 <a class="blue-text">
                   <i class="fa fa-comments-o"></i> {{commentsCount}}
                 </a>
-                <a class="red-text ml-4">
-                  <i class="fa fa-heart red-text" :class="liked ? 'red-text' : 'grey-text'"></i> {{data.views}}
+                <a class="blue-text ml-4">
+                  <i class="fa fa-eye"></i> {{data.views}}
                 </a>
               </h6>
 

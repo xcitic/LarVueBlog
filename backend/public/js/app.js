@@ -4240,6 +4240,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var id = this.$route.params.id;
     this.$store.dispatch('getPost', id);
+    this.$store.dispatch('viewedPost', id);
   }
 });
 
@@ -17938,11 +17939,8 @@ var render = function() {
               _vm._v(" " + _vm._s(_vm.commentsCount) + "\n              ")
             ]),
             _vm._v(" "),
-            _c("a", { staticClass: "red-text ml-4" }, [
-              _c("i", {
-                staticClass: "fa fa-heart red-text",
-                class: _vm.liked ? "red-text" : "grey-text"
-              }),
+            _c("a", { staticClass: "blue-text ml-4" }, [
+              _c("i", { staticClass: "fa fa-eye" }),
               _vm._v(" " + _vm._s(_vm.data.views) + "\n              ")
             ])
           ]),
@@ -20251,22 +20249,16 @@ var render = function() {
               _c("div", { staticClass: "jumbotron" }, [
                 _c("h2", [_vm._v(_vm._s(_vm.post.description))]),
                 _vm._v(" "),
-                _vm._m(0),
+                _c("p", [_vm._v("Published " + _vm._s(_vm.post.published))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "social-counters" }, [
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("span", { staticClass: "counter" }, [
                     _vm._v(_vm._s(_vm.post.views))
                   ]),
                   _vm._v(" "),
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "counter" }, [
-                    _vm._v(_vm._s(_vm.post.likes))
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(3),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("span", { staticClass: "counter" }, [
                     _vm._v(_vm._s(_vm.commentsCount))
@@ -20280,7 +20272,7 @@ var render = function() {
               _vm._v(" "),
               _c("hr", { staticClass: "between-sections" }),
               _vm._v(" "),
-              _vm._m(4)
+              _vm._m(2)
             ])
           ])
         ]),
@@ -20365,32 +20357,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Written by "),
-      _c("a", { staticClass: "black-text", attrs: { href: "#!" } }, [
-        _vm._v("Martha Barnett")
-      ]),
-      _vm._v(" on 25/08/2016")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("a", { staticClass: "btn btn-tw" }, [
       _c("i", { staticClass: "fa fa-eye left" }),
       _vm._v(" "),
       _c("span", { staticClass: "hidden-md-down" }, [_vm._v("Views")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "btn btn-gplus" }, [
-      _c("i", { staticClass: "fa fa-heart left" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "hidden-md-down" }, [_vm._v("Likes")])
     ])
   },
   function() {
@@ -36883,6 +36853,9 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   },
   getMyComments: function getMyComments() {
     return this.apiCall('get', '/user/comments');
+  },
+  viewedPost: function viewedPost(id) {
+    return this.apiCall('post', "/stats/post/".concat(id), id);
   }
 });
 
@@ -38315,6 +38288,9 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     removeUser: function removeUser(state, index) {
       state.users.splice(index, 1);
     },
+    increaseViews: function increaseViews(state, id) {
+      state.post.views++;
+    },
     error: function error(state, err) {
       state.error = err;
     },
@@ -39050,6 +39026,34 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return getMyComments;
+    }(),
+    viewedPost: function () {
+      var _viewedPost = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21(_ref21, id) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+          while (1) {
+            switch (_context21.prev = _context21.next) {
+              case 0:
+                commit = _ref21.commit;
+                _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].viewedPost(id).then(function () {
+                  commit('increaseViews', id);
+                });
+
+              case 2:
+              case "end":
+                return _context21.stop();
+            }
+          }
+        }, _callee21);
+      }));
+
+      function viewedPost(_x34, _x35) {
+        return _viewedPost.apply(this, arguments);
+      }
+
+      return viewedPost;
     }()
   }
 }));

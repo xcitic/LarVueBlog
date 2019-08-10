@@ -102,9 +102,10 @@ class BlogPostController extends Controller
 
         $post = BlogPost::where('id', $id)->first();
         // TODO ORDER BY created at date
+        $post->published = $post->updated_at->diffForHumans();
         $comments = $post->comments()->latest()->get();
         foreach($comments as $comment) {
-          $comment->published  = $comment->created_at->diffForHumans();
+          $comment->published  = $comment->updated_at->diffForHumans();
           $user = $comment->userInfo;
         }
         return response()
@@ -114,37 +115,10 @@ class BlogPostController extends Controller
                   ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\BlogPost  $blogPost
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BlogPost $blogPost)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BlogPost  $blogPost
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BlogPost $blogPost)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\BlogPost  $blogPost
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(BlogPost $blogPost)
-    {
-        //
+    public function viewed(int $id) {
+      $post = BlogPost::where('id', $id)->first();
+      $post->views += 1;
+      $post->update();
+      return;
     }
 }

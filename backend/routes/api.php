@@ -30,6 +30,8 @@ Route::post('/register', 'AuthController@register');
 Route::get('/posts', 'BlogPostController@index');
 Route::get('/post/{id}', 'BlogPostController@show');
 
+Route::post('/stats/post/{id}', 'BlogPostController@viewed');
+
 Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
   Route::post('/comment/{id}/delete', 'CommentController@deleteComment');

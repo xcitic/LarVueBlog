@@ -116,6 +116,10 @@ export default new Vuex.Store({
       state.users.splice(index,1);
     },
 
+    increaseViews(state, id) {
+      state.post.views++;
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -285,6 +289,13 @@ export default new Vuex.Store({
       } catch (err) {
         commit('error', err.message);
       }
+    },
+
+    async viewedPost({commit}, id) {
+      API.viewedPost(id)
+      .then(() => {
+        commit('increaseViews', id);
+      })
     }
 
   }

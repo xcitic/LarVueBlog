@@ -20,24 +20,24 @@
                           <!--Post data-->
                           <div class="jumbotron">
                               <h2>{{post.description}}</h2>
-                              <p>Written by <a href="#!" class="black-text">Martha Barnett</a> on 25/08/2016</p>
+                              <p>Published {{post.published}}</p>
 
                               <!--Social shares-->
                               <div class="social-counters">
 
-                                  <!--Twitter-->
+                                  <!--Views-->
                                   <a class="btn btn-tw">
                                       <i class="fa fa-eye left"></i>
                                       <span class="hidden-md-down">Views</span>
                                   </a>
                                   <span class="counter">{{post.views}}</span>
 
-                                  <!--Google+-->
-                                  <a class="btn btn-gplus">
+                                  <!--Likes+-->
+                                  <!-- <a class="btn btn-gplus">
                                       <i class="fa fa-heart left"></i>
                                       <span class="hidden-md-down">Likes</span>
                                   </a>
-                                  <span class="counter">{{post.likes}}</span>
+                                  <span class="counter">{{post.likes}}</span> -->
 
                                   <!--Comments-->
                                   <a class="btn btn-mdb">
@@ -178,6 +178,7 @@ import CommentForm from '@/components/CommentForm.vue';
     mounted() {
       let id = this.$route.params.id;
       this.$store.dispatch('getPost', id);
+      this.$store.dispatch('viewedPost', id);
     },
 
   }
