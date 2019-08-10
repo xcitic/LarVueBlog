@@ -32,7 +32,8 @@ Route::get('/post/{id}', 'BlogPostController@show');
 
 Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
-
+  Route::post('/user/update', 'UserController@updateUser');
+  Route::post('/user/update/picture', 'UserController@updatePicture');
 });
 
 Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {

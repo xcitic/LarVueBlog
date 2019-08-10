@@ -74,6 +74,7 @@ export default new Vuex.Store({
 
     setUser(state, userInfo) {
       state.user = userInfo;
+      localStorage.setItem('user', JSON.stringify(userInfo));
       if (userInfo) {
         state.authenticated = true;
       }
@@ -239,6 +240,28 @@ export default new Vuex.Store({
       try {
         let result = await API.deleteUser(id);
         commit('success', result);
+      } catch (err) {
+        commit('error', err.message);
+        throw err;
+      }
+    },
+
+    async updatePicture({commit, dispatch}, image) {
+      try {
+        let result = await API.updatePicture(image);
+        commit('success', result);
+        dispatch('getUser');
+      } catch (err) {
+        commit('error', err.message);
+        throw err;
+      }
+    },
+
+    async updateAccount({commit, dispatch}, payload) {
+      try {
+        let result = await API.updateAccount(payload);
+        commit('success', result);
+        dispatch('getUser');
       } catch (err) {
         commit('error', err.message);
         throw err;

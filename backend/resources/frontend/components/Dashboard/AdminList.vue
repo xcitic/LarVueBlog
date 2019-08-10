@@ -185,7 +185,7 @@ export default {
     async deletePost(index, id) {
       try {
         await this.$store.dispatch('deletePost', id)
-        .then((value) => {
+        .then(() => {
           this.flash(`Deleted Post with id: ${id}`, 'success');
           this.$store.commit('removePost', index);
         })

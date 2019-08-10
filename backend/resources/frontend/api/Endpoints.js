@@ -84,10 +84,18 @@ export default {
     return this.apiCall('post', `/comment/${payload.id}/update`, payload);
   },
 
-
   deleteUser(id) {
     let parsedId = Number(id);
     return this.apiCall('post', `/user/${parsedId}/delete`, parsedId);
+  },
+
+  updatePicture(image) {
+    return this.apiCall('post', '/user/update/picture', image);
+  },
+
+
+  updateAccount(payload) {
+    return this.apiCall('post', '/user/update', payload);
   }
 
 
