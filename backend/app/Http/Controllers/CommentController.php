@@ -51,7 +51,7 @@ class CommentController extends Controller
             'blog_post_id' => $postExists->id,
           ]);
           $comment->save();
-          
+
           $comment->published  = $comment->created_at->diffForHumans();
           $userInfo = $comment->userInfo;
 
@@ -62,26 +62,56 @@ class CommentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
+
+    public function getMyComments(Request $request) {
+
+      $user = $request->user('api');
+      $comments = $user->comments;
+      foreach ($comments as $comment) {
+        $comment->post;
+        $comment->published = $comment->created_at->diffForHumans();
+      }
+
+      return response($comments, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
+
+
+    public function deleteComment(int $id, Request $request) {
+      $user = $request->user('api');
+      $comment = Comment::where('id', $id)->first();
+      // admin can delete any comment
+      if($user->isAdmin() ) {
+        $comment->delete();
+        return response('Deleted', 200);
+      }
+      // user can only delete their own comments
+      if($comment->owner->id === $user->id) {
+          $comment->delete();
+          return response('Deleted', 200);
+        }
+
+      return response('Unauthorized', 401);
+    }
+
+
+
+    public function updateComment(Request $request) {
+      // Sanitization & VALIDATION
+      $user = $request->user('api');
+      $comment = Comment::where('id', $request->id)->first();
+      if(isset($comment)) {
+        if($user->isAdmin() || $comment->owner->id === $user->id) {
+          $allowed = true;
+        }
+        if($allowed) {
+          $comment->text = $request->text;
+          $comment->update();
+          return response('Updated', 200);
+        }
+
+      }
+      return response('Unauthorized', 401);
     }
 
     /**

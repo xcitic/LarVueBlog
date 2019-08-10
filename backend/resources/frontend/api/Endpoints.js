@@ -99,6 +99,10 @@ export default {
 
   updatePassword(payload) {
     return this.apiCall('post', '/user/update/password', payload);
+  },
+
+  getMyComments() {
+    return this.apiCall('get', '/user/comments');
   }
 
 

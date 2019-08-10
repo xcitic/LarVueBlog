@@ -32,9 +32,14 @@ Route::get('/post/{id}', 'BlogPostController@show');
 
 Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/create', 'CommentController@store');
+  Route::post('/comment/{id}/delete', 'CommentController@deleteComment');
+  Route::post('/comment/{id}/update', 'CommentController@updateComment');
+  Route::get('/user/comments', 'CommentController@getMyComments');
   Route::post('/user/update', 'UserController@updateUser');
   Route::post('/user/update/picture', 'UserController@updatePicture');
   Route::post('/user/update/password', 'UserController@updatePassword');
+
+
 });
 
 Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {
@@ -43,7 +48,5 @@ Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {
     Route::get('/users/all', 'AdminController@getUsers');
     Route::post('/post/{id}/delete', 'AdminController@deletePost');
     Route::post('/post/{id}/update', 'AdminController@updatePost');
-    Route::post('/comment/{id}/delete', 'AdminController@deleteComment');
-    Route::post('/comment/{id}/update', 'AdminController@updateComment');
     Route::post('/user/{id}/delete', 'AdminController@deleteUser');
 });

@@ -2535,12 +2535,134 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Dashboard_modals_editComment_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Dashboard/modals/editComment.vue */ "./resources/frontend/components/Dashboard/modals/editComment.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    comments: function comments() {
+      return this.$store.state.comments;
+    }
+  },
+  mounted: function mounted() {
+    this.getComments();
+  },
+  methods: {
+    getComments: function getComments() {
+      this.$store.dispatch('getMyComments');
+    },
+    editComment: function editComment(id) {
+      var data = this.comments.find(function (comment) {
+        return comment.id === id;
+      });
+      this.$modal.show(_components_Dashboard_modals_editComment_vue__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        comment: data
+      }, {
+        height: 'auto',
+        width: '80%',
+        adaptive: true,
+        overlayTransition: 'fade',
+        scrollable: true,
+        reset: true
+      });
+    },
+    deleteComment: function () {
+      var _deleteComment = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(index, id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$store.dispatch('deleteComment', id);
+
+              case 3:
+                this.flash("Deleted comment with id: ".concat(id), 'success');
+                this.$store.commit('removeComment', index);
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                this.flash('Error deleting comment: ' + _context.t0.message, 'error');
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function deleteComment(_x, _x2) {
+        return _deleteComment.apply(this, arguments);
+      }
+
+      return deleteComment;
+    }()
+  }
+});
 
 /***/ }),
 
@@ -3308,19 +3430,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RegisterForm',
   data: function data() {
@@ -3771,7 +3880,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this4.$store.dispatch('updatePassword', payload).then(function () {
                       _this4.flash('Success updating password', 'success');
                     })["catch"](function (err) {
-                      _this4.flash('Error updating password', 'error');
+                      _this4.flash('Error updating password: ' + err.message, 'error');
                     });
                   }
                 });
@@ -18384,9 +18493,145 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("My Comments")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "col-md-12 mb-1" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab-content card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "tab-pane fade active show",
+            attrs: { id: "comments", role: "tabpanel", "aria-expanded": "true" }
+          },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.comments, function(comment, index) {
+                    return _c("tr", { key: comment.id }, [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(index + 1))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(comment.text))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(comment.published))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          "\n                              " +
+                            _vm._s(comment.post.title) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "blue-text",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "top",
+                              title: "",
+                              "data-original-title": "Edit"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.editComment(comment.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-pencil" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "red-text",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "top",
+                              title: "",
+                              "data-original-title": "Remove"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteComment(index, comment.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-times" })]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tabs-wrapper" }, [
+      _c(
+        "ul",
+        {
+          staticClass: "nav classic-tabs tabs-primary primary-color",
+          attrs: { role: "tablist" }
+        },
+        [
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass:
+                  "nav-link waves-light waves-effect waves-light active",
+                attrs: {
+                  "data-toggle": "tab",
+                  href: "#comments",
+                  role: "tab",
+                  "aria-expanded": "true"
+                }
+              },
+              [_vm._v("Comments")]
+            )
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Comment")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Posted At")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Blog Post")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -19400,7 +19645,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-primary btn-block text-uppercase",
-              attrs: { type: "submit", disabled: _vm.submitted },
+              attrs: { type: "submit" },
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -36635,6 +36880,9 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   },
   updatePassword: function updatePassword(payload) {
     return this.apiCall('post', '/user/update/password', payload);
+  },
+  getMyComments: function getMyComments() {
+    return this.apiCall('get', '/user/comments');
   }
 });
 
@@ -38763,6 +39011,45 @@ window.axios.defaults.baseURL = "http://localhost:8000";
       }
 
       return updatePassword;
+    }(),
+    getMyComments: function () {
+      var _getMyComments = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(_ref20) {
+        var commit, result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                commit = _ref20.commit;
+                _context20.prev = 1;
+                _context20.next = 4;
+                return _api_Endpoints_js__WEBPACK_IMPORTED_MODULE_5__["default"].getMyComments();
+
+              case 4:
+                result = _context20.sent;
+                commit('setComments', result);
+                _context20.next = 11;
+                break;
+
+              case 8:
+                _context20.prev = 8;
+                _context20.t0 = _context20["catch"](1);
+                commit('error', _context20.t0.message);
+
+              case 11:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20, null, [[1, 8]]);
+      }));
+
+      function getMyComments(_x33) {
+        return _getMyComments.apply(this, arguments);
+      }
+
+      return getMyComments;
     }()
   }
 }));

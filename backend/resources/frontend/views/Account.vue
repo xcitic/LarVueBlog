@@ -255,7 +255,7 @@ export default {
                 .then(() => {
                 this.flash('Success updating password', 'success');
               }).catch((err) => {
-                this.flash('Error updating password', 'error');
+                this.flash('Error updating password: ' + err.message, 'error');
               })
           }
         }

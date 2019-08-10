@@ -65,23 +65,10 @@
 
         <button class="btn btn-lg btn-primary btn-block text-uppercase"
                 @click.prevent="submit"
-                type="submit"
-                :disabled="submitted">
+                type="submit">
                 Register
         </button>
         <hr class="my-4">
-        <!--
-        <button class="btn btn-lg btn-google btn-block text-uppercase"
-                type="submit">
-                <i class="fab fa-google mr-2"></i>
-                Register with Google
-        </button>
-        <button class="btn btn-lg btn-facebook btn-block text-uppercase"
-                type="submit">
-                <i class="fab fa-facebook-f mr-2"></i>
-                Register with Facebook
-        </button>
-        -->
       </form>
     </div>
 

@@ -276,6 +276,15 @@ export default new Vuex.Store({
         commit('error', err.message);
         throw err;
       }
+    },
+
+    async getMyComments({commit}) {
+      try {
+        let result = await API.getMyComments();
+        commit('setComments', result);
+      } catch (err) {
+        commit('error', err.message);
+      }
     }
 
   }
