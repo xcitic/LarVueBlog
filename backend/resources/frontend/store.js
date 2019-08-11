@@ -118,6 +118,10 @@ export default new Vuex.Store({
 
     increaseViews(state, id) {
       state.post.views++;
+      let post = state.posts.find(post => { return post.id === id})
+      if(post){
+        post.views++;
+      }
     },
 
     error(state, err) {

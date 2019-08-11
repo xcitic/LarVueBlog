@@ -18494,7 +18494,7 @@ var render = function() {
                   _c(
                     "tbody",
                     _vm._l(_vm.posts, function(post, index) {
-                      return _c("tr", { key: post.id }, [
+                      return _c("tr", { key: index }, [
                         _c("th", { attrs: { scope: "row" } }, [
                           _vm._v(_vm._s(post.id))
                         ]),
@@ -18571,7 +18571,7 @@ var render = function() {
                   _c(
                     "tbody",
                     _vm._l(_vm.comments, function(comment, index) {
-                      return _c("tr", { key: comment.id }, [
+                      return _c("tr", { key: index }, [
                         _c("th", { attrs: { scope: "row" } }, [
                           _vm._v(_vm._s(comment.id))
                         ]),
@@ -18646,7 +18646,7 @@ var render = function() {
                   _c(
                     "tbody",
                     _vm._l(_vm.users, function(user, index) {
-                      return _c("tr", { key: user.id }, [
+                      return _c("tr", { key: index }, [
                         _c("th", { attrs: { scope: "row" } }, [
                           _vm._v(_vm._s(user.id))
                         ]),
@@ -39010,6 +39010,13 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     },
     increaseViews: function increaseViews(state, id) {
       state.post.views++;
+      var post = state.posts.find(function (post) {
+        return post.id === id;
+      });
+
+      if (post) {
+        post.views++;
+      }
     },
     error: function error(state, err) {
       state.error = err;

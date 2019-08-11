@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
 
-                                <tr v-for="(post, index) in posts" :key="post.id">
+                                <tr v-for="(post, index) in posts" :key="index">
 
                                     <th scope="row">{{post.id}}</th>
                                     <td>{{post.title}}</td>
@@ -74,7 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(comment, index) in comments" :key="comment.id">
+                                <tr v-for="(comment, index) in comments" :key="index">
                                     <th scope="row">{{comment.id}}</th>
                                     <td>{{comment.created_at}}</td>
                                     <td>{{comment.text}}</td>
@@ -104,7 +104,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(user, index) in users" :key="user.id">
+                                <tr v-for="(user, index) in users" :key="index">
                                     <th scope="row">{{user.id}}</th>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\BlogPost;
 use Illuminate\Http\Request;
+use App\Http\Requests\CommentStoreRequest;
+
 
 class CommentController extends Controller
 {
@@ -34,12 +36,10 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentStoreRequest $request)
     {
-        $validator = $request->validate([
-          'message' => 'required|string|max:255',
-          'postId' => 'required|integer'
-        ]);
+
+        $validated = $request->validated();
 
         $postExists = BlogPost::where('id', $request->postId)->first();
         $user = $request->user();
@@ -96,15 +96,16 @@ class CommentController extends Controller
 
 
 
-    public function updateComment(Request $request) {
-      // Sanitization & VALIDATION
+    public function updateComment(CommentStoreRequest $request) {
       $user = $request->user('api');
       $comment = Comment::where('id', $request->id)->first();
+
       if(isset($comment)) {
+        // admin and user who owns the comment are allowed to edit.
         if($user->isAdmin() || $comment->owner->id === $user->id) {
-          $allowed = true;
-        }
-        if($allowed) {
+
+          $validated = $request->validated();
+
           $comment->text = $request->text;
           $comment->update();
           return response('Updated', 200);
@@ -114,26 +115,4 @@ class CommentController extends Controller
       return response('Unauthorized', 401);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comment $comment)
-    {
-        //
-    }
 }

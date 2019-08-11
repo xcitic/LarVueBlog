@@ -29,7 +29,6 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/posts', 'BlogPostController@index');
 Route::get('/post/{id}', 'BlogPostController@show');
-
 Route::post('/stats/post/{id}', 'BlogPostController@viewed');
 
 Route::group(['middleware' => ['auth:api']], function() {
