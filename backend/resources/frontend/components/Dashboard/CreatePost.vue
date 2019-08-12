@@ -10,8 +10,19 @@
               <div class="card mb-r">
                   <div class="card-block">
                       <div class="md-form mt-1 mb-0">
-                          <input v-model="title" type="text" id="title" class="form-control">
+                          <input
+                            v-model="title"
+                            type="text"
+                            id="title"
+                            class="form-control"
+                            maxlength="100"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                            name="title"
+                            />
                           <label for="title" class="">Post title</label>
+                          <span v-if="submitted && errors.has('title')">
+                            <p class="red-text"> {{ errors.first('title') }} </p>
+                          </span>
                       </div>
                   </div>
               </div>

@@ -10,8 +10,19 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <input v-model="title" type="text" id="title" class="form-control" maxlength="100"/>
-                            <label for="title" class="">Post title</label>
+                          <input
+                          v-model="title"
+                          type="text"
+                          id="title"
+                          class="form-control"
+                          maxlength="100"
+                          v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                          name="title"
+                          />
+                          <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
+                          <span v-if="submitted && errors.has('title')">
+                            <p class="red-text"> {{ errors.first('title') }} </p>
+                          </span>
                         </div>
                     </div>
                 </div>
@@ -20,8 +31,21 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <textarea v-model="description" type="text" id="description" class="form-control"  maxlength="150" rows="2"></textarea>
-                            <label for="description" :class="description ? 'active' : ''" class="ml-1">Short Description</label>
+                          <textarea
+                            v-model="description"
+                            type="text"
+                            id="description"
+                            class="form-control"
+                            maxlength="150"
+                            rows="2"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                            name="description"
+                            ></textarea>
+                          <label for="description" :class="post.description ? 'active' : ''" class="ml-1">Short Description</label>
+
+                          <span v-if="submitted && errors.has('description')">
+                            <p class="red-text"> {{ errors.first('description') }} </p>
+                          </span>
 
                         </div>
                     </div>
@@ -122,21 +146,29 @@ export default {
 
 
     save() {
-        let processedImage = this.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
-        let payload = {
-          'title': this.title,
-          'description': this.description,
-          'content': this.content,
-          'image': processedImage
-        }
 
-        this.$store.dispatch('createPost', payload)
-        .then(() => {
-          this.flash('Successfully created new post', 'success');
-          this.$router.push({ name: 'dashboard' });
-        }).catch((err) => {
-          this.flash('Error: ' + err.message, 'error');
-        })
+      this.$validator.validate().then(valid => {
+        this.submitted = true;
+        if (valid) {
+          let processedImage = this.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
+          let payload = {
+            'title': this.title,
+            'description': this.description,
+            'content': this.content,
+            'image': processedImage
+          }
+
+          this.$store.dispatch('createPost', payload)
+          .then(() => {
+            this.flash('Successfully created new post', 'success');
+            this.$router.push({ name: 'dashboard' });
+          }).catch((err) => {
+            this.flash('Error: ' + err.message, 'error');
+            this.submitted = false;
+          })
+        }
+      })
+
 
     },
 

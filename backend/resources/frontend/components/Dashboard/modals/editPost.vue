@@ -10,8 +10,17 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <input v-model="post.title" type="text" id="title"  class="form-control"  maxlength="100"/>
+                            <input v-model="post.title"
+                            type="text" id="title"
+                            class="form-control"
+                            maxlength="100"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                            name="title"
+                            />
                             <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
+                            <span v-if="submitted && errors.has('title')">
+                              <p class="red-text"> {{ errors.first('title') }} </p>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -20,8 +29,18 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <textarea v-model="post.description" type="text" id="description" class="form-control" maxlength="150" rows="2"></textarea>
+                            <textarea v-model="post.description" type="text"
+                            id="description"
+                            class="form-control"
+                            maxlength="150"
+                            rows="2"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                            name="description"
+                            ></textarea>
                             <label for="description" :class="post.description ? 'active' : ''" class="ml-1">Short Description</label>
+                            <span v-if="submitted && errors.has('description')">
+                              <p class="red-text"> {{ errors.first('description') }} </p>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -100,6 +119,7 @@ export default {
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
       },
       newImage: '',
+      submitted: false,
     }
   },
 
@@ -122,21 +142,31 @@ export default {
 
 
     async save() {
-        let processedImage = await this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
-        let payload = {
-          'id': this.post.id,
-          'title': this.post.title,
-          'description': this.post.description,
-          'content': this.post.content,
-          'image': processedImage
-        }
+        // run validator 
+        this.$validator.validate().then(
+          valid => {
+          this.sumbitted = true;
+          if (valid) {
 
-        this.$store.dispatch('updatePost', payload)
-        .then(() => {
-          this.flash('Successfully Updated Post', 'success');
-          this.$emit('close');
-        }).catch((err) => {
-          this.flash('Error: ' + err.message, 'error');
+            let processedImage = await this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
+            let payload = {
+              'id': this.post.id,
+              'title': this.post.title,
+              'description': this.post.description,
+              'content': this.post.content,
+              'image': processedImage
+            }
+
+            this.$store.dispatch('updatePost', payload)
+            .then(() => {
+              this.flash('Successfully Updated Post', 'success');
+              this.$emit('close');
+            }).catch((err) => {
+              this.flash('Error: ' + err.message, 'error');
+              this.submitted = false;
+            })
+
+          }
         })
 
       },
