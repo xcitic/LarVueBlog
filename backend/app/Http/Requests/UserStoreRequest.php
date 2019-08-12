@@ -38,7 +38,7 @@ class UserStoreRequest extends FormRequest
    * Sanitizing input
    * @return
    */
-  public function sanitize() {
+  private function sanitize() {
     $input = $this->all();
 
     $input['name'] = trim(filter_var($input['name'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW));

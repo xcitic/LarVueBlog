@@ -32,7 +32,7 @@ class UserLoginRequest extends FormRequest
     }
 
     // Sanitize the email before using it to query the database.
-    public function sanitize() {
+    private function sanitize() {
       $input = $this->all();
       $input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
 

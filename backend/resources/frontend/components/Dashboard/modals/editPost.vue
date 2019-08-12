@@ -41,7 +41,7 @@
 
                 <div class="card mb-r" v-if="post.image">
                     <div class="card-block">
-                      <img :src="post.image">
+                      <img :src="newImage ? newImage : post.image ">
                     </div>
                 </div>
 
@@ -95,6 +95,7 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
+      newImage: '',
     }
   },
 
@@ -110,31 +111,31 @@ export default {
     createImage(file) {
       let reader = new FileReader();
       reader.onload = (e) => {
-        this.post.image = e.target.result;
+        this.newImage = e.target.result;
       };
       reader.readAsDataURL(file);
     },
 
 
-    save() {
-      let payload = {
-        'id': this.post.id,
-        'title': this.post.title,
-        'description': this.post.description,
-        'content': this.post.content,
-        'image': this.post.image,
-      }
+    async save() {
+        let processedImage = await this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
+        let payload = {
+          'id': this.post.id,
+          'title': this.post.title,
+          'description': this.post.description,
+          'content': this.post.content,
+          'image': processedImage
+        }
 
-      this.$store.dispatch('updatePost', payload)
-      .then(() => {
-        this.flash('Successfully Updated Post', 'success');
-        this.$emit('close');
-      }).catch((err) => {
-        this.flash('Error: ' + err.message, 'error');
-      })
+        this.$store.dispatch('updatePost', payload)
+        .then(() => {
+          this.flash('Successfully Updated Post', 'success');
+          this.$emit('close');
+        }).catch((err) => {
+          this.flash('Error: ' + err.message, 'error');
+        })
 
-    },
-
+      },
 
   }
 }

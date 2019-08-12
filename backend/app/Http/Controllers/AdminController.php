@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\User;
 use App\BlogPost;
-
+use App\Http\Requests\PostStoreRequest;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,8 +14,8 @@ class AdminController extends Controller
     /**
      * Check that users is admin
      */
-    public function __construct() {
-        $this->middleware('auth:api');
+    public function __construct()
+    {
         $this->middleware('AdminCheck');
     }
 
@@ -24,7 +24,8 @@ class AdminController extends Controller
      * Get all comments
      * @return Array $comments
      */
-    public function getComments() {
+    public function getComments()
+    {
       $comments = Comment::get();
       return response($comments);
     }
@@ -33,7 +34,8 @@ class AdminController extends Controller
      * Get all users
      * @return Array $users
      */
-    public function getUsers() {
+    public function getUsers()
+    {
       $users = User::get();
       return response($users);
     }
@@ -45,53 +47,50 @@ class AdminController extends Controller
      * @param  PostStoreRequest  $request
      * @return Object [BlogPost or Error]
      */
-    public function storePost(Request $request)
+    public function storePost(PostStoreRequest $request)
     {
+        // double check auth
+        $auth = $request->user('api');
+        if($auth->role === 'admin') {
 
-        if ($auth->role === 'admin') {
-          $validate = $request->validate([
-            'title' => 'required|string|max:100',
-            'description' => 'required|string|max:150',
-            'content' => 'required|max:1000',
-            'image' => 'required',
-          ]);
+          // validate & sanitize data
+          $validated = $request->validated();
+            // Generate image from blob64 with Intervention\Image and upload to public directory
+            // Remember to install php*-gd package to process the image unless you want to use
+            // imagick
+            try {
+              $image = $request->get('image');
+              $title = $request->title;
+              $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
 
-          // Generate image from blob64 with Intervention\Image and upload to public directory
-          // Remember to install php*-gd package to process the image unless you want to use
-          // imagick
-          try {
-            $image = $request->get('image');
-            $title = $request->title;
-            $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
+              $imageLink = public_path('/images/');
+              \Image::make($image)->encode('png')->save($imageLink.$imageName);
+            } catch (\Exception $e) {
 
-            $imageLink = public_path('/images/');
-            \Image::make($image)->encode('png')->save($imageLink.$imageName);
-          } catch (\Exception $e) {
+              return response($e, 415);
+            }
 
-            return response($e, 415);
-          }
+            try {
 
-          try {
+              $post = new BlogPost([
+                'user_id' => $auth->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'content' => $request->content,
+                'image' => '/images/'.$imageName,
+                'likes'=> 0,
+                'views'=> 0,
+              ]);
 
-            $post = new BlogPost([
-              'user_id' => $auth->id,
-              'title' => $request->title,
-              'description' => $request->description,
-              'content' => $request->content,
-              'image' => '/images/'.$imageName,
-              'likes'=> 0,
-              'views'=> 0,
-            ]);
+              $post->save();
 
-            $post->save();
+              return response($post, 201);
 
-            return response($post, 201);
+            } catch (\Exception $e) {
 
-          } catch (\Exception $e) {
+              return response ($e, 500);
 
-            return response ($e, 500);
-
-          }
+            }
 
         }
         // Default if user auth fails
@@ -106,23 +105,33 @@ class AdminController extends Controller
      * @param  PostUpdateRequest $request [Validation & Sanitization]
      * @return Object          [updated post or error]
      */
-    public function updatePost(int $id, Request $request) {
+    public function updatePost(int $id, PostStoreRequest $request)
+    {
+
+      // Check that the post exists
       $post = BlogPost::where('id', $id)->first();
+      if(!is_object($post)) {
+        abort( response('Not found', 404) );
+      }
 
-      $validate = $request->validate([
-        'title' => 'required|string|max:100',
-        'description' => 'required|string|max:150',
-        'content' => 'required|max:1000',
-      ]);
+      // validate input
+      $validated = $request->validated();
 
-      if(isset($request->image)) {
+      // if new image uploaded and valid, then process it
+      if(is_string($request->image)) {
         try {
           $image = $request->image;
           $title = $request->title;
+          // replace all spaces, set lowercase, trim edges and add .png extension.
           $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
 
           $imageLink = public_path('/images/');
+          // Generate image using Intervention\Image package.
           \Image::make($image)->encode('png')->save($imageLink.$imageName);
+
+          // update the image link
+          $post->image = '/images/'.$imageName;
+
         } catch (\Exception $e) {
 
           return response($e, 415);
@@ -133,12 +142,10 @@ class AdminController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         $post->content = $request->content;
-        if(isset($request->image)) {
-          $post->image = '/images/'.$imageName;
-        }
-        $post->save();
 
-        return response($post);
+        $post->update();
+
+        return response($post, 200);
 
       } catch (\Exception $e) {
 
@@ -154,7 +161,8 @@ class AdminController extends Controller
      * @param  int    $id [unique identifier]
      * @return string   [success or error msg]
      */
-    public function deletePost(int $id) {
+    public function deletePost(int $id)
+    {
       $post = BlogPost::where('id', $id)->first();
 
       if(is_object($post)) {
@@ -171,7 +179,8 @@ class AdminController extends Controller
      * @param  int    $id [unique identifier]
      * @return string     [Success, or error msg]
      */
-    public function deleteUser(int $id) {
+    public function deleteUser(int $id)
+    {
       $user = User::where('id', $id)->first();
 
       if(isset($user)) {

@@ -53,8 +53,8 @@
                           <!--/Post data-->
 
                           <!--Post text-->
-                          <div class="post-text my-5">
-                            <p>{{post.content}}</p>
+                          <div class="post-text text-center my-5">
+                            <div v-html="post.content"></div>
                           </div>
                           <!--/Post text-->
 

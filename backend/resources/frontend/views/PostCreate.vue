@@ -117,20 +117,21 @@ export default {
 
 
     save() {
-      let payload = {
-        'title': this.title,
-        'description': this.description,
-        'content': this.content,
-        'image': this.image,
-      }
+        let processedImage = this.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
+        let payload = {
+          'title': this.title,
+          'description': this.description,
+          'content': this.content,
+          'image': processedImage
+        }
 
-      this.$store.dispatch('createPost', payload)
-      .then(() => {
-        this.flash('Successfully created new post', 'success');
-        this.$router.push('/dashboard');
-      }).catch((err) => {
-        this.flash('Error: ' + err.message, 'error');
-      })
+        this.$store.dispatch('createPost', payload)
+        .then(() => {
+          this.flash('Successfully created new post', 'success');
+          this.$router.push('/dashboard');
+        }).catch((err) => {
+          this.flash('Error: ' + err.message, 'error');
+        })
 
     },
 

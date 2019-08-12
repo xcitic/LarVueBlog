@@ -39,7 +39,9 @@ class BlogPostController extends Controller
         $post = BlogPost::where('id', $id)->first();
         // TODO ORDER BY created at date
         $post->published = $post->updated_at->diffForHumans();
+        $post->content = html_entity_decode($post->content);
         $comments = $post->comments()->latest()->get();
+
         foreach($comments as $comment) {
           $comment->published  = $comment->updated_at->diffForHumans();
           $user = $comment->userInfo;

@@ -2895,10 +2895,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-vue */ "./node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js");
-/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
-/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ckeditor/ckeditor5-vue */ "./node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2983,14 +2991,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ckeditor: _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0___default.a.component
+    ckeditor: _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_1___default.a.component
   },
   props: {
     post: Object
   },
   data: function data() {
     return {
-      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a
+      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2___default.a,
+      newImage: ''
     };
   },
   methods: {
@@ -3009,29 +3018,56 @@ __webpack_require__.r(__webpack_exports__);
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this.post.image = e.target.result;
+        _this.newImage = e.target.result;
       };
 
       reader.readAsDataURL(file);
     },
-    save: function save() {
-      var _this2 = this;
+    save: function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this2 = this;
 
-      var payload = {
-        'id': this.post.id,
-        'title': this.post.title,
-        'description': this.post.description,
-        'content': this.post.content,
-        'image': this.post.image
-      };
-      this.$store.dispatch('updatePost', payload).then(function () {
-        _this2.flash('Successfully Updated Post', 'success');
+        var processedImage, payload;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
 
-        _this2.$emit('close');
-      })["catch"](function (err) {
-        _this2.flash('Error: ' + err.message, 'error');
-      });
-    }
+              case 2:
+                processedImage = _context.sent;
+                payload = {
+                  'id': this.post.id,
+                  'title': this.post.title,
+                  'description': this.post.description,
+                  'content': this.post.content,
+                  'image': processedImage
+                };
+                this.$store.dispatch('updatePost', payload).then(function () {
+                  _this2.flash('Successfully Updated Post', 'success');
+
+                  _this2.$emit('close');
+                })["catch"](function (err) {
+                  _this2.flash('Error: ' + err.message, 'error');
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }()
   }
 });
 
@@ -4787,11 +4823,12 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this2 = this;
 
+      var processedImage = this.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
       var payload = {
         'title': this.title,
         'description': this.description,
         'content': this.content,
-        'image': this.image
+        'image': processedImage
       };
       this.$store.dispatch('createPost', payload).then(function () {
         _this2.flash('Successfully created new post', 'success');
@@ -19367,7 +19404,9 @@ var render = function() {
           _vm.post.image
             ? _c("div", { staticClass: "card mb-r" }, [
                 _c("div", { staticClass: "card-block" }, [
-                  _c("img", { attrs: { src: _vm.post.image } })
+                  _c("img", {
+                    attrs: { src: _vm.newImage ? _vm.newImage : _vm.post.image }
+                  })
                 ])
               ])
             : _vm._e()
@@ -21040,8 +21079,8 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "post-text my-5" }, [
-                _c("p", [_vm._v(_vm._s(_vm.post.content))])
+              _c("div", { staticClass: "post-text text-center my-5" }, [
+                _c("div", { domProps: { innerHTML: _vm._s(_vm.post.content) } })
               ]),
               _vm._v(" "),
               _c("hr", { staticClass: "between-sections" }),

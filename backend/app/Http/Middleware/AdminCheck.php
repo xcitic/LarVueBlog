@@ -19,6 +19,6 @@ class AdminCheck
          if($user->role === 'admin') {
            return $next($request);
          }
-         return response('Unauthorized', 401);
+         abort( response('Unauthorized', 401) );
     }
 }

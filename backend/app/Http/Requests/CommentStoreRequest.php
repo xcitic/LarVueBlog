@@ -37,10 +37,10 @@ class CommentStoreRequest extends FormRequest
      * Sanitizing input
      * @return
      */
-    public function sanitize() {
+    private function sanitize() {
       $input = $this->all();
-
-      $input['message'] = trim(filter_var($input['message'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW));
+      
+      $input['message'] = trim(strip_tags($input['message']));
       $input['postId'] = trim(filter_var($input['postId'], FILTER_SANITIZE_NUMBER_INT));
 
       $this->replace($input);
