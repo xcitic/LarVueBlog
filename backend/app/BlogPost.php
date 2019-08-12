@@ -17,10 +17,19 @@ class BlogPost extends Model
       'views'
     ];
 
+
+    /**
+     * BlogPost Owner Relationship
+     * @return Relationship [BelongsTo]
+     */
     public function owner() {
       return $this->belongsTo('App\User', 'user_id');
     }
 
+    /**
+     * Comments Relationship
+     * @return Relationship [hasMany]
+     */
     public function comments() {
       return $this->hasMany('App\Comment');
     }

@@ -38,6 +38,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
+    /**
+     * Comments Relationship to User
+     * @return Relationship [hasMany]
+     */
     public function comments() {
       return $this->hasMany('App\Comment');
     }
@@ -53,6 +59,11 @@ class User extends Authenticatable
       return false;
     }
 
+
+    /**
+     * Only return specified DB info to user
+     * @return Array
+     */
     public function getInfo() {
       $info = [
         'name' => $this->name,
