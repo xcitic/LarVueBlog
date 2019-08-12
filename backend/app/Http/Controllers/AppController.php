@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
+
+    /**
+     * Main App
+     * @return HTML generated from Blade view
+     */
     public function main() {
         return view('mainView');
     }
 
-    public function dashboard() {
-        $user = Auth::user();
-        if ($user) {
-          return view('mainView');
-        }
-    }
 }

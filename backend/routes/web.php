@@ -11,12 +11,5 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('mainView');
-// });
-// Route::get('/dashboard', 'AppController@dashboard');
-// Route::get('/post/{id}', 'BlogPostController@show');
-
-// Auth::routes();
 
 Route::get('{any?}', 'AppController@main')->where('any', '.*');
