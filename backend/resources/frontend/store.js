@@ -77,6 +77,7 @@ export default new Vuex.Store({
     logout(state) {
       state.user = null;
       state.authenticated = false;
+      state.isAdmin = false;
     },
 
     setUser(state, userInfo) {
