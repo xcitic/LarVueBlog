@@ -13,7 +13,8 @@
                    placeholder="Email address"
                    autofocus
                    name="email"
-                   v-validate="'required|email|max:75'"
+                   v-validate="'required|email|max:50'"
+                   maxlength="50"
              />
              <span v-if="submitted && errors.has('email')">
                <p class="red-text"> {{ errors.first('email') }} </p>
@@ -30,6 +31,7 @@
                    placeholder="Password"
                    name="password"
                    v-validate="'required|max:50'"
+                   maxlength="50"
              />
              <span v-if="submitted && errors.has('password')">
                  <p class="red-text"> {{ errors.first('password') }} </p>

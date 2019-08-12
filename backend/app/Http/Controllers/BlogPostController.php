@@ -68,7 +68,7 @@ class BlogPostController extends Controller
       if(isset($post)) {
         $post->views += 1;
         $post->update();
-      }  
+      }
       return;
     }
 }

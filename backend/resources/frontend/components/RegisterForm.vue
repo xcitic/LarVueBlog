@@ -13,6 +13,7 @@
                   name="name"
                   autofocus
                   v-validate="'required|alpha_spaces|min:4|max:50'"
+                  maxlength="50"
             />
             <span v-if="submitted && errors.has('name')">
                 <p class="red-text"> {{ errors.first('name') }} </p>
@@ -27,6 +28,7 @@
                  placeholder="Email address"
                  name="email"
                  v-validate="'required|email|max:50'"
+                 maxlength="50"
             />
             <span v-if="submitted && errors.has('email')">
                 <p class="red-text"> {{ errors.first('email') }} </p>
@@ -42,6 +44,7 @@
                  name="password"
                  ref="password"
                  v-validate="'required|max:50'"
+                 maxlength="50"
             />
             <span v-if="submitted && errors.has('password')">
                 <p class="red-text"> {{ errors.first('password') }} </p>
@@ -57,6 +60,7 @@
                  name="password_confirmation"
                  v-validate="'required|confirmed:password'"
                  data-vv-as="password"
+                 maxlength="50"
             />
             <span v-if="submitted && errors.has('password_confirmation')">
                 <p class="red-text"> {{ errors.first('password_confirmation') }} </p>

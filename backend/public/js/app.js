@@ -2118,6 +2118,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['userImage'],
   data: function data() {
@@ -2327,14 +2328,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: false
+    };
+  },
   mounted: function mounted() {
-    this.getPosts();
-    this.getComments();
-    this.getUsers();
+    this.loading = true;
+    this.fetchData();
   },
   computed: {
     posts: function posts() {
@@ -2348,6 +2355,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    fetchData: function () {
+      var _fetchData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.getPosts();
+
+              case 2:
+                _context.next = 4;
+                return this.getComments();
+
+              case 4:
+                _context.next = 6;
+                return this.getUsers();
+
+              case 6:
+                this.loading = false;
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function fetchData() {
+        return _fetchData.apply(this, arguments);
+      }
+
+      return fetchData;
+    }(),
     getPosts: function getPosts() {
       this.$store.dispatch('getPosts');
     },
@@ -2375,15 +2418,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deletePost: function () {
       var _deletePost = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(index, id) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(index, id) {
         var _this = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                _context2.prev = 0;
+                _context2.next = 3;
                 return this.$store.dispatch('deletePost', id).then(function () {
                   _this.flash("Deleted Post with id: ".concat(id), 'success');
 
@@ -2391,20 +2434,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                _context.next = 8;
+                _context2.next = 8;
                 break;
 
               case 5:
-                _context.prev = 5;
-                _context.t0 = _context["catch"](0);
-                this.flash('Error deleting post: ' + _context.t0.message, 'error');
+                _context2.prev = 5;
+                _context2.t0 = _context2["catch"](0);
+                this.flash('Error deleting post: ' + _context2.t0.message, 'error');
 
               case 8:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[0, 5]]);
+        }, _callee2, this, [[0, 5]]);
       }));
 
       function deletePost(_x, _x2) {
@@ -2431,32 +2474,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteComment: function () {
       var _deleteComment = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(index, id) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(index, id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return this.$store.dispatch('deleteComment', id);
 
               case 3:
                 this.flash("Deleted comment with id: ".concat(id), 'success');
                 this.$store.commit('removeComment', index);
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
 
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                this.flash('Error deleting comment: ' + _context2.t0.message, 'error');
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                this.flash('Error deleting comment: ' + _context3.t0.message, 'error');
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[0, 7]]);
+        }, _callee3, this, [[0, 7]]);
       }));
 
       function deleteComment(_x3, _x4) {
@@ -2483,36 +2526,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteUser: function () {
       var _deleteUser = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(index, id) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(index, id) {
         var name;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
+                _context4.prev = 0;
                 name = this.users.find(function (user) {
                   return user.id === id;
                 }).name;
-                _context3.next = 4;
+                _context4.next = 4;
                 return this.$store.dispatch('deleteUser', id);
 
               case 4:
                 this.flash("Deleted user with name: ".concat(name), 'success');
                 this.$store.commit('removeUser', index);
-                _context3.next = 11;
+                _context4.next = 11;
                 break;
 
               case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                this.flash('Error deleting user: ' + _context3.t0.message, 'error');
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                this.flash('Error deleting user: ' + _context4.t0.message, 'error');
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 8]]);
+        }, _callee4, this, [[0, 8]]);
       }));
 
       function deleteUser(_x5, _x6) {
@@ -2987,6 +3030,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2999,6 +3043,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_2___default.a,
+      editorConfig: {
+        toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
+      },
       newImage: ''
     };
   },
@@ -3548,6 +3595,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LoginForm',
   data: function data() {
@@ -3770,6 +3819,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -4784,6 +4837,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4796,7 +4851,10 @@ __webpack_require__.r(__webpack_exports__);
       description: '',
       content: '',
       image: '',
-      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a
+      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a,
+      editorConfig: {
+        toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
+      }
     };
   },
   methods: {
@@ -18498,7 +18556,12 @@ var render = function() {
               }
             ],
             staticClass: "md-textarea",
-            attrs: { type: "text", id: "message", name: "message" },
+            attrs: {
+              type: "text",
+              id: "message",
+              name: "message",
+              maxlength: "255"
+            },
             domProps: { value: _vm.message },
             on: {
               input: function($event) {
@@ -18567,238 +18630,243 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12 mb-1 mt-2" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-content card" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane fade show active",
-              attrs: { id: "posts", role: "tabpanel" }
-            },
-            [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.posts, function(post, index) {
-                      return _c("tr", { key: index }, [
-                        _c("th", { attrs: { scope: "row" } }, [
-                          _vm._v(_vm._s(post.id))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.title))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.comments.length))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.views))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.likes))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post.published))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "blue-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "",
-                                "data-original-title": "See Message"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.editPost(post.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-pencil" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "red-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Delete",
-                                "data-original-title": "Remove"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deletePost(index, post.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-times" })]
-                          )
-                        ])
-                      ])
-                    }),
-                    0
-                  )
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane fade",
-              attrs: { id: "comments", role: "tabpanel" }
-            },
-            [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.comments, function(comment, index) {
-                      return _c("tr", { key: index }, [
-                        _c("th", { attrs: { scope: "row" } }, [
-                          _vm._v(_vm._s(comment.id))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(comment.created_at))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(comment.text))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(comment.user_id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(comment.blog_post_id))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "blue-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "",
-                                "data-original-title": "Edit"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.editComment(comment.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-pencil" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "red-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "",
-                                "data-original-title": "Remove"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteComment(index, comment.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-times" })]
-                          )
-                        ])
-                      ])
-                    }),
-                    0
-                  )
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane fade",
-              attrs: { id: "users", role: "tabpanel" }
-            },
-            [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.users, function(user, index) {
-                      return _c("tr", { key: index }, [
-                        _c("th", { attrs: { scope: "row" } }, [
-                          _vm._v(_vm._s(user.id))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.email))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.role))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.created_at))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "blue-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "",
-                                "data-original-title": "Edit"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.editUser(user.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-pencil" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "red-text",
-                              attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "",
-                                "data-original-title": "Remove"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteUser(index, user.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-times" })]
-                          )
-                        ])
-                      ])
-                    }),
-                    0
-                  )
-                ])
-              ])
-            ]
-          )
-        ])
-      ])
+      _vm.loading
+        ? _c("div", { staticClass: "loading" }, [_vm._v("..Loading")])
+        : _c("div", { staticClass: "col-md-12 mb-1 mt-2" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content card" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade show active",
+                  attrs: { id: "posts", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.posts, function(post, index) {
+                          return _c("tr", { key: index }, [
+                            _c("th", { attrs: { scope: "row" } }, [
+                              _vm._v(_vm._s(post.id))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.title))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.comments.length))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.views))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.likes))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.published))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "blue-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "",
+                                    "data-original-title": "See Message"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editPost(post.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-pencil" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "red-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "Delete",
+                                    "data-original-title": "Remove"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deletePost(index, post.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-times" })]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "comments", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.comments, function(comment, index) {
+                          return _c("tr", { key: index }, [
+                            _c("th", { attrs: { scope: "row" } }, [
+                              _vm._v(_vm._s(comment.id))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(comment.created_at))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(comment.text))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(comment.user_id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(comment.blog_post_id))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "blue-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "",
+                                    "data-original-title": "Edit"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editComment(comment.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-pencil" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "red-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "",
+                                    "data-original-title": "Remove"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteComment(
+                                        index,
+                                        comment.id
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-times" })]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "users", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.users, function(user, index) {
+                          return _c("tr", { key: index }, [
+                            _c("th", { attrs: { scope: "row" } }, [
+                              _vm._v(_vm._s(user.id))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.email))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.role))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.created_at))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "blue-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "",
+                                    "data-original-title": "Edit"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editUser(user.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-pencil" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "red-text",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "",
+                                    "data-original-title": "Remove"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteUser(index, user.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-times" })]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
     ])
   ])
 }
@@ -19315,7 +19383,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "title" },
+                  attrs: { type: "text", id: "title", maxlength: "100" },
                   domProps: { value: _vm.post.title },
                   on: {
                     input: function($event) {
@@ -19352,11 +19420,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  class: _vm.post.description ? "active" : "",
                   attrs: {
                     type: "text",
                     id: "description",
-                    value: "Short Dec"
+                    maxlength: "150",
+                    rows: "2"
                   },
                   domProps: { value: _vm.post.description },
                   on: {
@@ -19367,7 +19435,17 @@ var render = function() {
                       _vm.$set(_vm.post, "description", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "ml-1",
+                    class: _vm.post.description ? "active" : "",
+                    attrs: { for: "description" }
+                  },
+                  [_vm._v("Short Description")]
+                )
               ])
             ])
           ]),
@@ -19377,7 +19455,11 @@ var render = function() {
             { staticClass: "card mb-r" },
             [
               _c("ckeditor", {
-                attrs: { editor: _vm.editor },
+                attrs: {
+                  editor: _vm.editor,
+                  config: _vm.editorConfig,
+                  "tag-name": "textarea"
+                },
                 model: {
                   value: _vm.post.content,
                   callback: function($$v) {
@@ -19417,7 +19499,7 @@ var render = function() {
             _c("div", { staticClass: "admin-panel info-admin-panel" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "card-block text-center" }, [
                 _vm._m(1),
                 _vm._v(" "),
                 _vm._m(2),
@@ -19455,9 +19537,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "view primary-color" }, [
-      _c("h5", [_vm._v("Change Post")])
-    ])
+    return _c(
+      "div",
+      { staticClass: "view primary-color text-center text-white" },
+      [_c("h5", [_vm._v("Change Post")])]
+    )
   },
   function() {
     var _vm = this
@@ -19914,8 +19998,8 @@ var render = function() {
                 {
                   name: "validate",
                   rawName: "v-validate",
-                  value: "required|email|max:75",
-                  expression: "'required|email|max:75'"
+                  value: "required|email|max:50",
+                  expression: "'required|email|max:50'"
                 }
               ],
               staticClass: "form-control",
@@ -19924,7 +20008,8 @@ var render = function() {
                 autocomplete: "username",
                 placeholder: "Email address",
                 autofocus: "",
-                name: "email"
+                name: "email",
+                maxlength: "50"
               },
               domProps: { value: _vm.email },
               on: {
@@ -19967,7 +20052,8 @@ var render = function() {
                 type: "password",
                 autocomplete: "current-password",
                 placeholder: "Password",
-                name: "password"
+                name: "password",
+                maxlength: "50"
               },
               domProps: { value: _vm.password },
               on: {
@@ -20291,7 +20377,8 @@ var render = function() {
                 autocomplete: "name",
                 placeholder: "Name",
                 name: "name",
-                autofocus: ""
+                autofocus: "",
+                maxlength: "50"
               },
               domProps: { value: _vm.input.name },
               on: {
@@ -20334,7 +20421,8 @@ var render = function() {
                 type: "email",
                 autocomplete: "username",
                 placeholder: "Email address",
-                name: "email"
+                name: "email",
+                maxlength: "50"
               },
               domProps: { value: _vm.input.email },
               on: {
@@ -20378,7 +20466,8 @@ var render = function() {
                 type: "password",
                 autocomplete: "new-password",
                 placeholder: "Password",
-                name: "password"
+                name: "password",
+                maxlength: "50"
               },
               domProps: { value: _vm.input.password },
               on: {
@@ -20422,7 +20511,8 @@ var render = function() {
                 autocomplete: "new-password",
                 placeholder: "Repeat Password",
                 name: "password_confirmation",
-                "data-vv-as": "password"
+                "data-vv-as": "password",
+                maxlength: "50"
               },
               domProps: { value: _vm.input.password_confirmation },
               on: {
@@ -21264,7 +21354,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "title" },
+                  attrs: { type: "text", id: "title", maxlength: "100" },
                   domProps: { value: _vm.title },
                   on: {
                     input: function($event) {
@@ -21297,7 +21387,8 @@ var render = function() {
                   attrs: {
                     type: "text",
                     id: "description",
-                    value: "Short Dec"
+                    maxlength: "150",
+                    rows: "2"
                   },
                   domProps: { value: _vm.description },
                   on: {
@@ -21308,7 +21399,17 @@ var render = function() {
                       _vm.description = $event.target.value
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "ml-1",
+                    class: _vm.description ? "active" : "",
+                    attrs: { for: "description" }
+                  },
+                  [_vm._v("Short Description")]
+                )
               ])
             ])
           ]),
@@ -21318,7 +21419,11 @@ var render = function() {
             { staticClass: "card mb-r" },
             [
               _c("ckeditor", {
-                attrs: { editor: _vm.editor },
+                attrs: {
+                  editor: _vm.editor,
+                  config: _vm.editorConfig,
+                  "tag-name": "textarea"
+                },
                 model: {
                   value: _vm.content,
                   callback: function($$v) {
@@ -21365,10 +21470,10 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn-flat waves-effect",
+                      staticClass: "btn btn-secondary waves-effect",
                       on: { click: _vm.reset }
                     },
-                    [_vm._v("Discard")]
+                    [_vm._v("Reset")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -37600,36 +37705,9 @@ var endpoint = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   createComment: function createComment(payload) {
     return this.apiCall('post', "/comment/".concat(payload.postId, "/create"), payload);
   },
-  getUser: function () {
-    var _getUser = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              return _context2.abrupt("return", this.apiCall('get', '/user'));
-
-            case 4:
-              _context2.prev = 4;
-              _context2.t0 = _context2["catch"](0);
-              console.log('error dude');
-
-            case 7:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, this, [[0, 4]]);
-    }));
-
-    function getUser() {
-      return _getUser.apply(this, arguments);
-    }
-
-    return getUser;
-  }(),
+  getUser: function getUser() {
+    return this.apiCall('get', '/user');
+  },
   createPost: function createPost(payload) {
     return this.apiCall('post', '/post/create', payload);
   },

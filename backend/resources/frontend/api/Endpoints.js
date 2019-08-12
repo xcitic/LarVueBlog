@@ -48,12 +48,8 @@ export default {
     return this.apiCall('post', `/comment/${payload.postId}/create`, payload);
   },
 
-  async getUser() {
-    try {
-        return this.apiCall('get', '/user');
-    } catch (err) {
-      console.log('error dude');
-    }
+  getUser() {
+      return this.apiCall('get', '/user');
   },
 
   createPost(payload) {

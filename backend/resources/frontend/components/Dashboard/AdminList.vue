@@ -2,7 +2,9 @@
   <div class="container">
     <div class="row">
 
-        <div class="col-md-12 mb-1 mt-2">
+      <div class="loading" v-if="loading">..Loading</div>
+
+        <div class="col-md-12 mb-1 mt-2" v-else>
             <!-- Tabs -->
             <!-- Nav tabs -->
 
@@ -134,10 +136,16 @@ import editUser from '@/components/Dashboard/modals/editUser.vue';
 
 export default {
 
+  data() {
+    return {
+      loading: false,
+    }
+  },
+
   mounted() {
-    this.getPosts();
-    this.getComments();
-    this.getUsers();
+    this.loading = true;
+    this.fetchData();
+
   },
 
   computed: {
@@ -156,6 +164,14 @@ export default {
   },
 
   methods: {
+
+    async fetchData() {
+        await this.getPosts()
+        await this.getComments()
+        await this.getUsers()
+        this.loading = false
+    },
+
     getPosts() {
        this.$store.dispatch('getPosts');
     },

@@ -10,7 +10,7 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <input v-model="post.title" type="text" id="title"  class="form-control" />
+                            <input v-model="post.title" type="text" id="title"  class="form-control"  maxlength="100"/>
                             <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
                         </div>
                     </div>
@@ -20,14 +20,15 @@
                 <div class="card mb-r">
                     <div class="card-block">
                         <div class="md-form mt-1 mb-0 ml-1">
-                            <textarea v-model="post.description" type="text" id="description" :class="post.description ? 'active' : ''" class="form-control" value="Short Dec"></textarea>
+                            <textarea v-model="post.description" type="text" id="description" class="form-control" maxlength="150" rows="2"></textarea>
+                            <label for="description" :class="post.description ? 'active' : ''" class="ml-1">Short Description</label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Second card -->
                 <div class="card mb-r">
-                    <ckeditor :editor="editor" v-model="post.content"></ckeditor>
+                    <ckeditor :editor="editor" :config="editorConfig" tag-name="textarea" v-model="post.content"></ckeditor>
                 </div>
                 <!-- /.Second card -->
 
@@ -53,12 +54,12 @@
                 <div class="card card-cascade narrower mb-r">
                     <div class="admin-panel info-admin-panel">
                         <!--Card image-->
-                        <div class="view primary-color">
+                        <div class="view primary-color text-center text-white">
                             <h5>Change Post</h5>
                         </div>
                         <!--/Card image-->
                         <!--Card content-->
-                        <div class="card-block">
+                        <div class="card-block text-center">
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
@@ -95,6 +96,9 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
+      editorConfig: {
+        toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
+      },
       newImage: '',
     }
   },

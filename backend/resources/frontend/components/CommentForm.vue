@@ -20,6 +20,7 @@
                   v-model.trim="message"
                   v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                   name="message"
+                  maxlength="255"
                   />
                   <label for="message">Your message</label>
                   <span v-if="submitted && errors.has('message')">
