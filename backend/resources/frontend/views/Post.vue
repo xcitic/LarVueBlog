@@ -4,7 +4,10 @@
       <!--Blog-->
       <div class="row mt-1">
           <!--Main listing-->
-          <div class="col-md-12">
+          <div class="loading" v-if="loading"></div>
+          <div class="col-md-12" v-else>
+
+
 
               <!--Section: Post-->
               <section class="section section-blog-fw">
@@ -133,7 +136,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Auth from '@/api/Auth.js';
 import Comment from '@/components/Comment.vue';
 import CommentForm from '@/components/CommentForm.vue';
@@ -148,18 +150,26 @@ import CommentForm from '@/components/CommentForm.vue';
 
     data() {
       return {
+        id: this.$route.params.id
       }
     },
 
     computed: {
-      ...mapState({
-        post: state => state.post,
-        comments: state => state.comments,
-        user: state => state.user
-      }),
 
-      userIsLoggedIn() {
-        return true;
+      loading() {
+        return this.$store.state.loading
+      },
+
+      post() {
+        return this.$store.state.post
+      },
+
+      comments() {
+        return this.$store.state.comments
+      },
+
+      user() {
+        return this.$store.state.user
       },
 
       commentsCount() {
@@ -175,10 +185,21 @@ import CommentForm from '@/components/CommentForm.vue';
       }
     },
 
+    beforeMount() {
+      this.$store.commit('isLoading');
+      this.fetchData();
+    },
+
     mounted() {
-      let id = this.$route.params.id;
-      this.$store.dispatch('getPost', id);
-      this.$store.dispatch('viewedPost', id);
+      this.$store.dispatch('viewedPost', this.id);
+    },
+
+    methods: {
+      async fetchData() {
+        await this.$store.dispatch('getPost', this.id);
+        this.$store.commit('notLoading');
+      }
+
     },
 
   }

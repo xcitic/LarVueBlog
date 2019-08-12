@@ -28,6 +28,7 @@ export default new Vuex.Store({
     },
     isAdmin: false,
     users: [],
+    loading: true
   },
 
   getters: {
@@ -35,13 +36,19 @@ export default new Vuex.Store({
       return state.comments;
     },
 
-    getUser(state) {
+    user(state) {
       return state.user
     },
 
     getPosts(state) {
       return state.posts
-    }
+    },
+
+    loading(state) {
+      return state.loading
+    },
+
+
   },
   mutations: {
     setPosts(state, data) {
@@ -53,12 +60,12 @@ export default new Vuex.Store({
     },
 
     setComments(state, comments) {
-      Vue.set(state, 'comments', comments);
+      state.comments = comments;
     },
 
     setComment(state, comment) {
       let data = [comment, ...state.comments];
-      Vue.set(state, 'comments', data);
+      state.comments = data;
     },
 
     login(state, userInfo) {
@@ -116,6 +123,14 @@ export default new Vuex.Store({
       state.users.splice(index,1);
     },
 
+    notLoading(state) {
+      state.loading = false;
+    },
+
+    isLoading(state) {
+      state.loading = true;
+    },
+
     increaseViews(state, id) {
       state.post.views++;
       let post = state.posts.find(post => { return post.id === id})
@@ -133,6 +148,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
+
     async getPosts({commit}) {
       let result = await API.getPosts();
       commit('setPosts', result);

@@ -1,7 +1,9 @@
 <template>
+
   <div class="col-md-12">
 
     <modals-container height="auto"/>
+
 
     <AdminList v-if="isAdmin"/>
 
@@ -24,7 +26,8 @@ export default {
   computed: {
     isAdmin() {
       return this.$store.state.isAdmin;
-    }
+    },
+
   }
 }
 </script>

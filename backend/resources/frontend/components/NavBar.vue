@@ -48,10 +48,6 @@ export default {
     ProfileIcon
   },
 
-  // mounted() {
-  //   return this.$store.dispatch('checkAuth');
-  // },
-
   computed: {
     authenticated() {
       return this.$store.state.authenticated;

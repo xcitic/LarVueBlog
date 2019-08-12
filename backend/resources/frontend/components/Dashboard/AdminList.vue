@@ -2,7 +2,9 @@
   <div class="container">
     <div class="row">
 
-      <div class="loading" v-if="loading">..Loading</div>
+      <div v-if="loading" class="justify-content-center">
+        <icons :icon="['fas', 'spinner']" class="fa-spinner" />
+      </div>
 
         <div class="col-md-12 mb-1 mt-2" v-else>
             <!-- Tabs -->
@@ -136,19 +138,16 @@ import editUser from '@/components/Dashboard/modals/editUser.vue';
 
 export default {
 
-  data() {
-    return {
-      loading: false,
-    }
-  },
-
-  mounted() {
-    this.loading = true;
+  beforeMount() {
+    this.$store.commit('isLoading');
     this.fetchData();
-
   },
 
   computed: {
+
+    loading() {
+      return this.$store.state.loading;
+    },
     posts() {
       return this.$store.state.posts;
     },
@@ -169,7 +168,7 @@ export default {
         await this.getPosts()
         await this.getComments()
         await this.getUsers()
-        this.loading = false
+        this.$store.commit('notLoading');
     },
 
     getPosts() {

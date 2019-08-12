@@ -1,6 +1,11 @@
 <template>
       <!-- First row -->
-      <div class="col-lg-12 col-md-12 mt-2">
+
+      <div v-if="loading" class="justify-content-center">
+        <icons :icon="['fas', 'spinner']" class="fa-spinner" />
+      </div>
+
+      <div class="col-lg-12 col-md-12 mt-2" v-else>
 
       <div class="row">
           <!-- First column -->
@@ -10,7 +15,7 @@
               <div class="card contact-card">
                   <div class="admin-panel info-admin-panel">
                       <!-- Card title -->
-                      <div class="view primary-color">
+                      <div class="view primary-color white-text">
                           <h5>Edit Photo</h5>
                       </div>
                       <!-- /.Card title -->
@@ -32,7 +37,7 @@
               <div class="card">
                   <div class="admin-panel info-admin-panel">
                       <!--Card image-->
-                      <div class="view primary-color">
+                      <div class="view primary-color white-text">
                           <h5>Edit Account</h5>
                       </div>
                       <!--/Card image-->
@@ -164,7 +169,19 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+
+    loading() {
+      return this.$store.state.loading;
     }
+  },
+
+  mounted() {
+    if(!this.user) {
+      this.$store.commit('isLoading');
+      this.setUser();
+    }
+
   },
 
   data() {
@@ -178,6 +195,11 @@ export default {
   },
 
   methods: {
+
+    async setUser() {
+      await this.$store.dispatch('checkUser')
+      this.$store.commit('notLoading');
+    },
 
     showPassword() {
       return this.changePassword = !this.changePassword;

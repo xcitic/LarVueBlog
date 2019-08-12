@@ -1,7 +1,12 @@
 <template>
   <div>
       <div class="container">
-        <section class="section classic-blog-listing mt-1">
+
+          <div v-if="loading" class="justify-content-center">
+            <icons :icon="['fas', 'spinner']" class="fa-spinner" />
+          </div>
+
+        <section class="section classic-blog-listing mt-1" v-else>
 
           <BlogPost
             v-for="(post, index) in posts"
@@ -24,27 +29,37 @@ export default {
     BlogPost
   },
 
-  mounted() {
+  beforeMount() {
     this.getPosts();
   },
 
   computed: {
     posts() {
       return this.$store.state.posts;
-    }
-  },
+    },
 
-  data() {
-    return {
-
+    loading() {
+      return this.$store.state.loading;
     }
+
   },
 
   methods: {
-    getPosts() {
-      this.$store.dispatch('getPosts');
+    async getPosts() {
+      await this.$store.dispatch('getPosts');
+      this.$store.commit('notLoading');
     },
 
   }
 }
 </script>
+
+<style>
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+  }
+.fa-spinner {
+  font-size: 50px;
+  animation: spinner 1s linear infinite;
+  }
+</style>

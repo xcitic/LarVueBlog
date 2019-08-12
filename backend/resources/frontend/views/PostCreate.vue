@@ -55,7 +55,7 @@
                 <div class="card card-cascade narrower mb-r">
                     <div class="admin-panel info-admin-panel">
                         <!--Card image-->
-                        <div class="view primary-color">
+                        <div class="view primary-color text-white">
                             <h5>Publish</h5>
                         </div>
                         <!--/Card image-->
@@ -64,8 +64,8 @@
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
-                                <button class="btn btn-secondary waves-effect" @click="reset">Reset</button>
-                                <button class="btn btn-primary" @click="save">Publish</button>
+                              <button class="btn btn-primary" @click="save">Publish</button>
+                              <button class="btn btn-secondary waves-effect" @click="reset">Reset</button>
                             </div>
                         </div>
                         <!--/.Card content-->
@@ -133,7 +133,7 @@ export default {
         this.$store.dispatch('createPost', payload)
         .then(() => {
           this.flash('Successfully created new post', 'success');
-          this.$router.push('/dashboard');
+          this.$router.push({ name: 'dashboard' });
         }).catch((err) => {
           this.flash('Error: ' + err.message, 'error');
         })
