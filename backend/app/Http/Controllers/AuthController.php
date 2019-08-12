@@ -14,13 +14,12 @@ class AuthController extends Controller
 
   /**
    * Creates a new User instance and persists it to the database
-   * @param  Request $request form input
-   * @return Array  token & user object.
+   * @param  UserStoreRequest $request [validate & sanitize input]
+   * @return Array  [token & user object]
    */
   public function register(UserStoreRequest $request)
   {
-
-
+      // validate and sanitize input
       $validated = $request->validated();
 
       // Hash password using php recommended password_hash, defaults to bcrypt hash encryption.
@@ -43,21 +42,26 @@ class AuthController extends Controller
 
         // Generate token with passport
         $token = $user->createToken('bearer')->accessToken;
-        // generate response, return only public parts of user info getInfo()
+        // generate response, return only public parts of user info; $user->getInfo()
         $userInfo = $user->getInfo();
         $token = ['token' => $token];
         $response = $userInfo + $token;
 
-        return response()->json($response, 200);
+        return response($response, 200);
 
-      } catch (Exception $e) {
-        return response()->json(['errors' => 'Invalid input'], 422);
+      } catch (\Exception $e) {
+        return response(['errors' => 'Invalid input'], 422);
       }
 
-      return response()->json(['errors' => 'Invalid input'], 422);
+      return response(['errors' => 'Invalid input'], 422);
 
   }
 
+  /**
+   * User login
+   * @param  UserLoginRequest $request [description]
+   * @return Object                    [User object & Token]
+   */
   public function login(UserLoginRequest $request)
   {
     // Validated data
@@ -65,7 +69,6 @@ class AuthController extends Controller
 
     // find the user
     $user = User::where('email', $request->email)->first();
-
 
     if ($user) {
       // check the hashed password
@@ -78,7 +81,7 @@ class AuthController extends Controller
         $token = ['token' => $token];
         // $response = array_merge($userInfo, $token);
         $response = $userInfo + $token;
-        return response()->json($response, 200);
+        return response($response, 200);
       }
     }
 

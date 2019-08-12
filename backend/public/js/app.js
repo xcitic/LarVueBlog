@@ -3277,32 +3277,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       reader.readAsDataURL(file);
     },
-    saveImage: function saveImage(image) {
-      var _this2 = this;
-
-      var payload = {
-        'image': image
-      };
-      this.$store.dispatch('updatePicture', payload).then(function () {
-        _this2.flash('Successfully updated picture', 'success');
-      })["catch"](function () {
-        _this2.flash('Error updating picture', 'error');
-      });
-    },
-    submit: function () {
-      var _submit = _asyncToGenerator(
+    saveImage: function () {
+      var _saveImage = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(image) {
+        var _this2 = this;
+
+        var processedImage, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.next = 2;
+                return image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
+
+              case 2:
+                processedImage = _context2.sent;
+                payload = {
+                  'image': processedImage
+                };
+                this.$store.dispatch('updatePicture', payload).then(function () {
+                  _this2.flash('Successfully updated picture', 'success');
+                })["catch"](function () {
+                  _this2.flash('Error updating picture', 'error');
+                });
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function saveImage(_x2) {
+        return _saveImage.apply(this, arguments);
+      }
+
+      return saveImage;
+    }(),
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
                 if (!(this.cur_password && this.new_password && this.new_password === this.new_password_confirmation)) {
-                  _context2.next = 3;
+                  _context3.next = 3;
                   break;
                 }
 
-                _context2.next = 3;
+                _context3.next = 3;
                 return this.savePassword();
 
               case 3:
@@ -3310,10 +3337,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function submit() {
@@ -3325,12 +3352,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     saveInfo: function () {
       var _saveInfo = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this3 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.$validator.validate().then(function (valid) {
                   _this3.submitted = true;
@@ -3352,10 +3379,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function saveInfo() {
@@ -3367,12 +3394,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     savePassword: function () {
       var _savePassword = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var _this4 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.$validator.validate().then(function (valid) {
                   if (valid) {
@@ -3392,10 +3419,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function savePassword() {
@@ -4127,32 +4154,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       reader.readAsDataURL(file);
     },
-    saveImage: function saveImage(image) {
-      var _this2 = this;
-
-      var payload = {
-        'image': image
-      };
-      this.$store.dispatch('updatePicture', payload).then(function () {
-        _this2.flash('Successfully updated picture', 'success');
-      })["catch"](function () {
-        _this2.flash('Error updating picture', 'error');
-      });
-    },
-    submit: function () {
-      var _submit = _asyncToGenerator(
+    saveImage: function () {
+      var _saveImage = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(image) {
+        var _this2 = this;
+
+        var processedImage, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.next = 2;
+                return image.replace(/^data:image\/(png|jpg|jpeg|JPEG|gif);base64,/, "");
+
+              case 2:
+                processedImage = _context2.sent;
+                payload = {
+                  'image': processedImage
+                };
+                this.$store.dispatch('updatePicture', payload).then(function () {
+                  _this2.flash('Successfully updated picture', 'success');
+                })["catch"](function () {
+                  _this2.flash('Error updating picture', 'error');
+                });
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function saveImage(_x2) {
+        return _saveImage.apply(this, arguments);
+      }
+
+      return saveImage;
+    }(),
+    submit: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
                 if (!(this.cur_password && this.new_password && this.new_password === this.new_password_confirmation)) {
-                  _context2.next = 3;
+                  _context3.next = 3;
                   break;
                 }
 
-                _context2.next = 3;
+                _context3.next = 3;
                 return this.savePassword();
 
               case 3:
@@ -4160,10 +4214,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function submit() {
@@ -4175,12 +4229,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     saveInfo: function () {
       var _saveInfo = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this3 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.$validator.validate().then(function (valid) {
                   _this3.submitted = true;
@@ -4202,10 +4256,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function saveInfo() {
@@ -4217,12 +4271,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     savePassword: function () {
       var _savePassword = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var _this4 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.$validator.validate().then(function (valid) {
                   if (valid) {
@@ -4242,10 +4296,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function savePassword() {

@@ -10,27 +10,102 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    /**
+     * Check that users is admin
+     */
     public function __construct() {
         $this->middleware('auth:api');
         $this->middleware('AdminCheck');
     }
 
+
+    /**
+     * Get all comments
+     * @return Array $comments
+     */
     public function getComments() {
       $comments = Comment::get();
       return response($comments);
     }
 
+    /**
+     * Get all users
+     * @return Array $users
+     */
     public function getUsers() {
       $users = User::get();
       return response($users);
     }
 
-    public function deletePost(int $id) {
-      $post = BlogPost::where('id', $id)->first();
-      $post->delete();
-      return response($id);
+
+    /**
+     * Create and store a new BlogPost
+     *
+     * @param  PostStoreRequest  $request
+     * @return Object [BlogPost or Error]
+     */
+    public function storePost(Request $request)
+    {
+
+        if ($auth->role === 'admin') {
+          $validate = $request->validate([
+            'title' => 'required|string|max:100',
+            'description' => 'required|string|max:150',
+            'content' => 'required|max:1000',
+            'image' => 'required',
+          ]);
+
+          // Generate image from blob64 with Intervention\Image and upload to public directory
+          // Remember to install php*-gd package to process the image unless you want to use
+          // imagick
+          try {
+            $image = $request->get('image');
+            $title = $request->title;
+            $imageName = trim(strtolower(preg_replace('/\s+/', '', $title))).'.png';
+
+            $imageLink = public_path('/images/');
+            \Image::make($image)->encode('png')->save($imageLink.$imageName);
+          } catch (\Exception $e) {
+
+            return response($e, 415);
+          }
+
+          try {
+
+            $post = new BlogPost([
+              'user_id' => $auth->id,
+              'title' => $request->title,
+              'description' => $request->description,
+              'content' => $request->content,
+              'image' => '/images/'.$imageName,
+              'likes'=> 0,
+              'views'=> 0,
+            ]);
+
+            $post->save();
+
+            return response($post, 201);
+
+          } catch (\Exception $e) {
+
+            return response ($e, 500);
+
+          }
+
+        }
+        // Default if user auth fails
+        return response('Unauthorized', 401);
+
     }
 
+
+    /**
+     * Update a post
+     * @param  int     $id      [unique identifier]
+     * @param  PostUpdateRequest $request [Validation & Sanitization]
+     * @return Object          [updated post or error]
+     */
     public function updatePost(int $id, Request $request) {
       $post = BlogPost::where('id', $id)->first();
 
@@ -73,6 +148,29 @@ class AdminController extends Controller
 
     }
 
+
+    /**
+     * Delete a Post
+     * @param  int    $id [unique identifier]
+     * @return string   [success or error msg]
+     */
+    public function deletePost(int $id) {
+      $post = BlogPost::where('id', $id)->first();
+
+      if(is_object($post)) {
+        $post->delete();
+        return response('Deleted', 200);
+      }
+
+      return response('Not found', 404);
+    }
+
+
+    /**
+     * Delete user
+     * @param  int    $id [unique identifier]
+     * @return string     [Success, or error msg]
+     */
     public function deleteUser(int $id) {
       $user = User::where('id', $id)->first();
 

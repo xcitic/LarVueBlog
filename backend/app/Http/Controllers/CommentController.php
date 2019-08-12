@@ -10,31 +10,19 @@ use App\Http\Requests\CommentStoreRequest;
 
 class CommentController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Check that user is authenticated before continuing
      */
-    public function index()
-    {
-        //
+    public function __construct() {
+      $this->middleware('auth:api');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Handle and store a new comment in DB.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CommentStoreRequest  $request [validation & sanitization]
+     * @return Object [$comment or $error]
      */
     public function store(CommentStoreRequest $request)
     {
@@ -55,57 +43,74 @@ class CommentController extends Controller
           $comment->published  = $comment->created_at->diffForHumans();
           $userInfo = $comment->userInfo;
 
-          return response()->json($comment, 201);
+          return response($comment, 201);
         }
 
-        return response()->json('Error', 404);
+        return response('Error', 404);
 
     }
 
 
+    /**
+     * Get Users own comments
+     * @param  Request $request
+     * @return Array            [$comments]
+     */
     public function getMyComments(Request $request) {
 
       $user = $request->user('api');
-      $comments = $user->comments;
-      foreach ($comments as $comment) {
-        $comment->post;
-        $comment->published = $comment->created_at->diffForHumans();
+      if($user) {
+        $comments = $user->comments;
+        foreach ($comments as $comment) {
+          $comment->post;
+          $comment->published = $comment->created_at->diffForHumans();
+        }
+
+        return response($comments, 200);
       }
 
-      return response($comments, 200);
+      return response('Unathorized', 401);
+
     }
 
 
-
+    /**
+     * Delete a comment
+     * @param  int     $id      [unique identifier]
+     * @param  Request $request
+     * @return String           [Success or error]
+     */
     public function deleteComment(int $id, Request $request) {
+
       $user = $request->user('api');
       $comment = Comment::where('id', $id)->first();
-      // admin can delete any comment
-      if($user->isAdmin() ) {
-        $comment->delete();
-        return response('Deleted', 200);
-      }
-      // user can only delete their own comments
-      if($comment->owner->id === $user->id) {
+
+      // check that the comment exists and db has returned an object
+      if(is_object($comment)) {
+        // admin can delete any comment, user can delete their own comments
+        if($user->isAdmin() || $comment->owner->id === $user->id) {
           $comment->delete();
           return response('Deleted', 200);
         }
+      }
 
       return response('Unauthorized', 401);
     }
 
 
-
+    /**
+     * Update a comment
+     * @param  CommentStoreRequest $request [Validation & sanitization]
+     * @return String                      [Success or error]
+     */
     public function updateComment(CommentStoreRequest $request) {
       $user = $request->user('api');
-      $comment = Comment::where('id', $request->id)->first();
+      $validated = $request->validated();
 
+      $comment = Comment::where('id', $request->id)->first();
       if(isset($comment)) {
         // admin and user who owns the comment are allowed to edit.
         if($user->isAdmin() || $comment->owner->id === $user->id) {
-
-          $validated = $request->validated();
-
           $comment->text = $request->text;
           $comment->update();
           return response('Updated', 200);

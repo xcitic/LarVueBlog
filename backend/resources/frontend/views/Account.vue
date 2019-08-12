@@ -201,9 +201,11 @@ export default {
       reader.readAsDataURL(file)
     },
 
-    saveImage(image) {
+    async saveImage(image) {
+      // Strip Mime type
+      let processedImage = await image.replace(/^data:image\/(png|jpg|jpeg|JPEG|gif);base64,/, "")
       let payload = {
-        'image': image,
+        'image': processedImage,
       }
       this.$store.dispatch('updatePicture', payload)
       .then(() => {

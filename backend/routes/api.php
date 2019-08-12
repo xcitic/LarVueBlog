@@ -44,9 +44,9 @@ Route::group(['middleware' => ['auth:api']], function() {
 });
 
 Route::group(['middleware' => ['auth:api', 'AdminCheck']], function() {
-    Route::post('/post/create', 'BlogPostController@store');
     Route::get('/comments/all', 'AdminController@getComments');
     Route::get('/users/all', 'AdminController@getUsers');
+    Route::post('/post/create', 'AdminController@storePost');
     Route::post('/post/{id}/delete', 'AdminController@deletePost');
     Route::post('/post/{id}/update', 'AdminController@updatePost');
     Route::post('/user/{id}/delete', 'AdminController@deleteUser');
