@@ -1,13 +1,11 @@
 <template>
+<div class="col-md-12">
 
-  <div class="col-md-12">
+  <modals-container height="auto"/>
 
-    <modals-container height="auto"/>
+  <AdminList v-if="isAdmin"/>
 
-
-    <AdminList v-if="isAdmin"/>
-
-    <Comments v-else />
+  <Comments v-else />
 
 </div>
 </template>

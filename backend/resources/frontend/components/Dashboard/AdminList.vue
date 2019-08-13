@@ -164,9 +164,9 @@ export default {
   methods: {
 
     async fetchData() {
-        await this.getPosts()
-        await this.getComments()
-        await this.getUsers()
+        this.getPosts()
+        this.getComments()
+        this.getUsers()
         this.$store.commit('notLoading');
     },
 

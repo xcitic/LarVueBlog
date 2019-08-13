@@ -166,8 +166,6 @@ export default {
           })
         }
       })
-
-
     },
 
     reset() {
@@ -177,10 +175,6 @@ export default {
       this.image = '';
     },
 
-
   }
 }
 </script>
-
-<style  scoped>
-</style>

@@ -1,17 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
 
 import Auth from '@/api/Auth.js';
 import API from '@/api/Endpoints.js';
 
 Vue.use(Vuex);
-
-/* Axios Config */
-window.axios = axios;
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = process.env.MIX_APP_URL;
-
 
 export default new Vuex.Store({
   state: {
@@ -70,7 +63,6 @@ export default new Vuex.Store({
 
     login(state, userInfo) {
       state.user = userInfo;
-      Auth.login(userInfo.token, userInfo);
       state.authenticated = true;
     },
 
@@ -162,9 +154,10 @@ export default new Vuex.Store({
     },
 
     async login({commit}, payload) {
-        let result = await API.login(payload);
+        let result = await API.login(payload)
         commit('login', result);
-        commit('setAuth', result);
+        commit('setUser', result)
+        Auth.login(result.token, result)
       },
 
     async register({commit}, payload) {

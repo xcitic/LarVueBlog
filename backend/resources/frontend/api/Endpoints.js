@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const authToken = localStorage.getItem('token');
+
+let authToken = localStorage.getItem('token');
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]');
 
 
@@ -30,6 +31,10 @@ export default {
 
   getPosts() {
     return this.apiCall('get', '/posts');
+  },
+
+  getToken() {
+    return authToken;
   },
 
   getPost(id) {

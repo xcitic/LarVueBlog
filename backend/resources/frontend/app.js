@@ -1,5 +1,3 @@
-"use strict";
-
 // Core
 import Vue from 'vue';
 Vue.config.productionTip = false;
@@ -8,7 +6,7 @@ Vue.config.productionTip = false;
 import App from './App.vue';
 import router from '@/router/router.js';
 import store from './store.js';
-import './registerServiceWorker';
+// import './registerServiceWorker';
 
 // External packages
 import VueFlashMessage from 'vue-flash-message';

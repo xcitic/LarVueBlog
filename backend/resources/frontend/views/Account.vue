@@ -265,7 +265,6 @@ export default {
       )
     },
 
-
     async savePassword() {
       this.$validator.validate().then(
         valid => {
@@ -285,9 +284,6 @@ export default {
         }
       )
     },
-
-
-
 
   }
 }

@@ -12,7 +12,6 @@
 <script>
 import SideNav from '@/components/Dashboard/SideNav.vue';
 
-
 export default {
   components: {
     SideNav,

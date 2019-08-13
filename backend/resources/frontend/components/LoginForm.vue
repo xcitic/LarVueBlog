@@ -74,7 +74,6 @@ export default {
       this.$validator.validate().then(
         valid => {
           if (valid) {
-
             let payload = {
               email: this.email,
               password: this.password

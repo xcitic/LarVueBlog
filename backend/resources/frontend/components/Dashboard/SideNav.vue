@@ -1,5 +1,9 @@
 <template>
-<ul id="slide-out" class="side-nav fixed custom-scrollbar">
+<div>
+  <div v-if="loading" class="justify-content-center">
+    <icons :icon="['fas', 'spinner']" class="fa-spinner" />
+  </div>
+<ul id="slide-out" class="side-nav fixed custom-scrollbar" v-else>
   <!-- Logo -->
   <li>
     <div class="user-box" v-if="user">
@@ -21,6 +25,7 @@
 
 </ul>
 
+</div>
 <!--/. Sidebar navigation -->
 </template>
 
@@ -33,10 +38,15 @@ export default {
   name: 'SideNav',
 
   mounted() {
+    this.$store.commit('isLoading');
     this.checkAdmin()
   },
 
   computed: {
+    loading() {
+      return this.$store.state.loading;
+    },
+
     user() {
       return this.$store.state.user;
     },
@@ -52,9 +62,11 @@ export default {
     async checkAdmin() {
       let response = await Auth.isAdmin();
       if (response === true) {
-        return this.$store.commit('setAdmin', true);
+        this.$store.commit('setAdmin', true);
+        return this.$store.commit('notLoading');
       }
       this.$store.commit('setAdmin', false);
+      return this.$store.commit('notLoading');
     },
 
   }

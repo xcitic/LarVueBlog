@@ -1,23 +1,22 @@
 <template>
-  <div>
-      <div class="container">
-
-        <div v-if="loading" class="justify-content-center">
-          <icons :icon="['fas', 'spinner']" class="fa-spinner" />
-        </div>
-
-        <section class="section classic-blog-listing mt-1" v-else>
-
-          <BlogPost
-            v-for="(post, index) in posts"
-            :key="index"
-            :title="post.title"
-            :data="post"
-           />
-
-        </section>
+<div>
+  <div class="container">
+    <div v-if="loading" class="justify-content-center">
+      <icons :icon="['fas', 'spinner']" class="fa-spinner" />
     </div>
+
+    <section class="section classic-blog-listing mt-1" v-else>
+
+      <BlogPost
+        v-for="(post, index) in posts"
+        :key="index"
+        :title="post.title"
+        :data="post"
+       />
+
+    </section>
   </div>
+</div>
 </template>
 
 <script>
