@@ -27,6 +27,8 @@
 <script>
 import Auth from '@/api/Auth.js';
 
+
+
 export default {
   name: 'SideNav',
 

@@ -1,9 +1,5 @@
 <template>
-  <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav top-nav-collapse">
-            <!-- SideNav slide-out button -->
-            <div class="float-left">
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
-            </div>
+  <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
             <!-- Breadcrumb-->
             <div class="breadcrumb-dn mr-auto">
               <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>

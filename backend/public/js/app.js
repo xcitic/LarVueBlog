@@ -13399,10 +13399,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NavBar',
@@ -30090,11 +30086,9 @@ var render = function() {
     "nav",
     {
       staticClass:
-        "navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav top-nav-collapse"
+        "navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav"
     },
     [
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "div",
         { staticClass: "breadcrumb-dn mr-auto" },
@@ -30189,23 +30183,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "float-left" }, [
-      _c(
-        "a",
-        {
-          staticClass: "button-collapse",
-          attrs: { href: "#", "data-activates": "slide-out" }
-        },
-        [_c("i", { staticClass: "fa fa-bars" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
