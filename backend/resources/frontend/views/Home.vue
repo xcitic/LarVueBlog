@@ -2,9 +2,9 @@
   <div>
       <div class="container">
 
-          <div v-if="loading" class="justify-content-center">
-            <icons :icon="['fas', 'spinner']" class="fa-spinner" />
-          </div>
+        <div v-if="loading" class="justify-content-center">
+          <icons :icon="['fas', 'spinner']" class="fa-spinner" />
+        </div>
 
         <section class="section classic-blog-listing mt-1" v-else>
 

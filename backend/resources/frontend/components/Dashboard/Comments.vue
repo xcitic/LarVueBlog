@@ -54,6 +54,10 @@ import editComment from '@/components/Dashboard/modals/editComment.vue';
 
 export default {
 
+  mounted() {
+    this.getComments();
+  },
+
   computed: {
     comments() {
       return this.$store.state.comments;
@@ -61,15 +65,10 @@ export default {
 
   },
 
-  mounted() {
-    this.getComments();
-  },
-
   methods: {
     getComments() {
       this.$store.dispatch('getMyComments');
     },
-
 
     editComment(id) {
       let data = this.comments.find(comment => comment.id === id);
@@ -85,7 +84,6 @@ export default {
       })
     },
 
-
     async deleteComment(index, id) {
       try {
         await this.$store.dispatch('deleteComment', id);
@@ -99,6 +97,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-</style>

@@ -5,7 +5,6 @@
       <div class="form-signin">
         <form>
           <div class="form-control-group">
-
             <input type="email"
                    autocomplete="username"
                    v-model="email"
@@ -19,9 +18,7 @@
              <span v-if="submitted && errors.has('email')">
                <p class="red-text"> {{ errors.first('email') }} </p>
              </span>
-
           </div>
-
 
           <div class="form-control-group my-4">
             <input type="password"
@@ -38,7 +35,6 @@
              </span>
           </div>
 
-
           <div class="custom-control custom-checkbox mb-3">
             <input type="checkbox"
                    class="custom-control-input"
@@ -47,6 +43,7 @@
               Remember password
             </label>
           </div>
+
           <button class="btn btn-lg btn-primary btn-block text-uppercase"
                   type="submit"
                   :disable="submitted"
@@ -60,7 +57,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'LoginForm',
   data () {
@@ -105,11 +101,10 @@ export default {
       },
 
     }
-
-  };
+}
 </script>
 
-<style lang="css" scoped>
+<style>
 .card-signin {
     border: 0;
     border-radius: 1rem;

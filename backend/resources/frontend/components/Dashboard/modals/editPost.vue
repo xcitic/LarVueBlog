@@ -143,12 +143,12 @@ export default {
 
 
     async save() {
-        let processedImage = await this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
         // run validator
         this.$validator.validate().then(
           valid => {
           this.sumbitted = true;
           if (valid) {
+            let processedImage = this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
             let payload = {
               'id': this.post.id,
               'title': this.post.title,

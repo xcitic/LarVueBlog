@@ -32,6 +32,10 @@ import Auth from '@/api/Auth.js';
 export default {
   name: 'SideNav',
 
+  mounted() {
+    this.checkAdmin()
+  },
+
   computed: {
     user() {
       return this.$store.state.user;
@@ -41,10 +45,6 @@ export default {
       return this.$store.state.isAdmin;
     }
 
-  },
-
-  mounted() {
-    this.checkAdmin()
   },
 
   methods: {
@@ -62,6 +62,3 @@ export default {
 
 }
 </script>
-
-<style lang="css" scoped>
-</style>

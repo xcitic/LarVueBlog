@@ -1,41 +1,47 @@
 <template>
-  <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
-            <!-- Breadcrumb-->
-            <div class="breadcrumb-dn mr-auto">
-              <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>
-            </div>
+<nav class="navbar fixed-top navbar-dark scrolling-navbar double-nav">
+  <!-- SideNav slide-out button -->
+  <div class="float-left mr-4" v-if="!homepage && !blogpage">
+      <a data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+  </div>
+  <!-- Logo and Mainpage route -->
+  <div class="breadcrumb-dn mr-auto">
+    <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>
+  </div>
 
-            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
-                <li class="nav-item" v-if="!homepage">
-                  <router-link class="nav-link" :to="{ name: 'home' }">
-                     <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
-                    </router-link>
-                </li>
+  <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
 
-                <li class="nav-item" v-if="!dashboard">
-                  <router-link class="nav-link" :to="{ name: 'dashboard' }">
-                     <i class="fa fa-tachometer"></i> <span class="hidden-sm-down">Dashboard</span>
-                    </router-link>
-                </li>
+      <li class="nav-item" v-if="!homepage">
+        <router-link class="nav-link" :to="{ name: 'home' }">
+           <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
+          </router-link>
+      </li>
 
-                <ProfileIcon />
-            </ul>
+      <li class="nav-item" v-if="!dashboard">
+        <router-link class="nav-link" :to="{ name: 'dashboard' }">
+           <i class="fa fa-tachometer"></i> <span class="hidden-sm-down">Dashboard</span>
+          </router-link>
+      </li>
+
+      <ProfileIcon />
+  </ul>
 
 
-            <ul class="nav navbar-nav nav-flex-icons ml-auto" v-else>
-                <li class="nav-item text-white">
-                  <router-link :to="{ name: 'login' }">Login</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link :to="{ name: 'register' }">Register</router-link>
-                </li>
-            </ul>
-        </nav>
+  <ul class="nav navbar-nav nav-flex-icons ml-auto" v-else>
+      <li class="nav-item text-white">
+        <router-link :to="{ name: 'login' }">Login</router-link>
+      </li>
+
+      <li class="nav-item">
+        <router-link :to="{ name: 'register' }">Register</router-link>
+      </li>
+  </ul>
+
+</nav>
 </template>
 
 <script>
 import ProfileIcon from '@/components/ProfileIcon';
-
 
 export default {
   name: 'NavBar',
@@ -55,7 +61,12 @@ export default {
 
     homepage() {
       return this.$route.name === "home";
+    },
+
+    blogpage() {
+      return this.$route.name === "post";
     }
+
   }
 }
 </script>
@@ -68,5 +79,8 @@ export default {
   margin-right: 2rem;
 }
 
+.hidden {
+  visibility: hidden;
+}
 
 </style>

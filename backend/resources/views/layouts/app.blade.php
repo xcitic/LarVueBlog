@@ -28,6 +28,9 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/main.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script>
+       $(".button-collapse").sideNav();
+    </script>
 
     @yield('scripts')
 

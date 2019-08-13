@@ -1,45 +1,44 @@
 <template>
   <!--Leave a reply form-->
-  <div class="reply-form">
+<div class="reply-form">
 
-      <!--Third row-->
-      <div class="row">
-          <!--Image column-->
-          <div class="col-sm-2 col-12">
-              <img :src="userImage" />
-          </div>
-          <!--/.Image column-->
+    <!--Third row-->
+    <div class="row">
+        <!--Image column-->
+        <div class="col-sm-2 col-12">
+            <img :src="userImage" />
+        </div>
+        <!--/.Image column-->
 
-          <!--Content column-->
-          <div class="col-sm-10 col-12">
-              <div class="md-form">
-                  <textarea
-                  type="text"
-                  id="message"
-                  class="md-textarea"
-                  v-model.trim="message"
-                  v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
-                  name="message"
-                  maxlength="255"
-                  />
-                  <label for="message">Your message</label>
-                  <span v-if="submitted && errors.has('message')">
-                    <p class="red-text"> {{ errors.first('message') }} </p>
-                  </span>
-              </div>
+        <!--Content column-->
+        <div class="col-sm-10 col-12">
+            <div class="md-form">
+                <textarea
+                type="text"
+                id="message"
+                class="md-textarea"
+                v-model.trim="message"
+                v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
+                name="message"
+                maxlength="255"
+                />
+                <label for="message">Your message</label>
+                <span v-if="submitted && errors.has('message')">
+                  <p class="red-text"> {{ errors.first('message') }} </p>
+                </span>
+            </div>
 
-          </div>
+        </div>
 
-          <div class="text-center">
-              <button @click.prevent="submit" class="btn btn-primary">Submit</button>
-          </div>
-          <!--/.Content column-->
+        <div class="text-center">
+            <button @click.prevent="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <!--/.Content column-->
 
-      </div>
-      <!--/.Third row-->
-  </div>
-  <!--/.Leave a reply form-->
-
+    </div>
+    <!--/.Third row-->
+</div>
+<!--/.Leave a reply form-->
 </template>
 
 <script>
@@ -54,7 +53,6 @@ export default {
       submitted: false,
     }
   },
-
 
   methods: {
     async submit() {
@@ -88,6 +86,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css" scoped>
-</style>

@@ -144,7 +144,6 @@ export default {
   },
 
   computed: {
-
     loading() {
       return this.$store.state.loading;
     },
@@ -260,10 +259,6 @@ export default {
       }
     },
 
-
   }
 }
 </script>
-
-<style scoped>
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-12 col-md-12 mt-2 mb-2">
+<div class="col-lg-12 col-md-12 mt-2 mb-2">
 
   <div class="row">
       <!-- First column -->
@@ -161,7 +161,6 @@ export default {
     user: Object
   },
 
-
   data() {
     return {
       cur_password: '',
@@ -238,7 +237,6 @@ export default {
       )
     },
 
-
     async savePassword() {
       this.$validator.validate().then(
         valid => {
@@ -261,6 +259,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>
