@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
@@ -30,6 +25,7 @@ Route::group(['middleware' => ['auth:api']], function() {
   Route::post('/comment/{id}/delete', 'CommentController@deleteComment');
   Route::post('/comment/{id}/update', 'CommentController@updateComment');
   Route::get('/user/comments', 'CommentController@getMyComments');
+  Route::get('/user', 'UserController@getUser');
   Route::post('/user/update', 'UserController@updateUser');
   Route::post('/user/update/picture', 'UserController@updatePicture');
   Route::post('/user/update/password', 'UserController@updatePassword');

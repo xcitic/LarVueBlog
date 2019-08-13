@@ -21,6 +21,16 @@ class UserController extends Controller
 
 
     /**
+     * Get currently logged in user using passport token
+     * @param  Request $request
+     * @return Object           [User]
+     */
+    public function getUser(Request $request) {
+      return $request->user('api');
+    }
+
+
+    /**
      * Update user picture and save to public folder
      * @param  UserUpdatePictureRequest $request [Validate base64 image]
      * @return String           [description]
