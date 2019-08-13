@@ -16,7 +16,7 @@
                           id="title"
                           class="form-control"
                           maxlength="100"
-                          v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
+                          v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                           name="title"
                           />
                           <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
@@ -35,11 +35,11 @@
                             v-model="description"
                             type="text"
                             id="description"
+                            name="description"
                             class="form-control"
                             maxlength="150"
                             rows="2"
-                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }
-                            name="description"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                             ></textarea>
                           <label for="description" :class="post.description ? 'active' : ''" class="ml-1">Short Description</label>
 
@@ -144,9 +144,7 @@ export default {
       reader.readAsDataURL(file);
     },
 
-
     save() {
-
       this.$validator.validate().then(valid => {
         this.submitted = true;
         if (valid) {

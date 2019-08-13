@@ -12694,6 +12694,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12709,7 +12729,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       editorConfig: {
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
       },
-      newImage: ''
+      newImage: '',
+      submitted: false
     };
   },
   methods: {
@@ -12739,7 +12760,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this2 = this;
 
-        var processedImage, payload;
+        var processedImage;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -12749,22 +12770,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 processedImage = _context.sent;
-                payload = {
-                  'id': this.post.id,
-                  'title': this.post.title,
-                  'description': this.post.description,
-                  'content': this.post.content,
-                  'image': processedImage
-                };
-                this.$store.dispatch('updatePost', payload).then(function () {
-                  _this2.flash('Successfully Updated Post', 'success');
+                // run validator
+                this.$validator.validate().then(function (valid) {
+                  _this2.sumbitted = true;
 
-                  _this2.$emit('close');
-                })["catch"](function (err) {
-                  _this2.flash('Error: ' + err.message, 'error');
+                  if (valid) {
+                    var payload = {
+                      'id': _this2.post.id,
+                      'title': _this2.post.title,
+                      'description': _this2.post.description,
+                      'content': _this2.post.content,
+                      'image': processedImage
+                    };
+
+                    _this2.$store.dispatch('updatePost', payload).then(function () {
+                      _this2.flash('Successfully Updated Post', 'success');
+
+                      _this2.$emit('close');
+                    })["catch"](function (err) {
+                      _this2.flash('Error: ' + err.message, 'error');
+
+                      _this2.submitted = false;
+                    });
+                  }
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -14617,6 +14648,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -14659,21 +14714,31 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this2 = this;
 
-      var processedImage = this.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
-      var payload = {
-        'title': this.title,
-        'description': this.description,
-        'content': this.content,
-        'image': processedImage
-      };
-      this.$store.dispatch('createPost', payload).then(function () {
-        _this2.flash('Successfully created new post', 'success');
+      this.$validator.validate().then(function (valid) {
+        _this2.submitted = true;
 
-        _this2.$router.push({
-          name: 'dashboard'
-        });
-      })["catch"](function (err) {
-        _this2.flash('Error: ' + err.message, 'error');
+        if (valid) {
+          var processedImage = _this2.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
+
+          var payload = {
+            'title': _this2.title,
+            'description': _this2.description,
+            'content': _this2.content,
+            'image': processedImage
+          };
+
+          _this2.$store.dispatch('createPost', payload).then(function () {
+            _this2.flash('Successfully created new post', 'success');
+
+            _this2.$router.push({
+              name: 'dashboard'
+            });
+          })["catch"](function (err) {
+            _this2.flash('Error: ' + err.message, 'error');
+
+            _this2.submitted = false;
+          });
+        }
       });
     },
     reset: function reset() {
@@ -29219,10 +29284,26 @@ var render = function() {
                       rawName: "v-model",
                       value: _vm.post.title,
                       expression: "post.title"
+                    },
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: {
+                        required: true,
+                        regex: /^[A-Za-z0-9.,!' -]*$/,
+                        max: 255
+                      },
+                      expression:
+                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "title", maxlength: "100" },
+                  attrs: {
+                    type: "text",
+                    id: "title",
+                    name: "title",
+                    maxlength: "100"
+                  },
                   domProps: { value: _vm.post.title },
                   on: {
                     input: function($event) {
@@ -29241,7 +29322,15 @@ var render = function() {
                     attrs: { for: "title" }
                   },
                   [_vm._v("Post title")]
-                )
+                ),
+                _vm._v(" "),
+                _vm.submitted && _vm.errors.has("title")
+                  ? _c("span", [
+                      _c("p", { staticClass: "red-text" }, [
+                        _vm._v(" " + _vm._s(_vm.errors.first("title")) + " ")
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ]),
@@ -29256,6 +29345,17 @@ var render = function() {
                       rawName: "v-model",
                       value: _vm.post.description,
                       expression: "post.description"
+                    },
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: {
+                        required: true,
+                        regex: /^[A-Za-z0-9.,!' -]*$/,
+                        max: 255
+                      },
+                      expression:
+                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                     }
                   ],
                   staticClass: "form-control",
@@ -29263,7 +29363,8 @@ var render = function() {
                     type: "text",
                     id: "description",
                     maxlength: "150",
-                    rows: "2"
+                    rows: "2",
+                    name: "description"
                   },
                   domProps: { value: _vm.post.description },
                   on: {
@@ -29284,7 +29385,17 @@ var render = function() {
                     attrs: { for: "description" }
                   },
                   [_vm._v("Short Description")]
-                )
+                ),
+                _vm._v(" "),
+                _vm.submitted && _vm.errors.has("description")
+                  ? _c("span", [
+                      _c("p", { staticClass: "red-text" }, [
+                        _vm._v(
+                          " " + _vm._s(_vm.errors.first("description")) + " "
+                        )
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ]),
@@ -31237,10 +31348,26 @@ var render = function() {
                       rawName: "v-model",
                       value: _vm.title,
                       expression: "title"
+                    },
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: {
+                        required: true,
+                        regex: /^[A-Za-z0-9.,!' -]*$/,
+                        max: 255
+                      },
+                      expression:
+                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "title", maxlength: "100" },
+                  attrs: {
+                    type: "text",
+                    id: "title",
+                    maxlength: "100",
+                    name: "title"
+                  },
                   domProps: { value: _vm.title },
                   on: {
                     input: function($event) {
@@ -31252,7 +31379,22 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "title" } }, [_vm._v("Post title")])
+                _c(
+                  "label",
+                  {
+                    class: _vm.post.title ? "active" : "",
+                    attrs: { for: "title" }
+                  },
+                  [_vm._v("Post title")]
+                ),
+                _vm._v(" "),
+                _vm.submitted && _vm.errors.has("title")
+                  ? _c("span", [
+                      _c("p", { staticClass: "red-text" }, [
+                        _vm._v(" " + _vm._s(_vm.errors.first("title")) + " ")
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ]),
@@ -31267,12 +31409,24 @@ var render = function() {
                       rawName: "v-model",
                       value: _vm.description,
                       expression: "description"
+                    },
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: {
+                        required: true,
+                        regex: /^[A-Za-z0-9.,!' -]*$/,
+                        max: 255
+                      },
+                      expression:
+                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
                     id: "description",
+                    name: "description",
                     maxlength: "150",
                     rows: "2"
                   },
@@ -31291,11 +31445,21 @@ var render = function() {
                   "label",
                   {
                     staticClass: "ml-1",
-                    class: _vm.description ? "active" : "",
+                    class: _vm.post.description ? "active" : "",
                     attrs: { for: "description" }
                   },
                   [_vm._v("Short Description")]
-                )
+                ),
+                _vm._v(" "),
+                _vm.submitted && _vm.errors.has("description")
+                  ? _c("span", [
+                      _c("p", { staticClass: "red-text" }, [
+                        _vm._v(
+                          " " + _vm._s(_vm.errors.first("description")) + " "
+                        )
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ]),
@@ -49040,6 +49204,7 @@ window.axios.defaults.baseURL = "http://localhost:8000";
     logout: function logout(state) {
       state.user = null;
       state.authenticated = false;
+      state.isAdmin = false;
     },
     setUser: function setUser(state, userInfo) {
       state.user = userInfo;
