@@ -27,5 +27,5 @@ TODO.md
 
 public/images/users/
 yarn.lock
-public/js/app.js
-public/mix-manifest.json
+/public/js/app.js
+/public/mix-manifest.json
