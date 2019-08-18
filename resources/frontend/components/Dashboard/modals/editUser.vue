@@ -223,8 +223,10 @@ export default {
           if(valid) {
             let payload = {
               name: this.user.name,
-              email: this.user.email
+              email: this.user.email,
+              id: this.user.id
             }
+            console.log(payload)
             this.$store.dispatch('updateAccount', payload)
             .then(() => {
               this.flash('Successfully updated your account.', 'success');

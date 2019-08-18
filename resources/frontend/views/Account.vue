@@ -253,6 +253,7 @@ export default {
               name: this.user.name,
               email: this.user.email
             }
+            console.log(payload)
             this.$store.dispatch('updateAccount', payload)
             .then(() => {
               this.flash('Successfully updated your account.', 'success');

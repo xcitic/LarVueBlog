@@ -95,7 +95,7 @@ export default {
   },
 
   updateAccount(payload) {
-    return this.apiCall('post', '/user/update', payload);
+    return this.apiCall('post', `/user/update`, payload);
   },
 
   updatePassword(payload) {

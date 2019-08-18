@@ -69,15 +69,50 @@ class UserController extends Controller
      * @return String                   [Success or error]
      */
     public function updateUser(UserUpdateRequest $request) {
+
       $validated = $request->validated();
 
+      // check that the authenticated user and the id passed matches
+      // If they don't pass, then check the user is admin, if not bounce.
+
       $user = $request->user('api');
-        if ($user) {
+      if($user) {
+
+        // User is updating their own profile
+        if ($user->id === $request->id) {
           $user->name = $request->name;
-          // check if the email has been changed (returned from validator)
-          if(is_string($user->email)) {
-            $user->email = $request->email;
+          // Check if email is updated and unique
+          if ($request->email !== $user->email) {
+            $alreadyExists = User::where('email', $request->email)->first();
+            // If a user instance exists with the email, abort request
+            if(isset($alreadyExists)) {
+              abort(response('Email exists', 422));
+            }
+            else {
+              $user->email = $request->email;
+            }
           }
+        }
+        // Admin is updating another users profile.
+        elseif ($user->isAdmin()) {
+          $user = User::where('id', $request->id)->first();
+          $user->name = $request->name;
+          // Check if email is updated and unique
+          if ($request->email !== $user->email) {
+            $alreadyExists = User::where('email', $request->email)->first();
+            // If a user instance exists with the email, abort request
+            if(isset($alreadyExists)) {
+              abort(response('Email exists', 422));
+            }
+            else {
+              $user->email = $request->email;
+            }
+          }
+        }
+        // Bounce everyone else
+        else {
+          abort(response('Unauthoried'), 401);
+        }
 
           // Update the user instance and send a response
           $user->update();
@@ -86,7 +121,6 @@ class UserController extends Controller
 
         return response('Unauthorized', 401);
       }
-
 
       /**
        * Update users password
