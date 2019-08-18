@@ -51,9 +51,13 @@ class PostStoreRequest extends FormRequest
       // strip php and html tags
       // encode everything in the db as htmlentities
       // trim the start and end
-      $allowedTags = '<br><strong><h1><h2><h3><h4><h5><p><i><figure><ul><li><ol>';
-      $input['content'] = trim( htmlentities( strip_tags($input['content'], $allowedTags) ) );
+      $allowedTags = "<br><strong><h1><h2><h3><h4><h5><p><i><ul><li><ol>";
+      $content = $input['content'];
 
+      $content_filtered = filter_var($content, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+      // $content_stripped = strip_tags($content_filtered, $allowedTags);
+      $content_html = htmlentities($content_filtered);
+      $input['content'] = $content_html;
 
       $this->replace($input);
 
