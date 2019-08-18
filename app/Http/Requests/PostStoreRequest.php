@@ -56,8 +56,8 @@ class PostStoreRequest extends FormRequest
 
       $content_filtered = filter_var($content, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
       // $content_stripped = strip_tags($content_filtered, $allowedTags);
-      $content_html = htmlentities($content_filtered);
-      $input['content'] = $content_html;
+      // $content_html = htmlentities($content_filtered);
+      $input['content'] = $content_filtered;
 
       $this->replace($input);
 
