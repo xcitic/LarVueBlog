@@ -9,12 +9,16 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
+public/images/users/
+public/js/app.js
+public/mix-manifest.json
 storage/*.key
 .env.*.php
 .env.php
 .env
 Homestead.yaml
 Homestead.json
+yarn.lock
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
@@ -23,9 +27,3 @@ Homestead.json
 # Idea and Development Docs
 design/
 TODO.md
-
-
-public/images/users/
-yarn.lock
-/public/js/app.js
-/public/mix-manifest.json

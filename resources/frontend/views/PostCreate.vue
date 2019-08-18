@@ -19,7 +19,7 @@
                           v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                           name="title"
                           />
-                          <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
+                          <label for="title" :class="title ? 'active' : ''" class="">Post title</label>
                           <span v-if="submitted && errors.has('title')">
                             <p class="red-text"> {{ errors.first('title') }} </p>
                           </span>
