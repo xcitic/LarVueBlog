@@ -41,7 +41,7 @@
                             rows="2"
                             v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
                             ></textarea>
-                          <label for="description" :class="post.description ? 'active' : ''" class="ml-1">Short Description</label>
+                          <label for="description" :class="description ? 'active' : ''" class="ml-1">Short Description</label>
 
                           <span v-if="submitted && errors.has('description')">
                             <p class="red-text"> {{ errors.first('description') }} </p>
