@@ -16,7 +16,7 @@
                             name="title"
                             class="form-control"
                             maxlength="100"
-                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
+                            v-validate="{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, min:6, max:255 }"
                             />
                             <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
                             <span v-if="submitted && errors.has('title')">
@@ -159,6 +159,7 @@ export default {
 
             this.$store.dispatch('updatePost', payload)
             .then(() => {
+              console.log(payload)
               this.flash('Successfully Updated Post', 'success');
               this.$emit('close');
             }).catch((err) => {

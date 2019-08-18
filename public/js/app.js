@@ -12781,6 +12781,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     };
 
                     _this2.$store.dispatch('updatePost', payload).then(function () {
+                      console.log(payload);
+
                       _this2.flash('Successfully Updated Post', 'success');
 
                       _this2.$emit('close');
@@ -14681,7 +14683,8 @@ __webpack_require__.r(__webpack_exports__);
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a,
       editorConfig: {
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
-      }
+      },
+      submitted: false
     };
   },
   methods: {
@@ -29123,10 +29126,11 @@ var render = function() {
                       value: {
                         required: true,
                         regex: /^[A-Za-z0-9.,!' -]*$/,
+                        min: 6,
                         max: 255
                       },
                       expression:
-                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, max:255 }"
+                        "{required: true, regex: /^[A-Za-z0-9.,!' -]*$/, min:6, max:255 }"
                     }
                   ],
                   staticClass: "form-control",

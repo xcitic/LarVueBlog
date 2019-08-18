@@ -124,6 +124,7 @@ export default {
       editorConfig: {
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
       },
+      submitted: false,
     }
   },
 
