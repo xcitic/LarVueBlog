@@ -24,7 +24,14 @@ class UserUpdatePictureRequest extends FormRequest
      */
     public function rules()
     {
-
+        // Check that the image passed is a valid Base64 encoded
+        if(isset($this->id)) {
+          return [
+            'image' => [new Base64ValidationRule],
+            'id' => 'integer'
+          ];
+        }
+        
         return [
           'image' => [new Base64ValidationRule]
         ];

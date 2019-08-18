@@ -27,3 +27,5 @@ yarn.lock
 # Idea and Development Docs
 design/
 TODO.md
+public/js/app.js
+public/mix-manifest.json

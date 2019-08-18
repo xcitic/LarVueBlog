@@ -13068,10 +13068,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 processedImage = _context2.sent;
                 payload = {
-                  'image': processedImage
+                  'image': processedImage,
+                  id: this.user.id
                 };
                 this.$store.dispatch('updatePicture', payload).then(function () {
                   _this2.flash('Successfully updated picture', 'success');
+
+                  _this2.$emit('close');
                 })["catch"](function () {
                   _this2.flash('Error updating picture', 'error');
                 });
@@ -13142,11 +13145,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       email: _this3.user.email,
                       id: _this3.user.id
                     };
-                    console.log(payload);
 
                     _this3.$store.dispatch('updateAccount', payload).then(function () {
-                      _this3.flash('Successfully updated your account.', 'success'); // this.$router.push('/dashboard');
+                      _this3.flash('Successfully updated your account.', 'success');
 
+                      _this3.$emit('close');
                     })["catch"](function (err) {
                       _this3.flash('Error: ' + err.message, 'error');
                     });
@@ -13182,7 +13185,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     var payload = {
                       old_password: _this4.cur_password,
                       new_password: _this4.new_password,
-                      new_password_confirmation: _this4.new_password_confirmation
+                      new_password_confirmation: _this4.new_password_confirmation,
+                      id: _this4.user.id
                     };
 
                     _this4.$store.dispatch('updatePassword', payload).then(function () {
@@ -14071,7 +14075,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       name: _this3.user.name,
                       email: _this3.user.email
                     };
-                    console.log(payload);
 
                     _this3.$store.dispatch('updateAccount', payload).then(function () {
                       _this3.flash('Successfully updated your account.', 'success'); // this.$router.push('/dashboard');
@@ -49836,24 +49839,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 4:
                 result = _context18.sent;
-                console.log(result);
                 commit('success', result);
                 dispatch('getUser');
-                _context18.next = 14;
+                _context18.next = 13;
                 break;
 
-              case 10:
-                _context18.prev = 10;
+              case 9:
+                _context18.prev = 9;
                 _context18.t0 = _context18["catch"](1);
                 commit('error', _context18.t0.message);
                 throw _context18.t0;
 
-              case 14:
+              case 13:
               case "end":
                 return _context18.stop();
             }
           }
-        }, _callee18, null, [[1, 10]]);
+        }, _callee18, null, [[1, 9]]);
       }));
 
       function updateAccount(_x29, _x30) {

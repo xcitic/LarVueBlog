@@ -26,19 +26,17 @@ class UserUpdateRequest extends FormRequest
 
         $this->sanitize();
 
-        // if ($this->email != $this->user()->email) {
+        if(isset($this->id)) {
           return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'id' => 'integer'
           ];
-        // }
-        //
-        // // else drop the email check
-        // return [
-        //   'name' => 'required|string|max:255',
-        //   'id' => 'required|integer'
-        // ];
+        }
+        return [
+          'name' => 'required|string|max:255',
+          'email' => 'required|string|email|max:255'
+        ];
 
 
 
@@ -54,11 +52,10 @@ class UserUpdateRequest extends FormRequest
 
       $input['name'] = trim(filter_var($input['name'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW));
       $input['email'] = trim(filter_var($input['email'], FILTER_SANITIZE_EMAIL));
-      // if (isset($input['id'])) {
-      //   $input['id'] = trim(filter_var($input['id'], FILTER_SANITIZE_NUMBER_INT));
-      //   $input['id'] = intval($input['id']);
-      // }
-
+      if(isset($user['id'])) {
+        $input['id'] = trim(filter_var($input['id'], FILTER_SANITIZE_NUMBER_INT));
+        $input['id'] = intval($input['id']);
+      }
 
       $this->replace($input);
 

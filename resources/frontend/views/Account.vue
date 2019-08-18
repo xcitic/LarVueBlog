@@ -251,9 +251,8 @@ export default {
           if(valid) {
             let payload = {
               name: this.user.name,
-              email: this.user.email
+              email: this.user.email,
             }
-            console.log(payload)
             this.$store.dispatch('updateAccount', payload)
             .then(() => {
               this.flash('Successfully updated your account.', 'success');
@@ -273,7 +272,7 @@ export default {
             let payload = {
               old_password: this.cur_password,
               new_password: this.new_password,
-              new_password_confirmation: this.new_password_confirmation,
+              new_password_confirmation: this.new_password_confirmation
             }
               this.$store.dispatch('updatePassword', payload)
                 .then(() => {

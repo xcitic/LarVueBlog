@@ -200,10 +200,12 @@ export default {
 
       let payload = {
         'image': processedImage,
+        id: this.user.id
       }
       this.$store.dispatch('updatePicture', payload)
       .then(() => {
         this.flash('Successfully updated picture', 'success');
+        this.$emit('close');
       }).catch(() => {
         this.flash('Error updating picture', 'error');
       })
@@ -226,11 +228,10 @@ export default {
               email: this.user.email,
               id: this.user.id
             }
-            console.log(payload)
             this.$store.dispatch('updateAccount', payload)
             .then(() => {
               this.flash('Successfully updated your account.', 'success');
-              // this.$router.push('/dashboard');
+              this.$emit('close');
             }).catch((err) => {
               this.flash('Error: ' + err.message, 'error');
             })
@@ -247,6 +248,7 @@ export default {
               old_password: this.cur_password,
               new_password: this.new_password,
               new_password_confirmation: this.new_password_confirmation,
+              id: this.user.id
             }
               this.$store.dispatch('updatePassword', payload)
                 .then(() => {

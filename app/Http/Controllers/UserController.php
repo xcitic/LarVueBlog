@@ -41,6 +41,15 @@ class UserController extends Controller
       $validated = $request->validated();
       // check user again
       $user = $request->user('api');
+      // Check if admin is updating another user
+      if(isset($request->id)) {
+        $id = intval($request->id);
+      }
+      // User is admin and ID is passed
+      if($user->isAdmin() && isset($id)) {
+        $user = User::where('id', $id)->first();
+      }
+
       // check that image is a string
       if(is_string($request->image)) {
 
@@ -70,21 +79,24 @@ class UserController extends Controller
      */
     public function updateUser(UserUpdateRequest $request) {
 
-      $validated = $request->validated();
+        $validated = $request->validated();
 
-      // check that the authenticated user and the id passed matches
-      // If they don't pass, then check the user is admin, if not bounce.
+        $user = $request->user('api');
+        if(isset($request->id)) {
+          $id = intval($request->id);
+        }
+        // User is admin and ID is passed
+        if($user->isAdmin() && isset($id)) {
+          $user = User::where('id', $id)->first();
+        }
 
-      $user = $request->user('api');
-      if($user) {
-
-        // User is updating their own profile
-        if ($user->id === $request->id) {
+        // User instance exists
+        if($user) {
           $user->name = $request->name;
-          // Check if email is updated and unique
+            // Check if email is updated and unique
           if ($request->email !== $user->email) {
             $alreadyExists = User::where('email', $request->email)->first();
-            // If a user instance exists with the email, abort request
+              // If a user instance exists with the email, abort request
             if(isset($alreadyExists)) {
               abort(response('Email exists', 422));
             }
@@ -92,29 +104,6 @@ class UserController extends Controller
               $user->email = $request->email;
             }
           }
-        }
-        // Admin is updating another users profile.
-        elseif ($user->isAdmin()) {
-          $user = User::where('id', $request->id)->first();
-          $user->name = $request->name;
-          // Check if email is updated and unique
-          if ($request->email !== $user->email) {
-            $alreadyExists = User::where('email', $request->email)->first();
-            // If a user instance exists with the email, abort request
-            if(isset($alreadyExists)) {
-              abort(response('Email exists', 422));
-            }
-            else {
-              $user->email = $request->email;
-            }
-          }
-        }
-        // Bounce everyone else
-        else {
-          abort(response('Unauthoried'), 401);
-        }
-
-          // Update the user instance and send a response
           $user->update();
           return response('Successfully updated user account', 200);
         }
@@ -136,8 +125,15 @@ class UserController extends Controller
           'new_password' => 'required|string|min:6|max:75|confirmed'
         ]);
 
+        if(isset($request->id)) {
+          $id = intval($request->id);
+        }
+        // User is admin and ID is passed
+        if($user->isAdmin() && isset($id)) {
+          $user = User::where('id', $id)->first();
+        }
 
-        if(isset($user)) {
+        if($user instanceof User) {
           $old_pw = $request->old_password;
           $new_pw = $request->new_password;
 

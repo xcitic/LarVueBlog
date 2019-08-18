@@ -278,7 +278,6 @@ export default new Vuex.Store({
     async updateAccount({commit, dispatch}, payload) {
       try {
         let result = await API.updateAccount(payload);
-        console.log(result)
         commit('success', result);
         dispatch('getUser');
       } catch (err) {
