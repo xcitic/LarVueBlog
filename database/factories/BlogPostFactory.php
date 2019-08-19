@@ -11,9 +11,9 @@ $factory->define(BlogPost::class, function (Faker $faker) {
 
     return [
         'user_id' => $user->id,
-        'title' => $faker->sentence(5),
-        'description' => $faker->sentence(25),
-        'content' => $faker->text(950),
+        'title' => $faker->sentence(3),
+        'description' => $faker->sentence(5),
+        'content' => $faker->text(650),
         'image' => $faker->imageUrl(1920, 1080),
         'likes' => $faker->numberBetween(20, 1000),
         'views' => $faker->numberBetween(50, 1000),

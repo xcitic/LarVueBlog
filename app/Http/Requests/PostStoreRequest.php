@@ -29,16 +29,16 @@ class PostStoreRequest extends FormRequest
       // If a new image is in the payload validate it, passes boolean false value into image if validation fails.
       if (is_string($this->image)) {
         return [
-          'title' => 'required|string|max:100',
-          'description' => 'required|string|max:150',
+          'title' => 'required|string|max:255',
+          'description' => 'required|string|max:255',
           'content' => 'required|max:1000',
           'image' => [new Base64ValidationRule]
         ];
       }
 
       return [
-        'title' => 'required|string|max:100',
-        'description' => 'required|string|max:150',
+        'title' => 'required|string|max:255',
+        'description' => 'required|string|max:255',
         'content' => 'required|max:1000',
       ];
 
