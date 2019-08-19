@@ -26,6 +26,12 @@ php artisan passport:install
 # Seed with dummy data
 php artisan db:seed
 
+# Dump autoload
+composer dump-autoload
+
+# Optimize routing cache
+php artisan optimize
+
 # Setup image folder
 mkdir -p public/images/users
 
