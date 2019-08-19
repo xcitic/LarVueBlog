@@ -11781,12 +11781,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['userImage'],
   data: function data() {
     return {
       message: '',
-      submitted: false
+      submitted: false,
+      processing: false
     };
   },
   methods: {
@@ -11803,6 +11811,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.submitted = true;
                 this.$validator.validate().then(function (valid) {
                   if (valid) {
+                    _this.processing = true;
                     var payload = {
                       message: _this.message,
                       postId: _this.$store.state.post.id
@@ -11810,8 +11819,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                     _this.$store.dispatch('createComment', payload).then(function () {
                       _this.flash('Your comment has been created :)', 'success');
+
+                      _this.processing = false;
                     })["catch"](function () {
                       _this.flash('Your comment was rejected. Please avoid profanity', 'error');
+
+                      _this.processing = false;
                     });
 
                     _this.reset();
@@ -14150,8 +14163,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                     _this4.$store.dispatch('updatePassword', payload).then(function () {
                       _this4.flash('Success updating password', 'success');
+
+                      _this4.resetPasswordInput();
                     })["catch"](function (err) {
                       _this4.flash('Error updating password: ' + err.message, 'error');
+
+                      _this4.resetPasswordInput();
                     });
                   }
                 });
@@ -14169,7 +14186,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return savePassword;
-    }()
+    }(),
+    resetPasswordInput: function resetPasswordInput() {
+      this.cur_password = '';
+      this.new_password = '';
+      this.new_password_confirmation = '';
+    }
   }
 });
 
@@ -28393,6 +28415,7 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.processing },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -28400,7 +28423,23 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Submit")]
+          [
+            _vm.processing
+              ? _c(
+                  "span",
+                  { staticClass: "justify-content-center" },
+                  [
+                    _c("icons", {
+                      staticClass: "fa-spinner-small",
+                      attrs: { icon: ["fas", "spinner"] }
+                    })
+                  ],
+                  1
+                )
+              : _c("span", [
+                  _vm._v("\n                  Submit\n                ")
+                ])
+          ]
         )
       ])
     ])

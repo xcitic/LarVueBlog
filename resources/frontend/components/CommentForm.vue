@@ -31,7 +31,14 @@
         </div>
 
         <div class="text-center">
-            <button @click.prevent="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" @click.prevent="submit" :disabled="processing">
+                <span v-if="processing" class="justify-content-center">
+                  <icons :icon="['fas', 'spinner']" class="fa-spinner-small" />
+                </span>
+                <span v-else>
+                  Submit
+                </span>
+            </button>
         </div>
         <!--/.Content column-->
 
@@ -51,6 +58,7 @@ export default {
     return {
       message: '',
       submitted: false,
+      processing: false,
     }
   },
 
@@ -60,6 +68,7 @@ export default {
       this.$validator.validate().then(
         valid => {
           if (valid) {
+            this.processing = true;
             let payload = {
               message: this.message,
               postId: this.$store.state.post.id
@@ -67,9 +76,11 @@ export default {
             this.$store.dispatch('createComment', payload)
               .then(() => {
                 this.flash('Your comment has been created :)', 'success');
+                this.processing = false;
               })
               .catch(() => {
                 this.flash('Your comment was rejected. Please avoid profanity', 'error');
+                this.processing = false;
               })
               this.reset();
 

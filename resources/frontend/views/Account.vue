@@ -292,13 +292,20 @@ export default {
               this.$store.dispatch('updatePassword', payload)
                 .then(() => {
                 this.flash('Success updating password', 'success');
+                this.resetPasswordInput();
               }).catch((err) => {
                 this.flash('Error updating password: ' + err.message, 'error');
+                this.resetPasswordInput();
               })
           }
-        }
-      )
+        })
     },
+
+    resetPasswordInput() {
+      this.cur_password = '';
+      this.new_password = '';
+      this.new_password_confirmation = '';
+    }
 
   }
 }
