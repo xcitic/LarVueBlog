@@ -83,7 +83,14 @@
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
-                                <button class="btn btn-primary" @click="save">Update</button>
+                                <button class="btn btn-primary" @click="save" :disabled="submitted">
+                                    <span v-if="submitted" class="justify-content-center">
+                                      <icons :icon="['fas', 'spinner']" class="fa-spinner-small" />
+                                    </span>
+                                    <span v-else>
+                                    Update
+                                    </span>
+                                </button>
                                 <button class="btn btn-secondary" @click="$emit('close')">Cancel</button>
                             </div>
                         </div>
@@ -182,5 +189,9 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style >
+.fa-spinner-small {
+  font-size: 15px;
+  animation: spinner 1s linear infinite;
+}
 </style>
