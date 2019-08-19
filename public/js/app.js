@@ -49230,6 +49230,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         post.views++;
       }
     },
+    increaseCommentCount: function increaseCommentCount(state, payload) {
+      var post = state.posts.find(function (post) {
+        return post.id === payload.postId;
+      });
+
+      if (post) {
+        post.comments.push(payload.comment);
+      }
+    },
     error: function error(state, err) {
       state.error = err;
     },
@@ -49379,7 +49388,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       var _createComment = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref5, payload) {
-        var commit, comment;
+        var commit, comment, updatePost;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
@@ -49391,8 +49400,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 3:
                 comment = _context5.sent;
                 commit('setComment', comment);
+                updatePost = {
+                  'comment': comment,
+                  'postId': payload.postId
+                };
+                commit('increaseCommentCount', updatePost);
 
-              case 5:
+              case 7:
               case "end":
                 return _context5.stop();
             }

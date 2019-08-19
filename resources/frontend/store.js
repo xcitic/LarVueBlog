@@ -132,6 +132,13 @@ export default new Vuex.Store({
       }
     },
 
+    increaseCommentCount(state, payload) {
+      let post = state.posts.find(post => { return post.id === payload.postId})
+      if(post) {
+        post.comments.push(payload.comment)
+      }
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -174,6 +181,11 @@ export default new Vuex.Store({
     async createComment({commit}, payload) {
       let comment = await API.createComment(payload);
       commit('setComment', comment);
+      let updatePost = {
+        'comment': comment,
+        'postId': payload.postId
+      }
+      commit('increaseCommentCount', updatePost);
     },
 
     async getUser({commit}) {
