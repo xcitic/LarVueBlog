@@ -18,7 +18,7 @@ class BlogPostController extends Controller
         $posts = BlogPost::latest()->get();
         foreach($posts as $post) {
           // return updated_as in terms of minutes / hours / days ago.
-          $post->published = $post->updated_at->diffForHumans();
+          $post->published = $post->created_at->diffForHumans();
           // attach the comments that belong to the post
           $comments = $post->comments;
         }
