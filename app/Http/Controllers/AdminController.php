@@ -109,6 +109,8 @@ class AdminController extends Controller
     {
 
       // Check that the post exists
+      // Ensure sanitization (type hinting should have caught it)
+      $id = intval($id);
       $post = BlogPost::where('id', $id)->first();
       if(!is_object($post)) {
         abort( response('Not found', 404) );
@@ -117,7 +119,7 @@ class AdminController extends Controller
       // validate input
       $validated = $request->validated();
 
-      // if new image uploaded and valid, then process it
+      // if new image uploaded and valid
       if(is_string($request->image)) {
         try {
           $image = $request->image;

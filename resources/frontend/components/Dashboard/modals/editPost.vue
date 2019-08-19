@@ -167,7 +167,6 @@ export default {
 
             this.$store.dispatch('updatePost', payload)
             .then(() => {
-              console.log(payload)
               this.flash('Successfully Updated Post', 'success');
               this.$emit('close');
             }).catch((err) => {

@@ -12805,8 +12805,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     }
 
                     _this2.$store.dispatch('updatePost', payload).then(function () {
-                      console.log(payload);
-
                       _this2.flash('Successfully Updated Post', 'success');
 
                       _this2.$emit('close');
