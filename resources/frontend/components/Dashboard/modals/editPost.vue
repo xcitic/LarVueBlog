@@ -20,7 +20,7 @@
                             />
                             <label for="title" :class="post.title ? 'active' : ''" class="">Post title</label>
                             <span v-if="submitted && errors.has('title')">
-                              <p class="red-text"> {{ errors.first('title') }} </p>
+                                <p class="red-text"> {{ errors.first('title') }} </p>
                             </span>
                         </div>
                     </div>
@@ -150,30 +150,29 @@ export default {
         // run validator
         this.$validator.validate().then(
           valid => {
-          this.sumbitted = true;
-          if (valid) {
+            this.submitted = true;
+            if (valid) {
 
-            let payload = {
-              'id': this.post.id,
-              'title': this.post.title,
-              'description': this.post.description,
-              'content': this.post.content,
-            }
+              let payload = {
+                'id': this.post.id,
+                'title': this.post.title,
+                'description': this.post.description,
+                'content': this.post.content,
+              }
 
-            if (this.newImage) {
-              let processedImage = this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
-              payload.image = processedImage;
-            }
+              if (this.newImage) {
+                let processedImage = this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
+                payload.image = processedImage;
+              }
 
-            this.$store.dispatch('updatePost', payload)
-            .then(() => {
-              this.flash('Successfully Updated Post', 'success');
-              this.$emit('close');
-            }).catch((err) => {
-              this.flash('Error: ' + err.message, 'error');
-              this.submitted = false;
-            })
-
+              this.$store.dispatch('updatePost', payload)
+              .then(() => {
+                this.flash('Successfully Updated Post', 'success');
+                this.$emit('close');
+              }).catch((err) => {
+                this.flash('Error: ' + err.message, 'error');
+                this.submitted = false;
+              })
           }
         })
 

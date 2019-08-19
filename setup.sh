@@ -17,7 +17,7 @@ cp .env.example .env
 # generate application salt
 php artisan key:generate
 # Build production app.js
-yarn run prod
+yarn run dev
 # setup database file sqlite
 touch database/database.sqlite
 php artisan migrate

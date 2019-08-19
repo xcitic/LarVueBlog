@@ -12789,7 +12789,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 // run validator
                 this.$validator.validate().then(function (valid) {
-                  _this2.sumbitted = true;
+                  _this2.submitted = true;
 
                   if (valid) {
                     var payload = {
