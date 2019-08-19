@@ -143,7 +143,15 @@
                               <div class="row">
                                 <div class="col-md-12 text-center">
                                     <button class="btn btn-secondary waves-light" @click.prevent="showPassword">Change Password</button><br>
-                                    <button class="btn btn-primary waves-light" @click.prevent="submit">Update Account</button><br>
+                                    <button class="btn btn-primary" @click.prevent="submit" :disabled="processing">
+                                        <span v-if="processing" class="justify-content-center">
+                                          <icons :icon="['fas', 'spinner']" class="fa-spinner-small" />
+                                        </span>
+                                        <span v-else>
+                                          Update Account
+                                        </span>
+                                    </button>
+                                    <br>
                                 </div>
                               </div>
                               <!-- /.Fourth row -->
@@ -191,6 +199,7 @@ export default {
       new_password_confirmation: '',
       submitted: false,
       changePassword: false,
+      processing: false,
     }
   },
 
@@ -249,6 +258,8 @@ export default {
         valid => {
           this.submitted = true;
           if(valid) {
+            this.processing = true;
+
             let payload = {
               name: this.user.name,
               email: this.user.email,
@@ -256,9 +267,13 @@ export default {
             this.$store.dispatch('updateAccount', payload)
             .then(() => {
               this.flash('Successfully updated your account.', 'success');
+              this.processing = false;
+              this.submitted = false;
               // this.$router.push('/dashboard');
             }).catch((err) => {
               this.flash('Error: ' + err.message, 'error');
+              this.processing = false;
+              this.submitted = false;
             })
           }
         }

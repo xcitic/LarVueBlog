@@ -83,12 +83,12 @@
                             <p><i class="fa fa-flag mr-1" aria-hidden="true"></i> Status: <strong>Draft</strong></p>
                             <p><i class="fa fa-calendar mr-1" aria-hidden="true"></i> Publish: <strong>Immediately</strong></p>
                             <div class="text-right">
-                                <button class="btn btn-primary" @click="save" :disabled="submitted">
-                                    <span v-if="submitted" class="justify-content-center">
+                                <button class="btn btn-primary" @click="save" :disabled="processing">
+                                    <span v-if="processing" class="justify-content-center">
                                       <icons :icon="['fas', 'spinner']" class="fa-spinner-small" />
                                     </span>
                                     <span v-else>
-                                    Update
+                                      Update
                                     </span>
                                 </button>
                                 <button class="btn btn-secondary" @click="$emit('close')">Cancel</button>
@@ -128,6 +128,7 @@ export default {
       },
       newImage: '',
       submitted: false,
+      processing: false,
     }
   },
 
@@ -148,18 +149,13 @@ export default {
       reader.readAsDataURL(file);
     },
 
-    async submit() {
-
-    },
-
-
     async save() {
         // run validator
         this.$validator.validate().then(
           valid => {
             this.submitted = true;
             if (valid) {
-
+              this.processing = true;
               let payload = {
                 'id': this.post.id,
                 'title': this.post.title,
@@ -175,12 +171,15 @@ export default {
               this.$store.dispatch('updatePost', payload)
               .then(() => {
                 this.flash('Successfully Updated Post', 'success');
+                this.processing = false;
                 this.$emit('close');
               }).catch((err) => {
                 this.flash('Error: ' + err.message, 'error');
+                this.processing = false;
                 this.submitted = false;
               })
           }
+
         })
 
       },

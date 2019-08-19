@@ -12739,7 +12739,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
       },
       newImage: '',
-      submitted: false
+      submitted: false,
+      processing: false
     };
   },
   methods: {
@@ -12763,42 +12764,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       reader.readAsDataURL(file);
     },
-    submit: function () {
-      var _submit = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function submit() {
-        return _submit.apply(this, arguments);
-      }
-
-      return submit;
-    }(),
     save: function () {
       var _save = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this2 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
                 // run validator
                 this.$validator.validate().then(function (valid) {
                   _this2.submitted = true;
 
                   if (valid) {
+                    _this2.processing = true;
                     var payload = {
                       'id': _this2.post.id,
                       'title': _this2.post.title,
@@ -12815,10 +12796,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.$store.dispatch('updatePost', payload).then(function () {
                       _this2.flash('Successfully Updated Post', 'success');
 
+                      _this2.processing = false;
+
                       _this2.$emit('close');
                     })["catch"](function (err) {
                       _this2.flash('Error: ' + err.message, 'error');
 
+                      _this2.processing = false;
                       _this2.submitted = false;
                     });
                   }
@@ -12826,10 +12810,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function save() {
@@ -13911,6 +13895,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   computed: {
@@ -13933,7 +13925,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       new_password: '',
       new_password_confirmation: '',
       submitted: false,
-      changePassword: false
+      changePassword: false,
+      processing: false
     };
   },
   methods: {
@@ -14103,16 +14096,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.submitted = true;
 
                   if (valid) {
+                    _this3.processing = true;
                     var payload = {
                       name: _this3.user.name,
                       email: _this3.user.email
                     };
 
                     _this3.$store.dispatch('updateAccount', payload).then(function () {
-                      _this3.flash('Successfully updated your account.', 'success'); // this.$router.push('/dashboard');
+                      _this3.flash('Successfully updated your account.', 'success');
 
+                      _this3.processing = false;
+                      _this3.submitted = false; // this.$router.push('/dashboard');
                     })["catch"](function (err) {
                       _this3.flash('Error: ' + err.message, 'error');
+
+                      _this3.processing = false;
+                      _this3.submitted = false;
                     });
                   }
                 });
@@ -14722,7 +14721,8 @@ __webpack_require__.r(__webpack_exports__);
       editorConfig: {
         toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo']
       },
-      submitted: false
+      submitted: false,
+      processing: false
     };
   },
   methods: {
@@ -14753,6 +14753,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.submitted = true;
 
         if (valid) {
+          _this2.processing = true;
+
           var processedImage = _this2.image.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
 
           var payload = {
@@ -14765,11 +14767,13 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$store.dispatch('createPost', payload).then(function () {
             _this2.flash('Successfully created new post', 'success');
 
+            _this2.processing = false;
+
             _this2.$router.go();
           })["catch"](function (err) {
-            _this2.flash('Error: ' + err.message, 'error');
+            _this2.processing = false;
 
-            _this2.submitted = false;
+            _this2.flash('Error: ' + err.message, 'error');
           });
         }
       });
@@ -29380,11 +29384,11 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { disabled: _vm.submitted },
+                      attrs: { disabled: _vm.processing },
                       on: { click: _vm.save }
                     },
                     [
-                      _vm.submitted
+                      _vm.processing
                         ? _c(
                             "span",
                             { staticClass: "justify-content-center" },
@@ -29398,7 +29402,7 @@ var render = function() {
                           )
                         : _c("span", [
                             _vm._v(
-                              "\n                                  Update\n                                  "
+                              "\n                                    Update\n                                  "
                             )
                           ])
                     ]
@@ -30863,7 +30867,8 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-primary waves-light",
+                            staticClass: "btn btn-primary",
+                            attrs: { disabled: _vm.processing },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
@@ -30871,8 +30876,27 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Update Account")]
+                          [
+                            _vm.processing
+                              ? _c(
+                                  "span",
+                                  { staticClass: "justify-content-center" },
+                                  [
+                                    _c("icons", {
+                                      staticClass: "fa-spinner-small",
+                                      attrs: { icon: ["fas", "spinner"] }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _c("span", [
+                                  _vm._v(
+                                    "\n                                        Update Account\n                                      "
+                                  )
+                                ])
+                          ]
                         ),
+                        _vm._v(" "),
                         _c("br")
                       ])
                     ])
@@ -31458,11 +31482,11 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      attrs: { disabled: _vm.submitted },
+                      attrs: { disabled: _vm.processing },
                       on: { click: _vm.save }
                     },
                     [
-                      _vm.submitted
+                      _vm.processing
                         ? _c(
                             "span",
                             { staticClass: "justify-content-center" },
