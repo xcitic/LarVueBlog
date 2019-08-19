@@ -26,6 +26,9 @@ php artisan passport:install
 # Seed with dummy data
 php artisan db:seed
 
+# Setup image folder
+mkdir -p public/images/users
+
 # Setup permissions
 if [ "$server" == "y" ]; then
   # Get current user
