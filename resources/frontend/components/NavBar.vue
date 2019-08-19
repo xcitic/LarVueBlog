@@ -6,13 +6,13 @@
   </div>
   <!-- Logo and Mainpage route -->
   <div class="breadcrumb-dn mr-auto">
-    <router-link :to="{ name: 'home'}"><p>LarVueBlog</p></router-link>
+    <router-link :to="{ name: 'landing'}"><p>LarVueBlog</p></router-link>
   </div>
 
   <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
 
       <li class="nav-item" v-if="!homepage">
-        <router-link class="nav-link" :to="{ name: 'home' }">
+        <router-link class="nav-link" :to="{ name: 'landing' }">
            <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
           </router-link>
       </li>

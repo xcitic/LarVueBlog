@@ -23,7 +23,7 @@
 import BlogPost from '@/components/BlogPost.vue';
 
 export default {
-  name: 'home',
+  name: 'landing',
   components: {
     BlogPost
   },

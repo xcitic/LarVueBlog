@@ -1,5 +1,5 @@
 // Views
-import Home from '@/views/Home.vue';
+import Landing from '@/views/Landing.vue';
 import Post from '@/views/Post.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
@@ -19,8 +19,8 @@ import NotFound from '@/views/NotFound.vue';
 const routes = () => [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'landing',
+    component: Landing
   },
   {
     path: '/post/:id',
