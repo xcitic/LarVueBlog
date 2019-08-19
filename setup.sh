@@ -27,7 +27,7 @@ php artisan passport:install
 php artisan db:seed
 
 # Setup permissions
-if ["$server" == 'y']; then
+if [ "$server" == "y" ]; then
   # Get current user
   declare user=$(id -u -n)
   sudo chown -R $user:www-data storage/{app,framework,logs} bootstrap/cache
