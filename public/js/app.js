@@ -12755,30 +12755,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       reader.readAsDataURL(file);
     },
-    save: function () {
-      var _save = _asyncToGenerator(
+    submit: function () {
+      var _submit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this2 = this;
-
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
+              case 0:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }(),
+    save: function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 // run validator
                 this.$validator.validate().then(function (valid) {
                   _this2.sumbitted = true;
 
                   if (valid) {
-                    var processedImage = _this2.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
-
                     var payload = {
                       'id': _this2.post.id,
                       'title': _this2.post.title,
                       'description': _this2.post.description,
-                      'content': _this2.post.content,
-                      'image': processedImage
+                      'content': _this2.post.content
                     };
+
+                    if (_this2.newImage) {
+                      var processedImage = _this2.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
+
+                      payload.image = processedImage;
+                    }
 
                     _this2.$store.dispatch('updatePost', payload).then(function () {
                       console.log(payload);
@@ -12796,10 +12820,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function save() {
@@ -13346,7 +13370,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     auth: function auth() {
       if (this.$store.state.user) {
         this.flash('Successfully logged in', 'success');
-        this.$router.push('/dashboard');
+        this.$router.go();
       } else {
         this.flash('Wrong username or password', 'error');
       }
@@ -13483,7 +13507,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _api_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].logout();
 
               case 2:
-                this.$router.push('/');
+                this.$router.go();
 
               case 3:
               case "end":
@@ -13660,7 +13684,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     auth: function auth() {
       if (this.$store.state.user) {
         this.flash('Successfully registered user.', 'success');
-        this.$router.push('/dashboard');
+        this.$router.go();
       } else {
         this.flash('Could not register user', 'error');
         this.submitted = false;
@@ -14727,9 +14751,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$store.dispatch('createPost', payload).then(function () {
             _this2.flash('Successfully created new post', 'success');
 
-            _this2.$router.push({
-              name: 'dashboard'
-            });
+            _this2.$router.go();
           })["catch"](function (err) {
             _this2.flash('Error: ' + err.message, 'error');
 
@@ -49331,21 +49353,22 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 4:
                 result = _context4.sent;
                 commit('login', result);
-                commit('setAuth');
-                _context4.next = 12;
+                commit('setUser', result);
+                _api_Auth_js__WEBPACK_IMPORTED_MODULE_3__["default"].login(result.token, result);
+                _context4.next = 13;
                 break;
 
-              case 9:
-                _context4.prev = 9;
+              case 10:
+                _context4.prev = 10;
                 _context4.t0 = _context4["catch"](1);
                 commit('error', _context4.t0);
 
-              case 12:
+              case 13:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[1, 9]]);
+        }, _callee4, null, [[1, 10]]);
       }));
 
       function register(_x6, _x7) {

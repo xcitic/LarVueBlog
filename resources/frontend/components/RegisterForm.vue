@@ -119,7 +119,7 @@ export default {
     auth() {
       if(this.$store.state.user) {
         this.flash('Successfully registered user.', 'success');
-        this.$router.push('/dashboard');
+        this.$router.go();
       }
       else {
         this.flash('Could not register user', 'error');

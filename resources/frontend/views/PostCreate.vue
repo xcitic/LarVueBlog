@@ -160,7 +160,7 @@ export default {
           this.$store.dispatch('createPost', payload)
           .then(() => {
             this.flash('Successfully created new post', 'success');
-            this.$router.push({ name: 'dashboard' });
+            this.$router.go();
           }).catch((err) => {
             this.flash('Error: ' + err.message, 'error');
             this.submitted = false;

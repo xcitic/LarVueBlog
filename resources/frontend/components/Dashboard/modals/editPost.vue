@@ -141,6 +141,10 @@ export default {
       reader.readAsDataURL(file);
     },
 
+    async submit() {
+
+    },
+
 
     async save() {
         // run validator
@@ -148,13 +152,17 @@ export default {
           valid => {
           this.sumbitted = true;
           if (valid) {
-            let processedImage = this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "")
+
             let payload = {
               'id': this.post.id,
               'title': this.post.title,
               'description': this.post.description,
               'content': this.post.content,
-              'image': processedImage
+            }
+
+            if (this.newImage) {
+              let processedImage = this.newImage.replace(/^data:image\/(png|jpg|jpeg|JPEG);base64,/, "");
+              payload.image = processedImage;
             }
 
             this.$store.dispatch('updatePost', payload)

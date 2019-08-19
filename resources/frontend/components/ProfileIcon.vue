@@ -24,7 +24,7 @@ export default {
   methods: {
     async logout() {
       await Auth.logout();
-      this.$router.push('/');
+      this.$router.go();
     }
   }
 }

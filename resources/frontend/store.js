@@ -164,7 +164,8 @@ export default new Vuex.Store({
       try {
         let result = await API.register(payload);
         commit('login', result);
-        commit('setAuth');
+        commit('setUser', result);
+        Auth.login(result.token, result)
       } catch (err) {
         commit('error', err);
       }

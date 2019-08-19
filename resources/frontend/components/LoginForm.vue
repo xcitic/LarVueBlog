@@ -92,7 +92,7 @@ export default {
     auth() {
       if(this.$store.state.user) {
         this.flash('Successfully logged in', 'success');
-        this.$router.push('/dashboard');
+        this.$router.go();
       }
       else {
         this.flash('Wrong username or password', 'error');
