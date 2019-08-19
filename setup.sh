@@ -4,6 +4,9 @@
 ## License: MIT
 
 
+echo '######## Welcome #########'
+read -p 'Are you serving this from a server? (y/n)' server
+
 # Setup project dependencies
 composer install
 yarn install
@@ -24,9 +27,6 @@ php artisan passport:install
 php artisan db:seed
 
 # Setup permissions
-echo 'Is the website on a server? (y/n)'
-read server
-
 if ["$server" == 'y']; then
   # Get current user
   declare user=$(id -u -n)
