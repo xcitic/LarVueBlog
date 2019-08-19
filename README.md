@@ -55,7 +55,7 @@ chmod +x setup.sh
 # Run setup script
 ./setup.sh
 
-##### PROJECT WILL START BE SERVED ON #####
+##### PROJECT WILL RUN ON #####
       http://localhost:8000
 ```
 
