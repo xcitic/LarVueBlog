@@ -6,6 +6,7 @@ use App\Comment;
 use App\BlogPost;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentStoreRequest;
+use App\Http\Requests\CommentUpdateRequest;
 
 
 class CommentController extends Controller
@@ -103,14 +104,19 @@ class CommentController extends Controller
      * @param  CommentStoreRequest $request [Validation & sanitization]
      * @return String                      [Success or error]
      */
-    public function updateComment(CommentStoreRequest $request) {
+    public function updateComment(int $id, CommentUpdateRequest $request) {
+      // check user
       $user = $request->user('api');
+      // validate input
       $validated = $request->validated();
 
+      // find the comment
       $comment = Comment::where('id', $request->id)->first();
-      if(isset($comment)) {
-        // admin and user who owns the comment are allowed to edit.
-        if($user->isAdmin() || $comment->owner->id === $user->id) {
+
+      // check comment found
+      if(is_object($comment)) {
+        // admin or user who owns the comment are allowed to edit.
+        if($user->isAdmin() || $comment->owner->id == $user->id) {
           $comment->text = $request->text;
           $comment->update();
           return response('Updated', 200);

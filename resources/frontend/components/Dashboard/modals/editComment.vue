@@ -60,9 +60,10 @@ export default {
               id: this.comment.id,
               text: this.comment.text
             };
+            console.log(payload)
             this.$store.dispatch('updateComment', payload)
               .then(() => {
-                this.flash(`The comment with id: ${payload.id}`, 'success');
+                this.flash(`The comment with id: ${payload.postId}`, 'success');
                 this.$emit('close');
               })
               .catch(() => {

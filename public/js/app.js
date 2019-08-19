@@ -12559,9 +12559,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       id: _this.comment.id,
                       text: _this.comment.text
                     };
+                    console.log(payload);
 
                     _this.$store.dispatch('updateComment', payload).then(function () {
-                      _this.flash("The comment with id: ".concat(payload.id), 'success');
+                      _this.flash("The comment with id: ".concat(payload.postId), 'success');
 
                       _this.$emit('close');
                     })["catch"](function () {
