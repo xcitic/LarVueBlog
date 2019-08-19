@@ -40,6 +40,25 @@ Project requirements are:
 - [git](https://git-scm.com/).
 
 
+
+## Setting up the project
+
+```bash
+# clone the project
+git clone https://github.com/xcitic/LarVueBlog.git
+
+# enter the project directory
+cd LarVueBlog
+
+# Make setup script executable
+chmod +x setup.sh
+# Run setup script
+./setup.sh
+
+##### PROJECT WILL START BE SERVED ON #####
+      http://localhost:8000
+```
+
 ## Features
 
 ### Application Features
@@ -72,25 +91,6 @@ Project requirements are:
 ### Build system
 - Webpack with versioning thanks to [LaravelMix](https://laravel-mix.com/)
 
-
-
-## Setting up the project
-
-```bash
-# clone the project
-git clone https://github.com/xcitic/LarVueBlog.git
-
-# enter the project directory
-cd LarVueBlog
-
-# Make setup script executable
-chmod +x setup.sh
-# Run setup script
-./setup.sh
-
-##### PROJECT WILL START BE SERVED ON #####
-      http://localhost:8000
-```
 
 
 ## License
