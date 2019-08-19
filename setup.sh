@@ -7,9 +7,23 @@
 echo '######## Welcome #########'
 read -p 'Are you serving this from a server? (y/n)' server
 
+## Check if user has yarn or npm installed (prefer yarn)
+declare yarn=$(which yarn)
+declare npm=$(which npm)
+declare packagemanager
+
+if [[ -n $yarn ]]; then
+  packagemanager=yarn
+elif [[ -n $npm ]]; then
+  packagemanager=npm
+else
+  echo 'You need NPM or Yarn installed. Exiting'
+  exit 1
+fi
+
 # Setup project dependencies
 composer install
-yarn install
+$packagemanager install
 
 # Setting up env variables. Default PDO is Sqlite
 cp .env.example .env
