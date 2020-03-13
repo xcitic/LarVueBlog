@@ -179,9 +179,9 @@
     methods: {
 
       async fetchData() {
-        this.getPosts()
-        this.getComments()
-        this.getUsers()
+        this.getPosts();
+        this.getComments();
+        this.getUsers();
         this.$store.commit('notLoading');
       },
 

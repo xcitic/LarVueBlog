@@ -245,31 +245,7 @@ __webpack_require__.r(__webpack_exports__);
 /* eslint-disable no-console */
 
 
-if (true) {
-  Object(register_service_worker__WEBPACK_IMPORTED_MODULE_0__["register"])("".concat("http://localhost:8000", "/service-worker.js"), {
-    ready: function ready() {
-      console.log('App is being served from cache by a service worker.\n');
-    },
-    registered: function registered() {
-      console.log('Service worker has been registered.');
-    },
-    cached: function cached() {
-      console.log('Content has been cached for offline use.');
-    },
-    updatefound: function updatefound() {
-      console.log('New content is downloading.');
-    },
-    updated: function updated() {
-      console.log('New content is available; please refresh.');
-    },
-    offline: function offline() {
-      console.log('No internet connection found. App is running in offline mode.');
-    },
-    error: function error(_error) {
-      console.error('Error during service worker registration:', _error);
-    }
-  });
-}
+if (false) {}
 
 /***/ }),
 

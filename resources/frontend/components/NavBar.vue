@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar fixed-top navbar-dark scrolling-navbar double-nav">
         <!-- SideNav slide-out button -->
-        <div class="float-left mr-4" v-if="dashboard">
+        <div class="float-left mr-4" v-if="dashboardPath">
             <a @click.prevent="toggleSideNav" class="button-collapse"><i class="fa fa-bars"></i></a>
         </div>
         <!-- Logo and Mainpage route -->
@@ -17,7 +17,7 @@
                 </router-link>
             </li>
 
-            <li class="nav-item" v-if="!dashboard">
+            <li class="nav-item" v-if="!dashboardPage">
                 <router-link class="nav-link" :to="{ name: 'dashboard' }">
                     <i class="fa fa-tachometer"></i> <span class="hidden-sm-down">Dashboard</span>
                 </router-link>
@@ -55,21 +55,17 @@
         return this.$store.state.authenticated;
       },
 
-      dashboard() {
-        return this.$route.matched[0].path === "/dashboard";
+      dashboardPath() {
+        return this.$route.matched[0].path == "/dashboard";
+      },
+
+      dashboardPage() {
+        return this.$route.name === "dashboard";
       },
 
       homepage() {
         return this.$route.name === "landing";
       },
-
-      blogpage() {
-        return this.$route.name === "post";
-      },
-
-      accountPage() {
-        return this.$route.name === "account";
-      }
 
     },
 

@@ -27,6 +27,9 @@ export default {
       .then(res => {
         return res.data
       })
+      .catch(err => {
+        throw new Error(err.message);
+      })
   },
 
   getPosts() {

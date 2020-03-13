@@ -13501,17 +13501,14 @@ __webpack_require__.r(__webpack_exports__);
     authenticated: function authenticated() {
       return this.$store.state.authenticated;
     },
-    dashboard: function dashboard() {
-      return this.$route.matched[0].path === "/dashboard";
+    dashboardPath: function dashboardPath() {
+      return this.$route.matched[0].path == "/dashboard";
+    },
+    dashboardPage: function dashboardPage() {
+      return this.$route.name === "dashboard";
     },
     homepage: function homepage() {
       return this.$route.name === "landing";
-    },
-    blogpage: function blogpage() {
-      return this.$route.name === "post";
-    },
-    accountPage: function accountPage() {
-      return this.$route.name === "account";
     }
   },
   methods: {
@@ -30384,7 +30381,7 @@ var render = function() {
     "nav",
     { staticClass: "navbar fixed-top navbar-dark scrolling-navbar double-nav" },
     [
-      _vm.dashboard
+      _vm.dashboardPath
         ? _c("div", { staticClass: "float-left mr-4" }, [
             _c(
               "a",
@@ -30442,7 +30439,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.dashboard
+              !_vm.dashboardPage
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -48473,7 +48470,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_7___default.a, {
   dynamic: true,
   dynamicDefaults: {
-    clickToClose: false
+    clickToClose: true
   }
 });
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_8__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__["faSpinner"]);
@@ -49521,31 +49518,7 @@ __webpack_require__.r(__webpack_exports__);
 /* eslint-disable no-console */
 
 
-if (true) {
-  Object(register_service_worker__WEBPACK_IMPORTED_MODULE_0__["register"])("".concat("http://localhost:8000", "/service-worker.js"), {
-    ready: function ready() {
-      console.log('App is being served from cache by a service worker.\n');
-    },
-    registered: function registered() {
-      console.log('Service worker has been registered.');
-    },
-    cached: function cached() {
-      console.log('Content has been cached for offline use.');
-    },
-    updatefound: function updatefound() {
-      console.log('New content is downloading.');
-    },
-    updated: function updated() {
-      console.log('New content is available; please refresh.');
-    },
-    offline: function offline() {
-      console.log('No internet connection found. App is running in offline mode.');
-    },
-    error: function error(_error) {
-      console.error('Error during service worker registration:', _error);
-    }
-  });
-}
+if (false) {}
 
 /***/ }),
 

@@ -29,7 +29,7 @@ Vue.use(VeeValidate);
 Vue.use(VModal, {
   dynamic: true,
   dynamicDefaults: {
-    clickToClose: false,
+    clickToClose: true,
   }
 });
 
