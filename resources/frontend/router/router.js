@@ -15,7 +15,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // Fetch and attach auth token.
   const token = localStorage.getItem('token');
-  window.scrollTo(0, 0);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 
   async function authCheck() {
     let isAdmin = await Auth.isAdmin();
