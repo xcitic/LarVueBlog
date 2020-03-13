@@ -1,8 +1,8 @@
 <template>
 <nav class="navbar fixed-top navbar-dark scrolling-navbar double-nav">
   <!-- SideNav slide-out button -->
-  <div class="float-left mr-4" v-if="!homepage && !blogpage">
-      <a data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+  <div class="float-left mr-4" v-if="dashboard || accountPage">
+      <a @click.prevent="toggleSideNav" class="button-collapse"><i class="fa fa-bars"></i></a>
   </div>
   <!-- Logo and Mainpage route -->
   <div class="breadcrumb-dn mr-auto">
@@ -11,7 +11,7 @@
 
   <ul class="nav navbar-nav nav-flex-icons ml-auto" v-if="authenticated">
 
-      <li class="nav-item" v-if="!homepage">
+      <li class="nav-item" v-if="homepage == false">
         <router-link class="nav-link" :to="{ name: 'landing' }">
            <i class="fa fa-comments-o"></i> <span class="hidden-sm-down">Go To Blog</span>
           </router-link>
@@ -60,13 +60,23 @@ export default {
     },
 
     homepage() {
-      return this.$route.name === "home";
+      return this.$route.name === "landing";
     },
 
     blogpage() {
       return this.$route.name === "post";
+    },
+
+    accountPage() {
+      return this.$route.name === "account";
     }
 
+  },
+
+  methods: {
+    toggleSideNav() {
+      this.$store.dispatch('toggleSideNav');
+    }
   }
 }
 </script>

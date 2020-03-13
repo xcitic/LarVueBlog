@@ -21,7 +21,8 @@ export default new Vuex.Store({
     },
     isAdmin: false,
     users: [],
-    loading: true
+    loading: true,
+    showSideNav: false,
   },
 
   getters: {
@@ -126,17 +127,21 @@ export default new Vuex.Store({
 
     increaseViews(state, id) {
       state.post.views++;
-      let post = state.posts.find(post => { return post.id === id})
+      let post = state.posts.find(post => { return post.id === id});
       if(post){
-        post.views++;
+        state.post.views += 1;
       }
     },
 
     increaseCommentCount(state, payload) {
-      let post = state.posts.find(post => { return post.id === payload.postId})
+      let post = state.posts.find(post => { return post.id === payload.postId});
       if(post) {
-        post.comments.push(payload.comment)
+        post.comments.push(payload.comment);
       }
+    },
+
+    toggleSideNav(state) {
+      state.showSideNav = !state.showSideNav;
     },
 
     error(state, err) {
@@ -323,7 +328,11 @@ export default new Vuex.Store({
       .then(() => {
         commit('increaseViews', id);
       })
-    }
+    },
+
+      toggleSideNav({commit}) {
+        commit('toggleSideNav');
+      }
 
   }
 });

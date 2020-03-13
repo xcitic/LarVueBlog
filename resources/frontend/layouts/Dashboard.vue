@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SideNav />
+    <SideNav v-if="showSideNav" />
 
     <div class="container-fluid">
       <router-view/>
@@ -16,6 +16,12 @@ export default {
   components: {
     SideNav,
   },
+
+  computed: {
+    showSideNav() {
+      return this.$store.state.showSideNav;
+    }
+  }
 
 }
 </script>

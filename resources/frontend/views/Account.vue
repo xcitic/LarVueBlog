@@ -188,8 +188,9 @@ export default {
     if(!this.user) {
       this.$store.commit('isLoading');
       this.setUser();
+    } else {
+      this.$store.commit('notLoading');
     }
-
   },
 
   data() {

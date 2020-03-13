@@ -12540,6 +12540,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SideNav',
@@ -13504,10 +13506,18 @@ __webpack_require__.r(__webpack_exports__);
       return this.$route.name === "dashboard";
     },
     homepage: function homepage() {
-      return this.$route.name === "home";
+      return this.$route.name === "landing";
     },
     blogpage: function blogpage() {
       return this.$route.name === "post";
+    },
+    accountPage: function accountPage() {
+      return this.$route.name === "account";
+    }
+  },
+  methods: {
+    toggleSideNav: function toggleSideNav() {
+      this.$store.dispatch('toggleSideNav');
     }
   }
 });
@@ -13764,6 +13774,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SideNav: _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  computed: {
+    showSideNav: function showSideNav() {
+      return this.$store.state.showSideNav;
+    }
   }
 });
 
@@ -13971,6 +13986,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     if (!this.user) {
       this.$store.commit('isLoading');
       this.setUser();
+    } else {
+      this.$store.commit('notLoading');
     }
   },
   data: function data() {
@@ -29006,84 +29023,72 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.loading
-      ? _c(
-          "div",
-          { staticClass: "justify-content-center" },
-          [
-            _c("icons", {
-              staticClass: "fa-spinner",
-              attrs: { icon: ["fas", "spinner"] }
-            })
-          ],
-          1
-        )
-      : _c(
-          "ul",
-          {
-            staticClass: "side-nav fixed custom-scrollbar",
-            attrs: { id: "slide-out" }
-          },
-          [
-            _c("li", [
-              _vm.user
-                ? _c("div", { staticClass: "user-box" }, [
-                    _c("img", {
-                      staticClass: "img-fluid rounded-circle",
-                      attrs: { src: _vm.user.image }
-                    }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "user text-center black-text" }, [
-                      _vm._v(_vm._s(_vm.user.name))
-                    ])
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
+    _c(
+      "ul",
+      {
+        staticClass: "side-nav fixed custom-scrollbar",
+        staticStyle: { transform: "translateX(0px)" },
+        attrs: { id: "slide-out" }
+      },
+      [
+        _c("li", [
+          _vm.user
+            ? _c("div", { staticClass: "user-box" }, [
+                _c("img", {
+                  staticClass: "img-fluid rounded-circle",
+                  attrs: { src: _vm.user.image }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "user text-center black-text" }, [
+                  _vm._v(_vm._s(_vm.user.name))
+                ])
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("ul", { staticClass: "collapsible collapsible-accordion" }, [
+            _c(
+              "li",
+              [
                 _c(
+                  "router-link",
+                  {
+                    staticClass: "collapsible-header waves-effect arrow-r",
+                    attrs: { to: { name: "dashboard" } }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-code" }),
+                    _vm._v(" Dashboard\n                    ")
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.isAdmin
+              ? _c(
                   "li",
                   [
                     _c(
                       "router-link",
                       {
                         staticClass: "collapsible-header waves-effect arrow-r",
-                        attrs: { to: { name: "dashboard" } }
+                        attrs: { to: { name: "postCreate" } }
                       },
                       [
-                        _c("i", { staticClass: "fa fa-code" }),
-                        _vm._v(" Dashboard")
+                        _c("i", { staticClass: "fa fa-envelope" }),
+                        _vm._v(" Create Post\n                    ")
                       ]
                     )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _vm.isAdmin
-                  ? _c(
-                      "li",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass:
-                              "collapsible-header waves-effect arrow-r",
-                            attrs: { to: { name: "postCreate" } }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-envelope" }),
-                            _vm._v(" Create Post")
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ])
-            ])
-          ]
-        )
+                )
+              : _vm._e()
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -30067,8 +30072,22 @@ var render = function() {
     "nav",
     { staticClass: "navbar fixed-top navbar-dark scrolling-navbar double-nav" },
     [
-      !_vm.homepage && !_vm.blogpage
-        ? _c("div", { staticClass: "float-left mr-4" }, [_vm._m(0)])
+      _vm.dashboard || _vm.accountPage
+        ? _c("div", { staticClass: "float-left mr-4" }, [
+            _c(
+              "a",
+              {
+                staticClass: "button-collapse",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.toggleSideNav($event)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-bars" })]
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
       _c(
@@ -30087,7 +30106,7 @@ var render = function() {
             "ul",
             { staticClass: "nav navbar-nav nav-flex-icons ml-auto" },
             [
-              !_vm.homepage
+              _vm.homepage == false
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -30165,21 +30184,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "button-collapse",
-        attrs: { "data-activates": "slide-out" }
-      },
-      [_c("i", { staticClass: "fa fa-bars" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -30512,7 +30517,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("SideNav"),
+      _vm.showSideNav ? _c("SideNav") : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "container-fluid" }, [_c("router-view")], 1)
     ],
@@ -49447,7 +49452,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     isAdmin: false,
     users: [],
-    loading: true
+    loading: true,
+    showSideNav: false
   },
   getters: {
     getComments: function getComments(state) {
@@ -49535,7 +49541,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       });
 
       if (post) {
-        post.views++;
+        state.post.views += 1;
       }
     },
     increaseCommentCount: function increaseCommentCount(state, payload) {
@@ -49546,6 +49552,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       if (post) {
         post.comments.push(payload.comment);
       }
+    },
+    toggleSideNav: function toggleSideNav(state) {
+      state.showSideNav = !state.showSideNav;
     },
     error: function error(state, err) {
       state.error = err;
@@ -50147,6 +50156,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
           }
         }, _callee21);
       }))();
+    },
+    toggleSideNav: function toggleSideNav(_ref22) {
+      var commit = _ref22.commit;
+      commit('toggleSideNav');
     }
   }
 }));
