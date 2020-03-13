@@ -36,13 +36,9 @@ class Auth {
     return user;
   }
 
-
   async isAdmin() {
     let userInfo = await API.getUser();
-    if (userInfo.role === "admin") {
-      return true;
-    }
-    return false;
+    return userInfo.role === "admin";
   }
 
 }

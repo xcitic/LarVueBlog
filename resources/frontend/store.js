@@ -31,15 +31,15 @@ export default new Vuex.Store({
     },
 
     user(state) {
-      return state.user
+      return state.user;
     },
 
     getPosts(state) {
-      return state.posts
+      return state.posts;
     },
 
     loading(state) {
-      return state.loading
+      return state.loading;
     },
 
 
@@ -58,8 +58,7 @@ export default new Vuex.Store({
     },
 
     setComment(state, comment) {
-      let data = [comment, ...state.comments];
-      state.comments = data;
+      state.comments = [comment, ...state.comments];
     },
 
     login(state, userInfo) {
@@ -174,9 +173,9 @@ export default new Vuex.Store({
     },
 
     async login({commit}, payload) {
-      let result = await API.login(payload)
+      let result = await API.login(payload);
       commit('login', result);
-      commit('setUser', result)
+      commit('setUser', result);
       Auth.login(result.token, result)
     },
 
@@ -185,7 +184,7 @@ export default new Vuex.Store({
         let result = await API.register(payload);
         commit('login', result);
         commit('setUser', result);
-        Auth.login(result.token, result)
+        Auth.login(result.token, result);
       } catch (err) {
         commit('error', err);
       }
@@ -197,13 +196,13 @@ export default new Vuex.Store({
       let updatePost = {
         'comment': comment,
         'postId': payload.postId
-      }
+      };
       commit('increaseCommentCount', updatePost);
     },
 
     async getUser({commit}) {
       try {
-        let userInfo = await API.getUser()
+        let userInfo = await API.getUser();
         commit('setUser', userInfo);
       } catch (err) {
         commit('error', err.message);
@@ -335,7 +334,7 @@ export default new Vuex.Store({
       API.viewedPost(id)
         .then(() => {
           commit('increaseViews', id);
-        })
+        });
     },
 
     toggleSideNav({commit}) {

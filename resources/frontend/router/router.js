@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
     if (token) {
       authCheck();
     } else {
-      return next('/login')
+      return next('/login');
     }
   }
 
