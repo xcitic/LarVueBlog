@@ -28,8 +28,10 @@
       BlogPost
     },
 
-    beforeMount() {
-      this.getPosts();
+    mounted() {
+      if(this.posts.length == 0) {
+        this.getPosts();
+      }
     },
 
     computed: {
