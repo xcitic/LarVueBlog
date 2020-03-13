@@ -20,7 +20,7 @@
 [![HitCount](http://hits.dwyl.io/xcitic/LarVueBlog.svg)](http://hits.dwyl.io/xcitic/LarVueBlog)
 
 
-<img src="https://github.com/xcitic/LarVueBlog/blob/master/documentation/LarVueBlogDemo-optimized.gif" width="100%" height="450" />
+<img src="https://github.com/xcitic/LarVueBlog/blob/master/documentation/LarVueBlogDemo.gif" width="100%" height="450" />
 
 
 ## Introduction
