@@ -18,15 +18,15 @@ const endpoint = axios.create({
 
 export default {
 
-  async apiCall (method, resource, data) {
+  async apiCall(method, resource, data) {
     return endpoint({
       method,
       url: resource,
       data,
     })
-    .then(res => {
-      return res.data
-    })
+      .then(res => {
+        return res.data
+      })
   },
 
   getPosts() {
@@ -54,7 +54,7 @@ export default {
   },
 
   getUser() {
-      return this.apiCall('get', '/user');
+    return this.apiCall('get', '/user');
   },
 
   createPost(payload) {

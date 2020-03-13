@@ -1,320 +1,323 @@
 <template>
-      <!-- First row -->
+    <!-- First row -->
 
-      <div v-if="loading" class="justify-content-center">
-        <icons :icon="['fas', 'spinner']" class="fa-spinner" />
-      </div>
+    <div v-if="loading" class="justify-content-center">
+        <icons :icon="['fas', 'spinner']" class="fa-spinner"/>
+    </div>
 
-      <div class="col-lg-12 col-md-12 mt-2" v-else>
+    <div class="col-lg-12 col-md-12 mt-2" v-else>
 
-      <div class="row">
-          <!-- First column -->
-          <div class="col-lg-3 offset-lg-2 offset-md-0 col-md-4">
+        <div class="row">
+            <!-- First column -->
+            <div class="col-lg-3 offset-lg-2 offset-md-0 col-md-4">
 
-              <!-- Card -->
-              <div class="card contact-card">
-                  <div class="admin-panel info-admin-panel">
-                      <!-- Card title -->
-                      <div class="view primary-color white-text pb-1">
-                          <h5>Edit Photo</h5>
-                      </div>
-                      <!-- /.Card title -->
+                <!-- Card -->
+                <div class="card contact-card">
+                    <div class="admin-panel info-admin-panel">
+                        <!-- Card title -->
+                        <div class="view primary-color white-text pb-1">
+                            <h5>Edit Photo</h5>
+                        </div>
+                        <!-- /.Card title -->
 
-                      <!-- Card content -->
-                      <div class="card-block text-center">
-                          <img v-if="user.image" :src="user.image" alt="User Photo" class="rounded-circle contact-avatar my-2 mx-auto">
+                        <!-- Card content -->
+                        <div class="card-block text-center">
+                            <img v-if="user.image" :src="user.image" alt="User Photo"
+                                 class="rounded-circle contact-avatar my-2 mx-auto">
                             <input class="btn btn-primary" type="file" @change="processImage" style="max-width: 90%;"/>
-                      </div>
-                      <!-- /.Card content -->
-                  </div>
-              </div>
-              <!-- /.Card -->
-          </div>
-          <!-- /.First column -->
-          <!-- Second column -->
-          <div class="col-lg-7 col-md-8">
-              <!--Card-->
-              <div class="card">
-                  <div class="admin-panel info-admin-panel">
-                      <!--Card image-->
-                      <div class="view primary-color white-text pb-1">
-                          <h5>Edit Account</h5>
-                      </div>
-                      <!--/Card image-->
-                      <!--Card content-->
-                      <div class="card-block mr-2 ml-2 mt-2">
-                          <!-- Edit Form -->
-                          <form>
-                              <!--First row-->
-                              <div class="row">
-                                  <!--First column-->
-                                  <div class="col-md-6">
-                                      <div class="md-form">
+                        </div>
+                        <!-- /.Card content -->
+                    </div>
+                </div>
+                <!-- /.Card -->
+            </div>
+            <!-- /.First column -->
+            <!-- Second column -->
+            <div class="col-lg-7 col-md-8">
+                <!--Card-->
+                <div class="card">
+                    <div class="admin-panel info-admin-panel">
+                        <!--Card image-->
+                        <div class="view primary-color white-text pb-1">
+                            <h5>Edit Account</h5>
+                        </div>
+                        <!--/Card image-->
+                        <!--Card content-->
+                        <div class="card-block mr-2 ml-2 mt-2">
+                            <!-- Edit Form -->
+                            <form>
+                                <!--First row-->
+                                <div class="row">
+                                    <!--First column-->
+                                    <div class="col-md-6">
+                                        <div class="md-form">
 
-                                        <input type="text"
-                                                v-model="user.name"
-                                                class="form-control validate"
-                                                autocomplete="name"
-                                                placeholder="Name"
-                                                name="name"
-                                                autofocus
-                                                v-validate="'required|alpha_spaces|min:4|max:50'"
-                                          />
-                                          <span v-if="submitted && errors.has('name')">
+                                            <input type="text"
+                                                   v-model="user.name"
+                                                   class="form-control validate"
+                                                   autocomplete="name"
+                                                   placeholder="Name"
+                                                   name="name"
+                                                   autofocus
+                                                   v-validate="'required|alpha_spaces|min:4|max:50'"
+                                            />
+                                            <span v-if="submitted && errors.has('name')">
                                               <p class="red-text"> {{ errors.first('name') }} </p>
                                           </span>
-                                          <label :class="user.name ? 'active' : ''" for="name">Name</label>
-                                      </div>
-                                  </div>
-                                  <!--Second column-->
-                                  <div class="col-md-6">
-                                      <div class="md-form">
-                                        <input type="email"
-                                               v-model="user.email"
-                                               class="form-control validate"
-                                               autocomplete="email"
-                                               placeholder="Email address"
-                                               name="email"
-                                               v-validate="'required|email|max:50'"
-                                          />
-                                          <span v-if="submitted && errors.has('email')">
+                                            <label :class="user.name ? 'active' : ''" for="name">Name</label>
+                                        </div>
+                                    </div>
+                                    <!--Second column-->
+                                    <div class="col-md-6">
+                                        <div class="md-form">
+                                            <input type="email"
+                                                   v-model="user.email"
+                                                   class="form-control validate"
+                                                   autocomplete="email"
+                                                   placeholder="Email address"
+                                                   name="email"
+                                                   v-validate="'required|email|max:50'"
+                                            />
+                                            <span v-if="submitted && errors.has('email')">
                                               <p class="red-text"> {{ errors.first('email') }} </p>
                                           </span>
-                                          <label :class="user.email ? 'active' : ''" for="email">Email</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!--/.First row-->
-                              <!--First row-->
-                              <div class="row" v-if="changePassword">
-                                  <!--First column-->
-                                  <div class="col-md-4">
-                                      <div class="md-form">
-                                        <input type="password"
-                                               v-model="cur_password"
-                                               class="form-control"
-                                               autocomplete="old-password"
-                                               placeholder="Enter current password"
-                                               name="cur_password"
-                                               ref="cur_password"
-                                               v-validate="'required|max:50'"
-                                               data-vv-as="Old Password"
-                                          />
-                                          <span v-if="submitted && errors.has('cur_password')">
+                                            <label :class="user.email ? 'active' : ''" for="email">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.First row-->
+                                <!--First row-->
+                                <div class="row" v-if="changePassword">
+                                    <!--First column-->
+                                    <div class="col-md-4">
+                                        <div class="md-form">
+                                            <input type="password"
+                                                   v-model="cur_password"
+                                                   class="form-control"
+                                                   autocomplete="old-password"
+                                                   placeholder="Enter current password"
+                                                   name="cur_password"
+                                                   ref="cur_password"
+                                                   v-validate="'required|max:50'"
+                                                   data-vv-as="Old Password"
+                                            />
+                                            <span v-if="submitted && errors.has('cur_password')">
                                               <p class="red-text"> {{ errors.first('cur_password') }} </p>
                                           </span>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <div class="md-form">
-                                        <input type="password"
-                                               v-model="new_password"
-                                               class="form-control"
-                                               autocomplete="new-password"
-                                               placeholder="Enter New Password"
-                                               name="new_password"
-                                               ref="new_password"
-                                               v-validate="'required|max:50'"
-                                               data-vv-as="New Password"
-                                          />
-                                          <span v-if="submitted && errors.has('new_password')">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form">
+                                            <input type="password"
+                                                   v-model="new_password"
+                                                   class="form-control"
+                                                   autocomplete="new-password"
+                                                   placeholder="Enter New Password"
+                                                   name="new_password"
+                                                   ref="new_password"
+                                                   v-validate="'required|max:50'"
+                                                   data-vv-as="New Password"
+                                            />
+                                            <span v-if="submitted && errors.has('new_password')">
                                               <p class="red-text"> {{ errors.first('new_password') }} </p>
                                           </span>
-                                      </div>
-                                  </div>
-                                  <!--Second column-->
-                                  <div class="col-md-4">
-                                      <div class="md-form">
-                                        <input type="password"
-                                               v-model="new_password_confirmation"
-                                               class="form-control"
-                                               autocomplete="new-password"
-                                               placeholder="Repeat New Password"
-                                               name="new_password_confirmation"
-                                               v-validate="'required|confirmed:new_password'"
-                                               data-vv-as="Password Confirmation"
-                                          />
-                                          <span v-if="submitted && errors.has('new_password_confirmation')">
+                                        </div>
+                                    </div>
+                                    <!--Second column-->
+                                    <div class="col-md-4">
+                                        <div class="md-form">
+                                            <input type="password"
+                                                   v-model="new_password_confirmation"
+                                                   class="form-control"
+                                                   autocomplete="new-password"
+                                                   placeholder="Repeat New Password"
+                                                   name="new_password_confirmation"
+                                                   v-validate="'required|confirmed:new_password'"
+                                                   data-vv-as="Password Confirmation"
+                                            />
+                                            <span v-if="submitted && errors.has('new_password_confirmation')">
                                               <p class="red-text"> {{ errors.first('new_password_confirmation') }} </p>
                                           </span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <button class="btn btn-secondary waves-light" @click.prevent="showPassword">Change Password</button><br>
-                                    <button class="btn btn-primary" @click.prevent="submit" :disabled="processing">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-secondary waves-light" @click.prevent="showPassword">
+                                            Change Password
+                                        </button>
+                                        <br>
+                                        <button class="btn btn-primary" @click.prevent="submit" :disabled="processing">
                                         <span v-if="processing" class="justify-content-center">
-                                          <icons :icon="['fas', 'spinner']" class="fa-spinner-small" />
+                                          <icons :icon="['fas', 'spinner']" class="fa-spinner-small"/>
                                         </span>
-                                        <span v-else>
+                                            <span v-else>
                                           Update Account
                                         </span>
-                                    </button>
-                                    <br>
+                                        </button>
+                                        <br>
+                                    </div>
                                 </div>
-                              </div>
-                              <!-- /.Fourth row -->
-                          </form>
-                          <!-- Edit Form -->
-                      </div>
-                      <!--/.Card content-->
-                  </div>
-              </div>
-              <!--/.Card-->
-          </div>
-          <!-- /.Second column -->
-      </div>
-      <!-- /.First row -->
-  </div>
+                                <!-- /.Fourth row -->
+                            </form>
+                            <!-- Edit Form -->
+                        </div>
+                        <!--/.Card content-->
+                    </div>
+                </div>
+                <!--/.Card-->
+            </div>
+            <!-- /.Second column -->
+        </div>
+        <!-- /.First row -->
+    </div>
 </template>
 
 <script>
-export default {
-  components: {
-  },
+  export default {
+    components: {},
 
-  computed: {
-    user() {
-      return this.$store.state.user;
+    computed: {
+      user() {
+        return this.$store.state.user;
+      },
+
+      loading() {
+        return this.$store.state.loading;
+      }
     },
 
-    loading() {
-      return this.$store.state.loading;
-    }
-  },
-
-  mounted() {
-    if(!this.user) {
-      this.$store.commit('isLoading');
-      this.setUser();
-    } else {
-      this.$store.commit('notLoading');
-    }
-  },
-
-  data() {
-    return {
-      cur_password: '',
-      new_password: '',
-      new_password_confirmation: '',
-      submitted: false,
-      changePassword: false,
-      processing: false,
-    }
-  },
-
-  methods: {
-
-    async setUser() {
-      await this.$store.dispatch('checkUser')
-      this.$store.commit('notLoading');
+    mounted() {
+      if (!this.user) {
+        this.$store.commit('isLoading');
+        this.setUser();
+      } else {
+        this.$store.commit('notLoading');
+      }
     },
 
-    showPassword() {
-      return this.changePassword = !this.changePassword;
+    data() {
+      return {
+        cur_password: '',
+        new_password: '',
+        new_password_confirmation: '',
+        submitted: false,
+        changePassword: false,
+        processing: false,
+      }
     },
 
-    async processImage(e) {
+    methods: {
+
+      async setUser() {
+        await this.$store.dispatch('checkUser')
+        this.$store.commit('notLoading');
+      },
+
+      showPassword() {
+        return this.changePassword = !this.changePassword;
+      },
+
+      async processImage(e) {
         let files = e.target.files || e.dataTransfer.files;
-        if(!files.length) {
+        if (!files.length) {
           return;
         }
         this.createImage(files[0]);
       },
 
-    createImage(file) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        let image = e.target.result;
-        this.user.image = image
-        this.saveImage(image);
-      };
-      reader.readAsDataURL(file)
-    },
+      createImage(file) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          let image = e.target.result;
+          this.user.image = image
+          this.saveImage(image);
+        };
+        reader.readAsDataURL(file)
+      },
 
-    async saveImage(image) {
-      // Strip Mime type
-      let processedImage = await image.replace(/^data:image\/(png|jpg|jpeg|JPEG|gif);base64,/, "")
-      let payload = {
-        'image': processedImage,
-      }
-      this.$store.dispatch('updatePicture', payload)
-      .then(() => {
-        this.flash('Successfully updated picture', 'success');
-      }).catch(() => {
-        this.flash('Error updating picture', 'error');
-      })
-    },
-
-    async submit() {
-      if(this.cur_password && this.new_password && (this.new_password === this.new_password_confirmation) ) {
-        await this.savePassword()
-      }
-      this.saveInfo()
-    },
-
-    async saveInfo() {
-      this.$validator.validate().then(
-        valid => {
-          this.submitted = true;
-          if(valid) {
-            this.processing = true;
-
-            let payload = {
-              name: this.user.name,
-              email: this.user.email,
-            }
-            this.$store.dispatch('updateAccount', payload)
-            .then(() => {
-              this.flash('Successfully updated your account.', 'success');
-              this.processing = false;
-              this.submitted = false;
-              // this.$router.push('/dashboard');
-            }).catch((err) => {
-              this.flash('Error: ' + err.message, 'error');
-              this.processing = false;
-              this.submitted = false;
-            })
-          }
+      async saveImage(image) {
+        // Strip Mime type
+        let processedImage = await image.replace(/^data:image\/(png|jpg|jpeg|JPEG|gif);base64,/, "")
+        let payload = {
+          'image': processedImage,
         }
-      )
-    },
+        this.$store.dispatch('updatePicture', payload)
+          .then(() => {
+            this.flash('Successfully updated picture', 'success');
+          }).catch(() => {
+          this.flash('Error updating picture', 'error');
+        })
+      },
 
-    async savePassword() {
-      this.$validator.validate().then(
-        valid => {
-          if(valid) {
-            let payload = {
-              old_password: this.cur_password,
-              new_password: this.new_password,
-              new_password_confirmation: this.new_password_confirmation
+      async submit() {
+        if (this.cur_password && this.new_password && (this.new_password === this.new_password_confirmation)) {
+          await this.savePassword()
+        }
+        this.saveInfo()
+      },
+
+      async saveInfo() {
+        this.$validator.validate().then(
+          valid => {
+            this.submitted = true;
+            if (valid) {
+              this.processing = true;
+
+              let payload = {
+                name: this.user.name,
+                email: this.user.email,
+              }
+              this.$store.dispatch('updateAccount', payload)
+                .then(() => {
+                  this.flash('Successfully updated your account.', 'success');
+                  this.processing = false;
+                  this.submitted = false;
+                  // this.$router.push('/dashboard');
+                }).catch((err) => {
+                this.flash('Error: ' + err.message, 'error');
+                this.processing = false;
+                this.submitted = false;
+              })
             }
+          }
+        )
+      },
+
+      async savePassword() {
+        this.$validator.validate().then(
+          valid => {
+            if (valid) {
+              let payload = {
+                old_password: this.cur_password,
+                new_password: this.new_password,
+                new_password_confirmation: this.new_password_confirmation
+              }
               this.$store.dispatch('updatePassword', payload)
                 .then(() => {
-                this.flash('Success updating password', 'success');
-                this.resetPasswordInput();
-              }).catch((err) => {
+                  this.flash('Success updating password', 'success');
+                  this.resetPasswordInput();
+                }).catch((err) => {
                 this.flash('Error updating password: ' + err.message, 'error');
                 this.resetPasswordInput();
               })
-          }
-        })
-    },
+            }
+          })
+      },
 
-    resetPasswordInput() {
-      this.cur_password = '';
-      this.new_password = '';
-      this.new_password_confirmation = '';
+      resetPasswordInput() {
+        this.cur_password = '';
+        this.new_password = '';
+        this.new_password_confirmation = '';
+      }
+
     }
-
   }
-}
 </script>
 
 <style>
-  .contact-avatar {
-    width: 175px !important;
-    height: 175px !important;
-  }
+    .contact-avatar {
+        width: 175px !important;
+        height: 175px !important;
+    }
 </style>

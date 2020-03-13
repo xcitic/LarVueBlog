@@ -1,6 +1,7 @@
 <template>
-    <div >
-        <ul v-click-outside="hideSideNav" id="slide-out" class="side-nav fixed custom-scrollbar" style="transform: translateX(0px);">
+    <div>
+        <ul v-click-outside="hideSideNav" id="slide-out" class="side-nav fixed custom-scrollbar"
+            style="transform: translateX(0px);">
             <!-- Logo -->
             <li>
                 <div class="user-box" v-if="user">
@@ -31,7 +32,6 @@
 </template>
 
 <script>
-  import Auth from '@/api/Auth.js';
   import ClickOutside from 'vue-click-outside';
 
   export default {
@@ -39,13 +39,15 @@
 
     data() {
       return {
-        isLoading: false,
+        isLoading: true,
       }
     },
 
     mounted() {
-      this.isLoading = true;
-      this.checkAdmin();
+      // hack to make sure click-outside does not trigger early.
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 200);
     },
 
     computed: {
@@ -60,29 +62,16 @@
     },
 
     methods: {
-
-      async checkAdmin() {
-        let response = await Auth.isAdmin();
-        if (response === true) {
-          this.$store.commit('setAdmin', true);
-          return this.isLoading = false;
-        }
-        this.$store.commit('setAdmin', false);
-        return this.isLoading = false;
-      },
-
       hideSideNav() {
         if (!this.isLoading) {
           this.$store.dispatch('hideSideNav');
         }
       }
-
     },
 
     directives: {
       ClickOutside
     }
-
 
   }
 </script>

@@ -11725,7 +11725,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -12142,6 +12141,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12423,6 +12437,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -12500,17 +12519,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
-/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
-/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_2__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -12543,18 +12553,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SideNav',
   data: function data() {
     return {
-      isLoading: false
+      isLoading: true
     };
   },
   mounted: function mounted() {
-    this.isLoading = true;
-    this.checkAdmin();
+    var _this = this;
+
+    // hack to make sure click-outside does not trigger early.
+    setTimeout(function () {
+      _this.isLoading = false;
+    }, 200);
   },
   computed: {
     user: function user() {
@@ -12565,43 +12579,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    checkAdmin: function checkAdmin() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__["default"].isAdmin();
-
-              case 2:
-                response = _context.sent;
-
-                if (!(response === true)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                _this.$store.commit('setAdmin', true);
-
-                return _context.abrupt("return", _this.isLoading = false);
-
-              case 6:
-                _this.$store.commit('setAdmin', false);
-
-                return _context.abrupt("return", _this.isLoading = false);
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
     hideSideNav: function hideSideNav() {
       if (!this.isLoading) {
         this.$store.dispatch('hideSideNav');
@@ -12609,7 +12586,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   directives: {
-    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_2___default.a
+    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_0___default.a
   }
 });
 
@@ -12855,6 +12832,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12968,6 +12948,13 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13572,6 +13559,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
@@ -13770,7 +13758,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/Dashboard/SideNav.vue */ "./resources/frontend/components/Dashboard/SideNav.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Dashboard/SideNav.vue */ "./resources/frontend/components/Dashboard/SideNav.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -13783,13 +13780,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    SideNav: _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    SideNav: _components_Dashboard_SideNav_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  mounted: function mounted() {
+    this.$store.commit('isLoading');
+    this.checkAdmin();
   },
   computed: {
     showSideNav: function showSideNav() {
       return this.$store.state.showSideNav;
+    }
+  },
+  methods: {
+    checkAdmin: function checkAdmin() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__["default"].isAdmin();
+
+              case 2:
+                response = _context.sent;
+
+                if (!(response === true)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _this.$store.commit('setAdmin', true);
+
+                return _context.abrupt("return", _this.$store.commit('notLoading'));
+
+              case 6:
+                _this.$store.commit('setAdmin', false);
+
+                return _context.abrupt("return", _this.$store.commit('notLoading'));
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -13813,6 +13854,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -14545,6 +14590,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -14630,6 +14680,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
 //
 //
 //
@@ -14891,7 +14944,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n#app {\n  font-family: 'Avenir', Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #2c3e50;\n}\n#nav {\n  padding: 30px;\n}\n.content {\n  padding: 65px;\n}\n#nav a {\n  font-weight: bold;\n  color: #2c3e50;\n}\n#nav a.router-link-exact-active {\n  color: #42b983;\n}\n", ""]);
+exports.push([module.i, "\n#app {\n    font-family: 'Avenir', Helvetica, Arial, sans-serif;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-align: center;\n    color: #2c3e50;\n}\n#nav {\n    padding: 30px;\n}\n.content {\n    padding: 65px;\n}\n#nav a {\n    font-weight: bold;\n    color: #2c3e50;\n}\n#nav a.router-link-exact-active {\n    color: #42b983;\n}\n", ""]);
 
 // exports
 
@@ -14910,7 +14963,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.fa-spinner-small {\n  font-size: 15px;\n  -webkit-animation: spinner 1s linear infinite;\n          animation: spinner 1s linear infinite;\n}\n", ""]);
+exports.push([module.i, "\n.fa-spinner-small {\n    font-size: 15px;\n    -webkit-animation: spinner 1s linear infinite;\n            animation: spinner 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -14929,7 +14982,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-signin {\n    border: 0;\n    border-radius: 1rem;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.5);\n}\n.card-signin .card-title {\n    margin-bottom: 2rem;\n    font-weight: 300;\n    font-size: 1.5rem;\n}\n.card-signin .card-body {\n    padding: 2rem;\n}\n.form-signin {\n    width: 100%;\n}\n.form-signin .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n    padding: 1rem;\n    transition: all 0.2s;\n}\n.form-label-group {\n    position: relative;\n    margin-bottom: 1rem;\n}\n.form-label-group input {\n    height: auto;\n    border-radius: 2rem;\n}\n.form-label-group>input,\n  .form-label-group>label {\n    padding: var(--input-padding-y) var(--input-padding-x);\n}\n.form-label-group>label {\n    position: absolute;\n    top: 0;\n    left: 0;\n    display: block;\n    width: 100%;\n    margin-bottom: 0;\n    /* Override default `<label>` margin */\n    line-height: 1.5;\n    color: #495057;\n    border: 1px solid transparent;\n    border-radius: .25rem;\n    transition: all .1s ease-in-out;\n}\n.form-label-group input::-webkit-input-placeholder {\n    color: transparent;\n}\n.form-label-group input:-ms-input-placeholder {\n    color: transparent;\n}\n.form-label-group input::-ms-input-placeholder {\n    color: transparent;\n}\n.form-label-group input::-moz-placeholder {\n    color: transparent;\n}\n.form-label-group input::placeholder {\n    color: transparent;\n}\n.form-label-group input:not(:placeholder-shown) {\n    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));\n    padding-bottom: calc(var(--input-padding-y) / 3);\n}\n.form-label-group input:not(:placeholder-shown)~label {\n    padding-top: calc(var(--input-padding-y) / 3);\n    padding-bottom: calc(var(--input-padding-y) / 3);\n    font-size: 12px;\n    color: #777;\n}\n.btn-google {\n    color: white;\n    background-color: #ea4335;\n}\n.btn-facebook {\n    color: white;\n    background-color: #3b5998;\n}\n", ""]);
+exports.push([module.i, "\n.card-signin {\n    border: 0;\n    border-radius: 1rem;\n    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.5);\n}\n.card-signin .card-title {\n    margin-bottom: 2rem;\n    font-weight: 300;\n    font-size: 1.5rem;\n}\n.card-signin .card-body {\n    padding: 2rem;\n}\n.form-signin {\n    width: 100%;\n}\n.form-signin .btn {\n    font-size: 80%;\n    border-radius: 5rem;\n    letter-spacing: .1rem;\n    font-weight: bold;\n    padding: 1rem;\n    transition: all 0.2s;\n}\n.form-label-group {\n    position: relative;\n    margin-bottom: 1rem;\n}\n.form-label-group input {\n    height: auto;\n    border-radius: 2rem;\n}\n.form-label-group > input,\n.form-label-group > label {\n    padding: var(--input-padding-y) var(--input-padding-x);\n}\n.form-label-group > label {\n    position: absolute;\n    top: 0;\n    left: 0;\n    display: block;\n    width: 100%;\n    margin-bottom: 0;\n    /* Override default `<label>` margin */\n    line-height: 1.5;\n    color: #495057;\n    border: 1px solid transparent;\n    border-radius: .25rem;\n    transition: all .1s ease-in-out;\n}\n.form-label-group input::-webkit-input-placeholder {\n    color: transparent;\n}\n.form-label-group input:-ms-input-placeholder {\n    color: transparent;\n}\n.form-label-group input::-ms-input-placeholder {\n    color: transparent;\n}\n.form-label-group input::-moz-placeholder {\n    color: transparent;\n}\n.form-label-group input::placeholder {\n    color: transparent;\n}\n.form-label-group input:not(:placeholder-shown) {\n    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));\n    padding-bottom: calc(var(--input-padding-y) / 3);\n}\n.form-label-group input:not(:placeholder-shown) ~ label {\n    padding-top: calc(var(--input-padding-y) / 3);\n    padding-bottom: calc(var(--input-padding-y) / 3);\n    font-size: 12px;\n    color: #777;\n}\n.btn-google {\n    color: white;\n    background-color: #ea4335;\n}\n.btn-facebook {\n    color: white;\n    background-color: #3b5998;\n}\n", ""]);
 
 // exports
 
@@ -14967,7 +15020,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.contact-avatar {\n  width: 175px !important;\n  height: 175px !important;\n}\n", ""]);
+exports.push([module.i, "\n.contact-avatar {\n    width: 175px !important;\n    height: 175px !important;\n}\n", ""]);
 
 // exports
 
@@ -14986,7 +15039,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n@-webkit-keyframes spinner {\nto { transform: rotate(360deg);\n}\n}\n@keyframes spinner {\nto { transform: rotate(360deg);\n}\n}\n.fa-spinner {\n  font-size: 50px;\n  -webkit-animation: spinner 1s linear infinite;\n          animation: spinner 1s linear infinite;\n}\n", ""]);
+exports.push([module.i, "\n@-webkit-keyframes spinner {\nto {\n        transform: rotate(360deg);\n}\n}\n@keyframes spinner {\nto {\n        transform: rotate(360deg);\n}\n}\n.fa-spinner {\n    font-size: 50px;\n    -webkit-animation: spinner 1s linear infinite;\n            animation: spinner 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -28361,12 +28414,12 @@ var render = function() {
           _c("h6", { staticClass: "mb-1" }, [
             _c("a", { staticClass: "blue-text" }, [
               _c("i", { staticClass: "fa fa-comments-o" }),
-              _vm._v(" " + _vm._s(_vm.commentsCount) + "\n              ")
+              _vm._v(" " + _vm._s(_vm.commentsCount) + "\n                ")
             ]),
             _vm._v(" "),
             _c("a", { staticClass: "blue-text ml-4" }, [
               _c("i", { staticClass: "fa fa-eye" }),
-              _vm._v(" " + _vm._s(_vm.data.views) + "\n              ")
+              _vm._v(" " + _vm._s(_vm.data.views) + "\n                ")
             ])
           ]),
           _vm._v(" "),
@@ -28414,13 +28467,13 @@ var render = function() {
         _c("ul", [
           _c("li", { staticClass: "comment-date" }, [
             _c("i", { staticClass: "fa fa-clock-o" }),
-            _vm._v(" " + _vm._s(_vm.createdAt) + " ")
+            _vm._v(" " + _vm._s(_vm.createdAt))
           ])
         ])
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "comment-text" }, [
-        _vm._v("\n        " + _vm._s(_vm.text) + "\n      ")
+        _vm._v("\n            " + _vm._s(_vm.text) + "\n        ")
       ])
     ])
   ])
@@ -28535,9 +28588,7 @@ var render = function() {
                   ],
                   1
                 )
-              : _c("span", [
-                  _vm._v("\n                  Submit\n                ")
-                ])
+              : _c("span", [_vm._v("\n              Submit\n            ")])
           ]
         )
       ])
@@ -28983,7 +29034,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(
-                          "\n                              " +
+                          "\n                                " +
                             _vm._s(comment.post.title) +
                             "\n                            "
                         )
@@ -29443,7 +29494,7 @@ var render = function() {
                     class: _vm.post.description ? "active" : "",
                     attrs: { for: "description" }
                   },
-                  [_vm._v("Short Description")]
+                  [_vm._v("Short\n                                Description")]
                 ),
                 _vm._v(" "),
                 _vm.submitted && _vm.errors.has("description")
@@ -29536,7 +29587,7 @@ var render = function() {
                           )
                         : _c("span", [
                             _vm._v(
-                              "\n                                    Update\n                                  "
+                              "\n                                  Update\n                                "
                             )
                           ])
                     ]
@@ -29596,7 +29647,7 @@ var staticRenderFns = [
         staticClass: "fa fa-calendar mr-1",
         attrs: { "aria-hidden": "true" }
       }),
-      _vm._v(" Publish: "),
+      _vm._v(" Publish:\n                                "),
       _c("strong", [_vm._v("Immediately")])
     ])
   }
@@ -29944,8 +29995,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Change Password")]
+                      [
+                        _vm._v(
+                          "\n                                        Change Password\n                                    "
+                        )
+                      ]
                     ),
+                    _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
                     _c(
@@ -29959,8 +30015,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Update Account")]
+                      [
+                        _vm._v(
+                          "Update\n                                        Account\n                                    "
+                        )
+                      ]
                     ),
+                    _vm._v(" "),
                     _c("br")
                   ])
                 ])
@@ -30120,7 +30181,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n                Log In\n        ")]
+            [_vm._v("\n                    Log In\n                ")]
           )
         ])
       ])
@@ -30141,7 +30202,11 @@ var staticRenderFns = [
       _c(
         "label",
         { staticClass: "custom-control-label", attrs: { for: "customCheck1" } },
-        [_vm._v("\n            Remember password\n          ")]
+        [
+          _vm._v(
+            "\n                        Remember password\n                    "
+          )
+        ]
       )
     ])
   }
@@ -30325,7 +30390,7 @@ var render = function() {
             staticClass: "dropdown-item",
             attrs: { to: { name: "account", params: {} } }
           },
-          [_vm._v("\n      My account\n    ")]
+          [_vm._v("\n            My account\n        ")]
         )
       ],
       1
@@ -30582,7 +30647,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n                Register\n        ")]
+            [_vm._v("\n                    Register\n                ")]
           ),
           _vm._v(" "),
           _c("hr", { staticClass: "my-4" })
@@ -30995,8 +31060,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Change Password")]
+                          [
+                            _vm._v(
+                              "\n                                        Change Password\n                                    "
+                            )
+                          ]
                         ),
+                        _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
                         _c(
@@ -31026,7 +31096,7 @@ var render = function() {
                                 )
                               : _c("span", [
                                   _vm._v(
-                                    "\n                                        Update Account\n                                      "
+                                    "\n                                      Update Account\n                                    "
                                   )
                                 ])
                           ]
@@ -31308,7 +31378,7 @@ var render = function() {
                             staticClass: "btn btn-secondary",
                             attrs: { to: { name: "register", params: {} } }
                           },
-                          [_vm._v("Register")]
+                          [_vm._v("Register\n                    ")]
                         )
                       ],
                       1
@@ -31544,7 +31614,7 @@ var render = function() {
                     class: _vm.description ? "active" : "",
                     attrs: { for: "description" }
                   },
-                  [_vm._v("Short Description")]
+                  [_vm._v("Short\n                                Description")]
                 ),
                 _vm._v(" "),
                 _vm.submitted && _vm.errors.has("description")
@@ -31635,7 +31705,7 @@ var render = function() {
                           )
                         : _c("span", [
                             _vm._v(
-                              "\n                                  Publish\n                                "
+                              "\n                                Publish\n                              "
                             )
                           ])
                     ]
@@ -31689,7 +31759,7 @@ var staticRenderFns = [
         staticClass: "fa fa-calendar mr-1",
         attrs: { "aria-hidden": "true" }
       }),
-      _vm._v(" Publish: "),
+      _vm._v(" Publish:\n                                "),
       _c("strong", [_vm._v("Immediately")])
     ])
   }
@@ -47976,9 +48046,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
- // window.axios = axios;
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// window.axios.defaults.baseURL = process.env.MIX_APP_URL;
+
 
 var Auth = /*#__PURE__*/function () {
   function Auth() {

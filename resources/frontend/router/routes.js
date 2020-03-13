@@ -31,26 +31,26 @@ const routes = () => [
     path: '/login',
     name: 'login',
     component: Login,
-    meta: { guest: true }
+    meta: {guest: true}
   },
   {
     path: '/register',
     name: 'register',
     component: Register,
-    meta: { guest: true }
+    meta: {guest: true}
   },
   {
     path: '/dashboard/',
     component: DashboardLayout,
     children: [
       {
-        path: '', name: 'dashboard', component: Dashboard, meta: { requiresAuth: true },
+        path: '', name: 'dashboard', component: Dashboard, meta: {requiresAuth: true},
       },
       {
-        path: 'account', name: 'account', component: Account, meta: { requiresAuth: true },
+        path: 'account', name: 'account', component: Account, meta: {requiresAuth: true},
       },
       {
-        path: 'post', name: 'postCreate', component: PostCreate, meta: { requiresAdmin: true },
+        path: 'post', name: 'postCreate', component: PostCreate, meta: {requiresAdmin: true},
       }
     ]
   },

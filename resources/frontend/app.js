@@ -1,5 +1,6 @@
 // Core
 import Vue from 'vue';
+
 Vue.config.productionTip = false;
 
 // Internal Components
@@ -10,12 +11,13 @@ import store from './store.js';
 
 // External packages
 import VueFlashMessage from 'vue-flash-message';
+
 require('vue-flash-message/dist/vue-flash-message.min.css');
 import VeeValidate from 'vee-validate';
 import VModal from 'vue-js-modal';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faSpinner} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 
 Vue.use(VueFlashMessage, {

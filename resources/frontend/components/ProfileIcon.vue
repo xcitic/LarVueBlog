@@ -1,31 +1,32 @@
 <template>
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" data-target="#userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-user"></i>
-    <span class="hidden-sm-down">Profile</span>
-  </a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-target="#userDropdown" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="hidden-sm-down">Profile</span>
+        </a>
 
-  <div class="dropdown-menu dropdown-ins dropdown-menu-right" id="userDropdown" aria-labelledby="userDropdown">
-    <a class="dropdown-item" @click="logout">Log Out</a>
+        <div class="dropdown-menu dropdown-ins dropdown-menu-right" id="userDropdown" aria-labelledby="userDropdown">
+            <a class="dropdown-item" @click="logout">Log Out</a>
 
-    <router-link class="dropdown-item" :to="{ name: 'account', params: {} }">
-      My account
-    </router-link>
-  </div>
+            <router-link class="dropdown-item" :to="{ name: 'account', params: {} }">
+                My account
+            </router-link>
+        </div>
 
-</li>
+    </li>
 </template>
 
 <script>
-import Auth from '@/api/Auth';
+  import Auth from '@/api/Auth';
 
-export default {
+  export default {
 
-  methods: {
-    async logout() {
-      await Auth.logout();
-      this.$router.go();
+    methods: {
+      async logout() {
+        await Auth.logout();
+        this.$router.go();
+      }
     }
   }
-}
 </script>

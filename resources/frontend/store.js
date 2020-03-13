@@ -106,15 +106,15 @@ export default new Vuex.Store({
     },
 
     removePost(state, index) {
-      state.posts.splice(index,1);
+      state.posts.splice(index, 1);
     },
 
     removeComment(state, index) {
-      state.comments.splice(index,1);
+      state.comments.splice(index, 1);
     },
 
     removeUser(state, index) {
-      state.users.splice(index,1);
+      state.users.splice(index, 1);
     },
 
     notLoading(state) {
@@ -127,15 +127,19 @@ export default new Vuex.Store({
 
     increaseViews(state, id) {
       state.post.views++;
-      let post = state.posts.find(post => { return post.id === id});
-      if(post){
+      let post = state.posts.find(post => {
+        return post.id === id
+      });
+      if (post) {
         state.post.views += 1;
       }
     },
 
     increaseCommentCount(state, payload) {
-      let post = state.posts.find(post => { return post.id === payload.postId});
-      if(post) {
+      let post = state.posts.find(post => {
+        return post.id === payload.postId
+      });
+      if (post) {
         post.comments.push(payload.comment);
       }
     },
@@ -170,11 +174,11 @@ export default new Vuex.Store({
     },
 
     async login({commit}, payload) {
-        let result = await API.login(payload)
-        commit('login', result);
-        commit('setUser', result)
-        Auth.login(result.token, result)
-      },
+      let result = await API.login(payload)
+      commit('login', result);
+      commit('setUser', result)
+      Auth.login(result.token, result)
+    },
 
     async register({commit}, payload) {
       try {
@@ -329,18 +333,18 @@ export default new Vuex.Store({
 
     async viewedPost({commit}, id) {
       API.viewedPost(id)
-      .then(() => {
-        commit('increaseViews', id);
-      })
+        .then(() => {
+          commit('increaseViews', id);
+        })
     },
 
-      toggleSideNav({commit}) {
-        commit('toggleSideNav');
-      },
+    toggleSideNav({commit}) {
+      commit('toggleSideNav');
+    },
 
-      hideSideNav({commit}) {
-        commit('hideSideNav');
-      },
+    hideSideNav({commit}) {
+      commit('hideSideNav');
+    },
 
   }
 });

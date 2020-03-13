@@ -1,33 +1,33 @@
 <template>
-<div class="col-md-12">
+    <div class="col-md-12">
 
-  <modals-container height="auto"/>
+        <modals-container height="auto"/>
 
-  <AdminList v-if="isAdmin"/>
+        <AdminList v-if="isAdmin"/>
 
-  <Comments v-else />
+        <Comments v-else/>
 
-</div>
+    </div>
 </template>
 
 <script>
-import AdminList from '@/components/Dashboard/AdminList.vue';
-import Comments from '@/components/Dashboard/Comments.vue';
+  import AdminList from '@/components/Dashboard/AdminList.vue';
+  import Comments from '@/components/Dashboard/Comments.vue';
 
-export default {
+  export default {
 
-  components: {
-    AdminList,
-    Comments
-  },
-
-  computed: {
-    isAdmin() {
-      return this.$store.state.isAdmin;
+    components: {
+      AdminList,
+      Comments
     },
 
+    computed: {
+      isAdmin() {
+        return this.$store.state.isAdmin;
+      },
+
+    }
   }
-}
 </script>
 
 <style scoped>
