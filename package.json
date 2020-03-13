@@ -10,14 +10,14 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^12.3.1",
+        "@ckeditor/ckeditor5-build-classic": "^17.0.0",
         "@ckeditor/ckeditor5-vue": "^1.0.0-beta.2",
         "@fortawesome/fontawesome-svg-core": "^1.2.21",
         "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/vue-fontawesome": "^0.1.6",
-        "@tinymce/tinymce-vue": "^2.1.0",
+        "@tinymce/tinymce-vue": "^3.2.0",
         "axios": "^0.19.0",
-        "core-js": "^2.6.5",
+        "core-js": "3",
         "register-service-worker": "^1.6.2",
         "vee-validate": "^2.2.13",
         "vue": "^2.6.10",
@@ -28,17 +28,17 @@
     },
     "devDependencies": {
         "bootstrap": "^4.1.0",
-        "cross-env": "^5.1",
+        "cross-env": "^7.0.2",
         "eslint": "^6.1.0",
-        "eslint-loader": "^2.2.1",
-        "eslint-plugin-vue": "^5.2.3",
+        "eslint-loader": "^3.0.3",
+        "eslint-plugin-vue": "^6.2.2",
         "jquery": "^3.2",
-        "laravel-mix": "^4.0.7",
+        "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
         "popper.js": "^1.12",
-        "resolve-url-loader": "^2.3.1",
+        "resolve-url-loader": "^3.1.1",
         "sass": "^1.15.2",
-        "sass-loader": "^7.1.0",
+        "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.10"
     }
 }

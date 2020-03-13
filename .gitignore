@@ -28,3 +28,8 @@ yarn.lock
 # Idea and Development Docs
 design/
 TODO.md
+
+# IDE
+.idea/
+/.DS_Store
+.DS_Store

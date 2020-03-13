@@ -55,6 +55,8 @@ if [ "$server" == "y" ]; then
   declare user=$(id -u -n)
   sudo chown -R $user:www-data storage/{app,framework,logs} bootstrap/cache
   sudo chown -R www-data:www-data public/images
+  echo 'Server setup complete'
+  echo 'Point Nginx or Apache to serve from /public'
 else
   echo 'Setup complete'
   echo 'Starting dev server'
