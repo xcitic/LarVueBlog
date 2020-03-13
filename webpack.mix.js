@@ -11,25 +11,25 @@ const mix = require('laravel-mix');
  |
  */
 
- mix.webpackConfig({
-   resolve: {
-     extensions: ['.js', '.vue'],
-     alias: {
-       '@': `${__dirname}/resources/frontend`,
-     }
-   },
-   module: {
-     rules: [
-       {
-         enforce: 'pre',
-         test: /\.(js|vue)$/,
-         loader: 'eslint-loader',
-         exclude: /node_modules/
-       }
-     ]
-   }
- });
+mix.webpackConfig({
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      '@': `${__dirname}/resources/frontend`,
+    }
+  },
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      }
+    ]
+  }
+});
 
 mix.js('resources/frontend/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    // .js('resources/js/registerServiceWorker.js', 'public/service-worker.js');
+  .js('resources/frontend/registerServiceWorker.js', 'public/service-worker.js')
+  .sass('resources/sass/app.scss', 'public/css');

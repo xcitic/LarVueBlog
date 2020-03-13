@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
 import App from './App.vue';
 import router from '@/router/router.js';
 import store from './store.js';
-//import './registerServiceWorker.js';
+import './registerServiceWorker.js';
 
 // External packages
 import VueFlashMessage from 'vue-flash-message';

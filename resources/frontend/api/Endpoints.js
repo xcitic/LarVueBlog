@@ -3,7 +3,7 @@ import axios from 'axios';
 
 let authToken = localStorage.getItem('token');
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]');
-const url = process.env.MIX_APP_URL;
+const url = process.env.MIX_API_URL;
 
 const endpoint = axios.create({
   baseURL: url,
