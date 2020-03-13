@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <ul id="slide-out" class="side-nav fixed custom-scrollbar" style="transform: translateX(0px);">
+    <div >
+        <ul v-click-outside="hideSideNav" id="slide-out" class="side-nav fixed custom-scrollbar" style="transform: translateX(0px);">
             <!-- Logo -->
             <li>
                 <div class="user-box" v-if="user">
@@ -26,28 +26,29 @@
             </li>
 
         </ul>
-
     </div>
     <!--/. Sidebar navigation -->
 </template>
 
 <script>
   import Auth from '@/api/Auth.js';
-
+  import ClickOutside from 'vue-click-outside';
 
   export default {
     name: 'SideNav',
 
+    data() {
+      return {
+        isLoading: false,
+      }
+    },
+
     mounted() {
-      this.$store.commit('isLoading');
-      this.checkAdmin()
+      this.isLoading = true;
+      this.checkAdmin();
     },
 
     computed: {
-      loading() {
-        return this.$store.state.loading;
-      },
-
       user() {
         return this.$store.state.user;
       },
@@ -64,12 +65,22 @@
         let response = await Auth.isAdmin();
         if (response === true) {
           this.$store.commit('setAdmin', true);
-          return this.$store.commit('notLoading');
+          return this.isLoading = false;
         }
         this.$store.commit('setAdmin', false);
-        return this.$store.commit('notLoading');
+        return this.isLoading = false;
       },
 
+      hideSideNav() {
+        if (!this.isLoading) {
+          this.$store.dispatch('hideSideNav');
+        }
+      }
+
+    },
+
+    directives: {
+      ClickOutside
     }
 
 

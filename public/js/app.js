@@ -12503,6 +12503,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api_Auth_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/api/Auth.js */ "./resources/frontend/api/Auth.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -12541,18 +12543,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SideNav',
+  data: function data() {
+    return {
+      isLoading: false
+    };
+  },
   mounted: function mounted() {
-    this.$store.commit('isLoading');
+    this.isLoading = true;
     this.checkAdmin();
   },
   computed: {
-    loading: function loading() {
-      return this.$store.state.loading;
-    },
     user: function user() {
       return this.$store.state.user;
     },
@@ -12583,12 +12587,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$store.commit('setAdmin', true);
 
-                return _context.abrupt("return", _this.$store.commit('notLoading'));
+                return _context.abrupt("return", _this.isLoading = false);
 
               case 6:
                 _this.$store.commit('setAdmin', false);
 
-                return _context.abrupt("return", _this.$store.commit('notLoading'));
+                return _context.abrupt("return", _this.isLoading = false);
 
               case 8:
               case "end":
@@ -12597,7 +12601,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    hideSideNav: function hideSideNav() {
+      if (!this.isLoading) {
+        this.$store.dispatch('hideSideNav');
+      }
     }
+  },
+  directives: {
+    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_2___default.a
   }
 });
 
@@ -13503,7 +13515,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.authenticated;
     },
     dashboard: function dashboard() {
-      return this.$route.name === "dashboard";
+      return this.$route.matched[0].path === "/dashboard";
     },
     homepage: function homepage() {
       return this.$route.name === "landing";
@@ -14936,7 +14948,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.navbar {\n  margin-bottom: 55px;\n}\n.nav-item {\n  margin-right: 2rem;\n}\n.hidden {\n  visibility: hidden;\n}\n\n", ""]);
+exports.push([module.i, "\n.navbar {\n    margin-bottom: 55px;\n}\n.nav-item {\n    margin-right: 2rem;\n}\n.hidden {\n    visibility: hidden;\n}\n\n", ""]);
 
 // exports
 
@@ -28079,6 +28091,85 @@ VeeValidate$1.withValidation = withValidation;
 
 /***/ }),
 
+/***/ "./node_modules/vue-click-outside/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-click-outside/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function validate(binding) {
+  if (typeof binding.value !== 'function') {
+    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
+    return false
+  }
+
+  return true
+}
+
+function isPopup(popupItem, elements) {
+  if (!popupItem || !elements)
+    return false
+
+  for (var i = 0, len = elements.length; i < len; i++) {
+    try {
+      if (popupItem.contains(elements[i])) {
+        return true
+      }
+      if (elements[i].contains(popupItem)) {
+        return false
+      }
+    } catch(e) {
+      return false
+    }
+  }
+
+  return false
+}
+
+function isServer(vNode) {
+  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
+}
+
+exports = module.exports = {
+  bind: function (el, binding, vNode) {
+    if (!validate(binding)) return
+
+    // Define Handler and cache it on the element
+    function handler(e) {
+      if (!vNode.context) return
+
+      // some components may have related popup item, on which we shall prevent the click outside event handler.
+      var elements = e.path || (e.composedPath && e.composedPath())
+      elements && elements.length > 0 && elements.unshift(e.target)
+      
+      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
+
+      el.__vueClickOutside__.callback(e)
+    }
+
+    // add Event Listeners
+    el.__vueClickOutside__ = {
+      handler: handler,
+      callback: binding.value
+    }
+    !isServer(vNode) && document.addEventListener('click', handler)
+  },
+
+  update: function (el, binding) {
+    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
+  },
+  
+  unbind: function (el, binding, vNode) {
+    // Remove Event Listeners
+    !isServer(vNode) && document.removeEventListener('click', el.__vueClickOutside__.handler)
+    delete el.__vueClickOutside__
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-flash-message/dist/vue-flash-message.min.css":
 /*!***********************************************************************!*\
   !*** ./node_modules/vue-flash-message/dist/vue-flash-message.min.css ***!
@@ -29026,6 +29117,14 @@ var render = function() {
     _c(
       "ul",
       {
+        directives: [
+          {
+            name: "click-outside",
+            rawName: "v-click-outside",
+            value: _vm.hideSideNav,
+            expression: "hideSideNav"
+          }
+        ],
         staticClass: "side-nav fixed custom-scrollbar",
         staticStyle: { transform: "translateX(0px)" },
         attrs: { id: "slide-out" }
@@ -30072,7 +30171,7 @@ var render = function() {
     "nav",
     { staticClass: "navbar fixed-top navbar-dark scrolling-navbar double-nav" },
     [
-      _vm.dashboard || _vm.accountPage
+      _vm.dashboard
         ? _c("div", { staticClass: "float-left mr-4" }, [
             _c(
               "a",
@@ -49556,6 +49655,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     toggleSideNav: function toggleSideNav(state) {
       state.showSideNav = !state.showSideNav;
     },
+    hideSideNav: function hideSideNav(state) {
+      state.showSideNav = false;
+    },
     error: function error(state, err) {
       state.error = err;
     },
@@ -50160,6 +50262,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     toggleSideNav: function toggleSideNav(_ref22) {
       var commit = _ref22.commit;
       commit('toggleSideNav');
+    },
+    hideSideNav: function hideSideNav(_ref23) {
+      var commit = _ref23.commit;
+      commit('hideSideNav');
     }
   }
 }));

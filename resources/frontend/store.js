@@ -144,6 +144,10 @@ export default new Vuex.Store({
       state.showSideNav = !state.showSideNav;
     },
 
+    hideSideNav(state) {
+      state.showSideNav = false;
+    },
+
     error(state, err) {
       state.error = err;
     },
@@ -332,7 +336,11 @@ export default new Vuex.Store({
 
       toggleSideNav({commit}) {
         commit('toggleSideNav');
-      }
+      },
+
+      hideSideNav({commit}) {
+        commit('hideSideNav');
+      },
 
   }
 });

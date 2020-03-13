@@ -1,29 +1,32 @@
 <template>
-  <div>
-    <SideNav v-if="showSideNav" />
+    <div>
+            <SideNav v-if="showSideNav"/>
 
-    <div class="container-fluid">
-      <router-view/>
+        <div class="container-fluid">
+            <router-view/>
+        </div>
+
     </div>
-
-  </div>
 </template>
 
 <script>
-import SideNav from '@/components/Dashboard/SideNav.vue';
+  import SideNav from '@/components/Dashboard/SideNav.vue';
 
-export default {
-  components: {
-    SideNav,
-  },
 
-  computed: {
-    showSideNav() {
-      return this.$store.state.showSideNav;
-    }
+  export default {
+    components: {
+      SideNav,
+    },
+
+    computed: {
+      showSideNav() {
+        return this.$store.state.showSideNav;
+      }
+    },
+
+
+
   }
-
-}
 </script>
 
 <style>
