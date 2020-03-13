@@ -30574,6 +30574,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "btn btn-primary",
+                      staticStyle: { "max-width": "90%" },
                       attrs: { type: "file" },
                       on: { change: _vm.processImage }
                     })
@@ -30943,7 +30944,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "view primary-color white-text" }, [
+    return _c("div", { staticClass: "view primary-color white-text pb-1" }, [
       _c("h5", [_vm._v("Edit Photo")])
     ])
   },
@@ -30951,7 +30952,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "view primary-color white-text" }, [
+    return _c("div", { staticClass: "view primary-color white-text pb-1" }, [
       _c("h5", [_vm._v("Edit Account")])
     ])
   }

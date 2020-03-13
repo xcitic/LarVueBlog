@@ -15,7 +15,7 @@
               <div class="card contact-card">
                   <div class="admin-panel info-admin-panel">
                       <!-- Card title -->
-                      <div class="view primary-color white-text">
+                      <div class="view primary-color white-text pb-1">
                           <h5>Edit Photo</h5>
                       </div>
                       <!-- /.Card title -->
@@ -23,7 +23,7 @@
                       <!-- Card content -->
                       <div class="card-block text-center">
                           <img v-if="user.image" :src="user.image" alt="User Photo" class="rounded-circle contact-avatar my-2 mx-auto">
-                            <input class="btn btn-primary" type="file" @change="processImage"/>
+                            <input class="btn btn-primary" type="file" @change="processImage" style="max-width: 90%;"/>
                       </div>
                       <!-- /.Card content -->
                   </div>
@@ -37,7 +37,7 @@
               <div class="card">
                   <div class="admin-panel info-admin-panel">
                       <!--Card image-->
-                      <div class="view primary-color white-text">
+                      <div class="view primary-color white-text pb-1">
                           <h5>Edit Account</h5>
                       </div>
                       <!--/Card image-->
