@@ -30,7 +30,7 @@ The application uses [Laravel](https://laravel.com) as backend and [VueJS](https
 Authorization is handled by [Passport](http://www.passportjs.org/) with JWT token.
 
 
-- [Preview](https://larvueblog.samilazreg.com)
+- [Live Demo](https://larvueblog.samilazreg.com)
 
 
 ## Preparation
